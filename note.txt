@@ -1,0 +1,261 @@
+<?php
+# ABBREVATION
+fs          - font-size
+lh          - line-height
+fw          - font-weight
+
+clr         - color
+bg_clr      - background-color
+br          - border-radius
+bw          - border-width
+bs          - border-style
+b_clr       - border-color
+
+ds          - display
+ps          - position
+
+p           - padding
+pt          - padding-top
+pb          - padding-bottom
+pr          - padding-right
+pl          - padding-left
+
+m           - margin
+mt          - margin-top
+mb          - margin-bottom
+mr          - margin-right
+ml          - margin-left
+
+wd          - width
+mx_wd       - max-width
+ht          - height
+
+hv          - hover
+btn         - button
+inp         - input
+
+
+
+
+/**
+ *
+ *  General Product Data
+ *
+ */
+$product->get_id(); // Returns the unique ID for this object.
+$product->get_description(); // Get product description.
+$product->get_formatted_name(); // Get product name with SKU or ID. Used within admin.
+$product->get_featured(); // If the product is featured.
+$product->get_name(); // Get product name.
+$product->get_title(); // Get the product's title. For products this is the product name.
+$product->get_type(); // Get internal type. Should return string and *should be overridden* by child classes.
+$product->get_virtual(); // Get virtual.
+$product->get_total_sales(); // Get number total of sales.
+$product->get_short_description(); // Get product short description.
+$product->get_sku(); // Get SKU (Stock-keeping unit) - product unique ID.
+$product->get_slug(); // Get product slug.
+$product->get_status(); // Get product status.
+$product->get_permalink(); // Product permalink.
+$product->get_catalog_visibility(); // Get catalog visibility.
+
+/**
+ *
+ *  Pricing Data
+ *
+ */
+$product->get_price(); // Returns the product's active price.
+$product->get_date_on_sale_from(); // Get date on sale from.
+$product->get_date_on_sale_to(); // Get date on sale to.
+$product->get_display_price(); // Returns the price including or excluding tax, based on the 'woocommerce_tax_display_shop' setting.
+$product->get_price_excluding_tax(); // Returns the price (excluding tax) - ignores tax_class filters since the price may *include* tax and thus needs subtracting.
+$product->get_price_html(); // Returns the price in html format.
+$product->get_price_html_from_text(); // Functions for getting parts of a price, in html, used by $product->get_price_html.
+$product->get_price_html_from_to(); // Functions for getting parts of a price, in html, used by $product->get_price_html.
+$product->get_price_including_tax(); // Returns the price (including tax). Uses customer tax rates. Can work for a specific $qty for more accurate taxes.
+$product->get_price_suffix(); // Get the suffix to display after prices > 0.
+$product->get_sale_price(); // Returns the product's sale price.
+$product->get_regular_price(); // Returns the product's regular price.
+$product->get_tax_class(); // Returns the tax class.
+$product->get_tax_status(); // Returns the tax status.
+
+/**
+ *
+ *  Image Related Data
+ *
+ */
+$product->get_image(); // Returns the main product image.
+$product->get_image_id(); // Get main image ID.
+$product->get_gallery_attachment_ids(); // Returns the gallery attachment ids.
+$product->get_gallery_image_ids(); // Returns the gallery attachment ids.
+
+/**
+ *
+ *  Stock or Inventory Data
+ *
+ */
+$product->get_backorders(); // Get backorders.
+$product->get_availability(); // Returns the availability of the product.
+$product->get_max_purchase_quantity(); // Get max quantity which can be purchased at once.
+$product->get_min_purchase_quantity(); // Get min quantity which can be purchased at once.
+$product->get_stock_managed_by_id(); // If the stock level comes from another product ID, this should be modified.
+$product->get_stock_quantity(); // Returns number of items available for sale.
+$product->get_stock_status(); // Return the stock status.
+$product->get_total_stock(); // Get total stock - This is the stock of parent and children combined.
+$product->get_sold_individually(); // Return if should be sold individually.
+$product->get_low_stock_amount(); // Get low stock amount.
+
+/**
+ *
+ *  Shipping Data
+ *
+ */
+$product->get_height(); // Returns the product height.
+$product->get_length(); // Returns the product length.
+$product->get_weight(); // Returns the product's weight.
+$product->get_width(); // Returns the product width.
+$product->get_dimensions(); // Returns formatted dimensions.
+$product->get_manage_stock(); // Return if product manage stock.
+$product->get_shipping_class(); // Returns the product shipping class SLUG.
+$product->get_shipping_class_id(); // Get shipping class ID.
+
+/**
+ *
+ *  Product Variations / Parent Data
+ *
+ */
+$product->get_child(); // Returns the child product.
+$product->get_children(); // Returns the children IDs if applicable. Overridden by child classes.
+$product->get_formatted_variation_attributes(); // Get formatted variation data with WC < 2.4 back compat and proper formatting of text-based attribute names.
+$product->get_matching_variation(); // Match a variation to a given set of attributes using a WP_Query.
+$product->get_parent(); // Get the parent of the post.
+$product->get_parent_id(); // Get parent ID.
+$product->get_variation_default_attributes(); // If set, get the default attributes for a variable product.
+$product->get_variation_description(); // Get product variation description.
+$product->get_variation_id(); // Get variation ID.
+
+/**
+ *
+ *  Product Downloads
+ *
+ */
+$product->get_download_expiry(); // Get download expiry.
+$product->get_download_limit(); // Get download limit.
+$product->get_downloadable(); // Get downloadable.
+$product->get_downloads(); // Get downloads.
+$product->get_file(); // Get a file by $download_id.
+$product->get_file_download_path(); // Get file download path identified by $download_id.
+$product->get_files(); // Same as $product->get_downloads in CRUD.
+
+/**
+ *
+ *  Attributes, Tags, Categories & Associated Data Objects
+ *
+ */
+$product->get_attribute(); // Returns a single product attribute as a string.
+$product->get_attributes(); // Returns product attributes.
+$product->get_categories(); // Returns the product categories.
+$product->get_category_ids(); // Get category ids.
+$product->get_default_attributes(); // Get default attributes.
+$product->get_cross_sell_ids(); // Get cross sell IDs.
+$product->get_cross_sells(); // Returns the cross sell product ids.
+$product->get_related(); // Get and return related products.
+$product->get_tag_ids(); // Get tag ids.
+$product->get_tags(); // Returns the product tags.
+$product->get_upsell_ids(); // Get upsell IDs.
+$product->get_upsells(); // Returns the upsell product ids.
+$product->get_meta(); // Get Meta Data by Key.
+$product->get_meta_data(); // Get All Meta Data.
+
+/**
+ *
+ *  Ratings and Reviews
+ *
+ */
+$product->get_rating_count(); // Get the total amount (COUNT) of ratings, or just the count for one rating e.g. number of 5 star ratings.
+$product->get_rating_counts(); // Get rating count.
+$product->get_rating_html(); // Returns the product rating in html format.
+$product->get_review_count(); // Get review count.
+$product->get_reviews_allowed(); // Return if reviews is allowed.
+$product->get_average_rating(); // Get average rating.
+
+/**
+ *
+ *  Other Product Data
+ *
+ */
+$product->get_changes(); // Return data changes only.
+$product->get_data(); // Returns all data for this object.
+$product->get_data_keys(); // Returns array of expected data keys for this object.
+$product->get_data_store(); // Get the data store.
+$product->get_date_created(); // Get product created date.
+$product->get_date_modified(); // Get product modified date.
+$product->get_extra_data_keys(); // Returns all "extra" data keys for an object (for sub objects like product types).
+$product->get_menu_order(); // Get menu order.
+$product->get_meta_cache_key(); // Helper method to compute meta cache key. Different from WP Meta cache key in that meta data cached using this key also contains meta_id column.
+$product->get_object_read(); // Get object read property.
+$product->get_post_data(); // Get the product's post data.
+$product->get_post_password(); // Get post password.
+$product->get_purchase_note(); // Get purchase note.
+
+
+
+# close icon
+bs-close
+
+# quick view button icon
+bs-eye
+bs-eye-fill
+bs-search
+bs-expand
+bs-fullscreen
+bs-arrow-fullscreen
+
+# viewer navigation previoius icon
+bs-chevron-left
+bs-arrow-left
+bs-arrow-left-circle
+bs-arrow-left-circle-fill
+bs-arrow-left-square
+bs-arrow-left-square-fill
+bs-caret-left
+bs-caret-left-fill
+
+# viewer navigation next icon
+bs-chevron-right
+bs-arrow-right
+bs-arrow-right-circle
+bs-arrow-right-circle-fill
+bs-arrow-right-square
+bs-arrow-right-square-fill
+bs-caret-right
+bs-caret-right-fill
+
+
+
+#LOADERS
+    - spinner-1 
+        - width, height, stroke 1, color 1
+    - spinner-2
+        - width, height, stroke 1, color 1
+    - spinner-3
+        - width, height, stroke 1, color 1 & 2
+    - spinner-4
+        - width, height, stroke 1, color 1 & 2
+    - spinner-5
+        - width, height, stroke 1, color 1 & 2
+    - spinner-6
+        - width, height, stroke 1, color 1
+    - spinner-7
+        - width, height, stroke 1, color 1 & 2
+    - spinner-8
+        - width, height, stroke 1, color 1
+    - spinner-9
+        -width, height, stroke, color 1 & 2
+    - pulse-1
+        - width, height, color 1
+    - pulse-2
+        -width, height, color 1
+    - pulse-3
+        - width, height, color 1
+    - pulse-4
+        - width, height, color 1
