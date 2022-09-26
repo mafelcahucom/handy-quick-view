@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 ?>
 
 <div id="hqfw-js-modal" class="hqfw-modal hqfw" data-state="hide">
-	<div class="hqfw-modal__overlay hqfw-flex hqfw-flex-ai-c">
+	<div class="hqfw-js-close-modal hqfw-modal__overlay hqfw-flex hqfw-flex-ai-c">
 		<div class="hqfw-viewer hqfw-flex hqfw-flex-ai-c">
 			<div class="hqfw-viewer__navigation">
 				<button type="button" class="hqfw-js-navigation-btn hqfw-navigation-btn hqfw-flex-c hqfw-hover" data-product_id="0" data-event="prev" data-state="default" aria-label="Previous" title="Previous">

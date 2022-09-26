@@ -125,6 +125,25 @@ final class Style {
     }
 
     /**
+     * Minify the inline css.
+     *
+     * @since 1.0.0
+     * 
+     * @param  string  $css  The inline css to be minify.
+     * @return string
+     */
+    private function minify_inline_css( $css ) {
+        $css = preg_replace( '/\s+/', ' ', $css );
+        $css = preg_replace( '/\/\*[^\!](.*?)\*\//', '', $css );
+        $css = preg_replace( '/(,|:|;|\{|}) /', '$1', $css );
+        $css = preg_replace( '/ (,|;|\{|})/', '$1', $css );
+        $css = preg_replace( '/(:| )0\.([0-9]+)(%|em|ex|px|in|cm|mm|pt|pc)/i', '${1}.${2}${3}', $css );
+        $css = preg_replace( '/(:| )(\.?)0(%|em|ex|px|in|cm|mm|pt|pc)/i', '${1}0', $css );
+
+        return trim( $css );
+    }
+
+    /**
      * Custom Inline Css.
      *
      * @since 1.0.0
@@ -299,11 +318,14 @@ final class Style {
                 width: 100%;
                 max-width: 950px;
                 background-color: #ffffff;
+                border-radius: 4px;
             }
             .hqfw-product__gallery {
+                padding: 15px;
                 width: 50%;
             }
             .hqfw-product__summary {
+                padding: 15px;
                 width: 50%;
                 overflow: auto;
             }
@@ -339,7 +361,7 @@ final class Style {
                 align-items: center;
                 justify-content: center;
                 min-width: 100%;
-                max-height: 475px;
+                height: 475px;
             }
             .hqfw-photo-slider__slide > * {
                 pointer-events: none;
@@ -349,6 +371,7 @@ final class Style {
                 width:  100%;
                 max-width: fit-content;
                 height: auto;
+                border-radius: 4px;
             }
         ";
 
@@ -406,17 +429,21 @@ final class Style {
 
         $class .= "
             .hqfw-photo-slider__collection {
-                flex-wrap: wrap;
-            }
-            .hqfw-photo-slider__collection li {
-                width: 50px;
-                height: auto;
+                display: grid;
+                grid-gap: 10px;
+                grid-auto-rows: 1fr;
+                grid-template-columns: repeat(auto-fill, minmax(45px, 3fr));
+                margin-top: 10px !important;
             }
             .hqfw-photo-slider__collection img {
                 height: auto;
-                max-height: 50px;
+                max-height: 45px;
                 cursor: pointer;
-                opacity: 0.8;
+                opacity: 0.5;
+            }
+            .hqfw-photo-slider__collection img:hover,
+            .hqfw-photo-slider__collection img:focus {
+                opacity: 1;
             }
             .hqfw-photo-slider__collection img[data-state='active'] {
                 opacity: 1;
@@ -425,25 +452,6 @@ final class Style {
         
 
         $style    = '<style id="hqfw-inline-style">'. $class .'</style>';
-        $minified = $style;
-        echo $this->minify_css( $minified );
-    }
-
-    /**
-     * Minify the dynamic css.
-     * 
-     * @param string $css css to minify.
-     * @return string minified css.
-     */
-    public function minify_css( $css ) {
-
-        $css = preg_replace( '/\s+/', ' ', $css );
-        $css = preg_replace( '/\/\*[^\!](.*?)\*\//', '', $css );
-        $css = preg_replace( '/(,|:|;|\{|}) /', '$1', $css );
-        $css = preg_replace( '/ (,|;|\{|})/', '$1', $css );
-        $css = preg_replace( '/(:| )0\.([0-9]+)(%|em|ex|px|in|cm|mm|pt|pc)/i', '${1}.${2}${3}', $css );
-        $css = preg_replace( '/(:| )(\.?)0(%|em|ex|px|in|cm|mm|pt|pc)/i', '${1}0', $css );
-
-        return trim( $css );
+        echo $this->minify_inline_css( $style );
     }
 }

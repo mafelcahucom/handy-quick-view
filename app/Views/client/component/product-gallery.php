@@ -28,21 +28,25 @@ $total_images = count( $args['images'] );
     <div class="hqfw-photo-slider__container">
         <?php foreach ( $args['images'] as $key => $value ): ?>
             <?php
-                $image_class = ( $key === 0 ? 'hqfw-photo-slider__image-primary' : 'hqfw-photo-slider__image-primary' );
+                if ( ! is_array( $value['image'] ) ) {
+                    $value['image'] = [ $value['image'], 480, 480 ];
+                }
+
+                $image_class = ( $key === 0 ? 'hqfw-photo-slider__image-primary' : 'hqfw-photo-slider__image' );
                 $zoom_class  = Helper::get_zoom_class( $value['image'][1], $value['image'][2] );
-                $zoom_class  = ( 1 === 1 ? $zoom_class : '' );
+
             ?>
-            <div class="hqfw-photo-slider__slide <?php echo esc_attr( $zoom_class ); ?>">
+            <div class="hqfw-photo-slider__slide <?php echo esc_attr( $zoom_class ); ?>" data-image_id="<?php echo esc_attr( $value['id'] ); ?>">
                 <img src="<?php echo esc_url( $value['image'][0] ); ?>" class="<?php echo esc_attr( $image_class ); ?>" width="<?php echo esc_attr( $value['image'][1] ); ?>" height="<?php echo esc_attr( $value['image'][2] ); ?>" alt="<?php echo esc_attr( $value['title'] ); ?>" role="presentation">
             </div>
         <?php endforeach; ?>
     </div>
 
     <?php if ( $total_images > 1 ): ?>
-        <button class="hqfw-js-photo-slider-controller hqfw-photo-slider__controller hqfw-flex-c hqfw-hover" data-slider="hqfw-js-photo-slider" data-event="prev" aria-label="Previous">
+        <button class="hqfw-js-photo-slider-controller hqfw-photo-slider__controller hqfw-flex-c hqfw-hover" data-event="prev" aria-label="Previous">
             <?php echo Helper::get_icon( 'bs-chevron-left' ); ?>
         </button>
-        <button class="hqfw-js-photo-slider-controller hqfw-photo-slider__controller hqfw-flex-c hqfw-hover" data-slider="hqfw-js-photo-slider" data-event="next" aria-label="Next">
+        <button class="hqfw-js-photo-slider-controller hqfw-photo-slider__controller hqfw-flex-c hqfw-hover" data-event="next" aria-label="Next">
             <?php echo Helper::get_icon( 'bs-chevron-right' ); ?>
         </button>
     <?php endif; ?>
@@ -55,21 +59,25 @@ $total_images = count( $args['images'] );
                     $label = $key .' of '. $total_images;
                 ?>
                 <li>
-                    <button class="hqfw-js-photo-slider-shortcut hqfw-hover" data-slider="hqfw-js-photo-slider" data-slide="<?php echo esc_attr( $key ); ?>" data-state="<?php echo esc_attr( $state ); ?>" aria-label="<?php echo esc_attr( $label ); ?>"></button>
+                    <button class="hqfw-js-photo-slider-shortcut hqfw-hover" data-slide="<?php echo esc_attr( $key ); ?>" data-state="<?php echo esc_attr( $state ); ?>" aria-label="<?php echo esc_attr( $label ); ?>"></button>
                 </li>
             <?php endforeach; ?>
         </ul>
     <?php endif; ?>
 </div>
 <?php if ( $total_images > 1 ): ?>
-    <ul class="hqfw-photo-slider__collection hqfw-flex hqfw-flex-jc-sb">
+    <ul class="hqfw-photo-slider__collection">
         <?php foreach ( $args['images'] as $key => $value ): ?>
             <?php
-                $state = ( $key === 0 ? 'active' : 'default' );
-                $label = $key .' of '. $total_images;
+                $state       = ( $key === 0 ? 'active' : 'default' );
+                $label       = $key .' of '. $total_images;
+                $image_class = ( $key === 0 ? 'hqfw-photo-slider__collection__image-primary' : 'hqfw-photo-slider__collection__image' );
+                if ( ! is_array( $value['image'] ) ) {
+                    $value['image'] = [ $value['image'] ];
+                }
             ?>
             <li class="hqfw-flex-c">
-                <img src="<?php echo esc_url( $value['image'][0] ); ?>" class="hqfw-js-photo-slider-shortcut hqfw-hover" data-slider="hqfw-js-photo-slider" data-slide="<?php echo esc_attr( $key ); ?>" data-state="<?php echo esc_attr( $state ); ?>" aria-label="<?php echo esc_attr( $label ); ?>">
+                <img src="<?php echo esc_url( $value['image'][0] ); ?>" class="hqfw-js-photo-slider-shortcut hqfw-hover <?php echo esc_attr( $image_class ); ?>" data-slide="<?php echo esc_attr( $key ); ?>" data-state="<?php echo esc_attr( $state ); ?>" aria-label="<?php echo esc_attr( $label ); ?>">
             </li>
         <?php endforeach; ?>
     </ul>

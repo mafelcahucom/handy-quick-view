@@ -12,7 +12,7 @@ const handy = handy || {};
  * Toaster Component.
  *
  * @since 1.0.0
- * 
+ *
  * @type {Object}
  */
 handy.toaster = {
@@ -22,11 +22,11 @@ handy.toaster = {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param {Object}   params           Contains the necessary parameters.
-	 * @param {string}   params.title     The title of the toast.
-	 * @param {string}   params.message   The message of the toast.
-	 * @param {integer}  params.duration  The duration of the toaster before hiding. 
-	 * @param {boolean}  params.allowed   Check if the plugin is allowed to use toaster. 
+	 * @param {Object}  params          Contains the necessary parameters.
+	 * @param {string}  params.title    The title of the toast.
+	 * @param {string}  params.message  The message of the toast.
+	 * @param {integer} params.duration The duration of the toaster before hiding.
+	 * @param {boolean} params.allowed  Check if the plugin is allowed to use toaster.
 	 */
 	show( params ) {
 		if ( ! params.allowed ) {

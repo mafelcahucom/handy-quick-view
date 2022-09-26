@@ -110,9 +110,9 @@ hqfw.fn = {
 	 * Check if the element animation is done or into end.
 	 *
 	 * @since 1.0.0
-	 * 
-	 * @param  {element}  element  The element to be watch.
-	 * @return {Boolean}
+	 *
+	 * @param {element} element The element to be watch.
+	 * @return {boolean}
 	 */
 	isAnimationDone( element ) {
 		return new Promise( function( resolve, reject ) {
@@ -120,12 +120,11 @@ hqfw.fn = {
 				resolve( false );
 			}
 
-			element.addEventListener( 'animationend', function( e ) {
+			element.addEventListener( 'animationend', function() {
 				resolve( true );
-			});
-		});
+			} );
+		} );
 	},
-
 
 	/**
 	 * Sets the attribute of target elements.
@@ -155,8 +154,8 @@ hqfw.fn = {
 	 * Remove elements based on the selector.
 	 *
 	 * @since 1.0.0
-	 * 
-	 * @param  {string}  selector  The element query selector.
+	 *
+	 * @param {string} selector The element query selector.
 	 */
 	removeElements( selector ) {
 		if ( ! selector ) {
@@ -170,8 +169,8 @@ hqfw.fn = {
 
 		elements.forEach( function( element ) {
 			element.remove();
-		});
-	}
+		} );
+	},
 };
 
 /**
@@ -206,7 +205,7 @@ hqfw.prompt = {
 				error: 'MISSING_DATA_ERROR',
 				title: 'Missing Data',
 				content: 'There is a missing data that are required. Please check and try again.',
-			}
+			},
 		];
 
 		const errorDetail = errors.find( function( value ) {
@@ -220,7 +219,7 @@ hqfw.prompt = {
 				title: errorDetail.title,
 				content: errorDetail.content,
 				duration: hqfwLocal.toaster.duration,
-				allowed: hqfwLocal.toaster.isUseToaster
+				allowed: hqfwLocal.toaster.isUseToaster,
 			} );
 		}
 	},
@@ -234,21 +233,139 @@ hqfw.prompt = {
 hqfw.photoSlider = {
 
 	/**
+	 * Holds the photo slider element.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @type {Object}
+	 */
+	sliderElem: null,
+
+	/**
+	 * Holds the primary image source.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @type {string}
+	 */
+	primaryImageSrc: null,
+
+	/**
 	 * Initialize.
 	 *
 	 * @since 1.0.0
 	 */
 	init() {
+		if ( ! this.setSlider() ) {
+			return;
+		}
+
+		this.setPrimaryImageSrc();
+		this.setSlideSize();
+		this.enableImageZoom();
 		this.navigationController();
 		this.shortcutController();
 	},
 
 	/**
-	 * Zoom in the image on grab event.
+	 * Set the slider element property.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return {boolean} Check if the slider element has found.
+	 */
+	setSlider() {
+		const sliderElem = document.getElementById( 'hqfw-js-photo-slider' );
+		if ( ! sliderElem ) {
+			return;
+		}
+
+		hqfw.photoSlider.sliderElem = sliderElem;
+		return true;
+	},
+
+	/**
+	 * Set the primary image property its source.
 	 *
 	 * @since 1.0.0
 	 */
-	imageZoom() {
+	setPrimaryImageSrc() {
+		const sliderElem = hqfw.photoSlider.sliderElem;
+		const primaryImageElem = sliderElem.querySelector( '.hqfw-photo-slider__image-primary' );
+		if ( ! primaryImageElem ) {
+			return;
+		}
+
+		hqfw.photoSlider.primaryImageSrc = primaryImageElem.getAttribute( 'src' );
+	},
+
+	/**
+	 * Set the primary images in slide and collection based on
+	 * given image source.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param {string} source The new image source.
+	 */
+	setPrimaryImage( source = '' ) {
+		if ( ! source ) {
+			source = hqfw.photoSlider.primaryImageSrc;
+		}
+
+		const sliderElem = hqfw.photoSlider.sliderElem;
+		const primarySlideImageElem = sliderElem.querySelector( '.hqfw-photo-slider__image-primary' );
+		if ( primarySlideImageElem ) {
+			primarySlideImageElem.setAttribute( 'src', source );
+
+			const primarySlideZoomImageElem = primarySlideImageElem.nextElementSibling;
+			if ( primarySlideZoomImageElem ) {
+				primarySlideZoomImageElem.setAttribute( 'src', source );
+				primarySlideZoomImageElem.addEventListener( 'load', function() {
+					jQuery( primarySlideZoomImageElem ).css( 'width', primarySlideZoomImageElem.naturalWidth + 'px' );
+					jQuery( primarySlideZoomImageElem ).css( 'height', primarySlideZoomImageElem.naturalHeight + 'px' );
+				} );
+			}
+		}
+
+		const primaryCollectionImageElem = document.querySelector( '.hqfw-photo-slider__collection__image-primary' );
+		if ( primaryCollectionImageElem ) {
+			primaryCollectionImageElem.setAttribute( 'src', source );
+		}
+	},
+
+	/**
+	 * Set the all the slider slide div height and width based
+	 * on the image primary.
+	 *
+	 * @since 1.0.0
+	 */
+	setSlideSize() {
+		const sliderElem = hqfw.photoSlider.sliderElem;
+		const slideElems = sliderElem.querySelectorAll( '.hqfw-photo-slider__slide' );
+		if ( ! slideElems ) {
+			return;
+		}
+
+		const primarySlideElem = slideElems[ 0 ];
+		const primaryImage = primarySlideElem.querySelector( '.hqfw-photo-slider__image-primary' );
+		if ( ! primaryImage ) {
+			return;
+		}
+
+		primaryImage.addEventListener( 'load', function() {
+			const height = ( primaryImage.height < 350 ? 350 : primaryImage.height );
+			slideElems.forEach( function( slideElem ) {
+				slideElem.style.height = `${ height }px`;
+			} );
+		} );
+	},
+
+	/**
+	 * Zoom in the image on mouse enter event.
+	 *
+	 * @since 1.0.0
+	 */
+	enableImageZoom() {
 		jQuery( '.hqfw-image-zoom' ).zoom();
 	},
 
@@ -256,14 +373,9 @@ hqfw.photoSlider = {
 	 * Move the slides.
 	 *
 	 * @since 1.0.0
-	 * 
-	 * @param  {object}  sliderElem  The slider element.
 	 */
-	move( sliderElem ) {
-		if ( ! sliderElem ) {
-			return;
-		}
-
+	moveSlide() {
+		const sliderElem = hqfw.photoSlider.sliderElem;
 		const sliderWidth = sliderElem.offsetWidth;
 		const currentSlide = parseInt( sliderElem.getAttribute( 'data-current-slide' ) );
 		const sliderContainerElem = sliderElem.querySelector( '.hqfw-photo-slider__container' );
@@ -280,6 +392,72 @@ hqfw.photoSlider = {
 	},
 
 	/**
+	 * Move the slides to primary image.
+	 *
+	 * @since 1.0.0
+	 */
+	moveSlideToPrimary() {
+		const sliderElem = hqfw.photoSlider.sliderElem;
+		sliderElem.setAttribute( 'data-current-slide', 0 );
+		hqfw.photoSlider.setPrimaryImage();
+		hqfw.photoSlider.moveSlide();
+	},
+
+	/**
+	 * Move the slides based on the image_id.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param
+	 */
+	/**
+	 * Move the slides based on the image_id.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param {integer} imageId     The target image id.
+	 * @param {string}  imageSource The image url
+	 */
+	moveSlideByImageId( imageId, imageSource ) {
+		if ( ! imageId || ! imageSource ) {
+			return;
+		}
+
+		const sliderElem = hqfw.photoSlider.sliderElem;
+		const slideElems = sliderElem.querySelectorAll( '.hqfw-photo-slider__slide' );
+		if ( ! slideElems ) {
+			return;
+		}
+
+		const imageIds = Array.from( slideElems ).map( function( slideElem ) {
+			return parseInt( slideElem.getAttribute( 'data-image_id' ) );
+		} );
+
+		if ( ! imageIds ) {
+			return;
+		}
+
+		const currentSlide = imageIds.indexOf( imageId );
+		// Move slide based on the current slide.
+		if ( currentSlide !== -1 ) {
+			// If the target slide is primary then set primary
+			// image source to the default image source.
+			if ( imageIds[ 0 ] === imageId ) {
+				hqfw.photoSlider.setPrimaryImage();
+			}
+		}
+
+		// Move slide to the primary slide and change the
+		// primary slide and collection image source.
+		if ( currentSlide === -1 ) {
+			hqfw.photoSlider.setPrimaryImage( imageSource );
+		}
+
+		sliderElem.setAttribute( 'data-current-slide', ( currentSlide === -1 ? 0 : currentSlide ) );
+		hqfw.photoSlider.moveSlide();
+	},
+
+	/**
 	 * Holds the previous and next navigation controller event.
 	 *
 	 * @since 1.0.0
@@ -288,19 +466,13 @@ hqfw.photoSlider = {
 		hqfw.fn.eventListener( 'click', '.hqfw-js-photo-slider-controller', function( e ) {
 			const target = e.target;
 			const event = target.getAttribute( 'data-event' );
-			const slider = target.getAttribute( 'data-slider' );
-			if ( ! [ 'prev', 'next' ].includes( event ) || ! slider ) {
+			if ( ! [ 'prev', 'next' ].includes( event ) ) {
 				return;
 			}
 
-			const sliderElem = document.getElementById( slider );
-			if ( ! sliderElem ) {
-				return;
-			}
-
-
-			let totalSlides = sliderElem.querySelectorAll( '.hqfw-photo-slider__container .hqfw-photo-slider__slide' ).length;
-			let currentSlide = parseInt( sliderElem.getAttribute( 'data-current-slide' ) );
+			const sliderElem = hqfw.photoSlider.sliderElem;
+			const totalSlides = sliderElem.querySelectorAll( '.hqfw-photo-slider__slide' ).length;
+			const currentSlide = parseInt( sliderElem.getAttribute( 'data-current-slide' ) );
 			let updatedSlideValue = currentSlide;
 			switch ( event ) {
 				case 'prev':
@@ -312,8 +484,8 @@ hqfw.photoSlider = {
 			}
 
 			sliderElem.setAttribute( 'data-current-slide', updatedSlideValue );
-			hqfw.photoSlider.move( sliderElem );
-		});
+			hqfw.photoSlider.moveSlide();
+		} );
 	},
 
 	/**
@@ -325,21 +497,127 @@ hqfw.photoSlider = {
 		hqfw.fn.eventListener( 'click', '.hqfw-js-photo-slider-shortcut', function( e ) {
 			const target = e.target;
 			const state = target.getAttribute( 'data-state' );
-			const slider = target.getAttribute( 'data-slider' );
 			const slide = parseInt( target.getAttribute( 'data-slide' ) );
-			if ( state !== 'default' || ! slider || isNaN( slide ) ) {
-				return;
-			}	
-
-			const sliderElem = document.getElementById( slider );
-			if ( ! sliderElem ) {
+			if ( state !== 'default' || isNaN( slide ) ) {
 				return;
 			}
-			
+
+			const sliderElem = hqfw.photoSlider.sliderElem;
 			sliderElem.setAttribute( 'data-current-slide', slide );
-			hqfw.photoSlider.move( sliderElem );
-		});
+			hqfw.photoSlider.moveSlide();
+		} );
 	},
+};
+
+/**
+ * Holds variation component.
+ *
+ * @since 1.0.0
+ *
+ * @type {Object}
+ */
+hqfw.variation = {
+
+	/**
+	 * Holds variation form element.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @type {Object}
+	 */
+	variationFormElem: null,
+
+	/**
+	 * Initialize.
+	 *
+	 * @since 1.0.0
+	 */
+	init() {
+		if ( ! this.setVariationForm() ) {
+			return;
+		}
+
+		this.form();
+		this.variationIdInputListener();
+		this.variatioWrapListener();
+	},
+
+	/**
+	 * Set the variation form element property.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return {boolean} Check if the .variations_form has found.
+	 */
+	setVariationForm() {
+		const viewerElem = document.getElementById( 'hqfw-js-viewer-content' );
+		if ( ! viewerElem ) {
+			return;
+		}
+
+		const variationFormElem = viewerElem.querySelector( '.variations_form' );
+		if ( ! variationFormElem ) {
+			return;
+		}
+
+		hqfw.variation.variationFormElem = variationFormElem;
+		return true;
+	},
+
+	setPhotoSlider() {
+
+	},
+
+	/**
+	 * Holds the variation form event.
+	 *
+	 * @since 1.0.0
+	 */
+	form() {
+		jQuery( hqfw.variation.variationFormElem ).wc_variation_form();
+	},
+
+	/**
+	 * Watch the variation id input dropdown change value.
+	 *
+	 * @since 1.0.0
+	 */
+	variationIdInputListener() {
+		const variationFormElem = hqfw.variation.variationFormElem;
+		const variationIdFormElem = variationFormElem.querySelector( 'input[name="variation_id"]' );
+		if ( ! variationIdFormElem ) {
+			return;
+		}
+
+		jQuery( variationFormElem ).on( 'woocommerce_variation_select_change', function() {
+			setTimeout( function() {
+				const variationId = variationIdFormElem.value;
+				if ( ! variationId ) {
+					// Move the photo slider to primary image.
+					hqfw.photoSlider.moveSlideToPrimary();
+				}
+			}, 200 );
+		} );
+	},
+
+	/**
+	 * Watch the variation form if there's a new selected variation.
+	 *
+	 * @since 1.0.0
+	 */
+	variatioWrapListener() {
+		const variationFormElem = hqfw.variation.variationFormElem;
+		const variationWrapElem = variationFormElem.querySelector( '.single_variation_wrap' );
+		if ( ! variationWrapElem ) {
+			return;
+		}
+
+		jQuery( variationWrapElem ).on( 'show_variation', function( event, variation ) {
+			// Move photo slider based on the image id and source.
+			hqfw.photoSlider.moveSlideByImageId( variation.image_id, variation.image.full_src );
+		} );
+	},
+
 };
 
 /**
@@ -353,7 +631,7 @@ hqfw.quickView = {
 	 * Holds all product id.
 	 *
 	 * @since 1.0.0
-	 * 
+	 *
 	 * @type {Array}
 	 */
 	productIds: [],
@@ -366,6 +644,7 @@ hqfw.quickView = {
 	init() {
 		this.setProductIds();
 		this.show();
+		this.close();
 		this.navigation();
 	},
 
@@ -389,7 +668,7 @@ hqfw.quickView = {
 					hqfw.quickView.productIds.push( productId );
 				}
 			}
-		});
+		} );
 	},
 
 	/**
@@ -397,16 +676,16 @@ hqfw.quickView = {
 	 * the current id viewed.
 	 *
 	 * @since 1.0.0
-	 * 
-	 * @param  {integer}  productId  The current product id viewed.
-	 * @return {object}
+	 *
+	 * @param {integer} productId The current product id viewed.
+	 * @return {Object}
 	 */
 	getProductIdAdjacent( productId ) {
 		const ids = hqfw.quickView.productIds;
 		const idsCount = ids.length;
 		const data = {
 			prevId: 0,
-			nextId: 0
+			nextId: 0,
 		};
 
 		if ( ! productId || idsCount <= 1 ) {
@@ -414,12 +693,12 @@ hqfw.quickView = {
 		}
 
 		const idIndex = ids.indexOf( productId );
-		if ( idIndex === -1  ) {
+		if ( idIndex === -1 ) {
 			return data;
 		}
 
 		data.prevId = ( idIndex > 0 ? ids[ idIndex - 1 ] : ids[ idsCount - 1 ] );
-		data.nextId = ( idIndex < ( idsCount - 1 ) ? ids[ idIndex + 1 ] : ids[0] );
+		data.nextId = ( idIndex < ( idsCount - 1 ) ? ids[ idIndex + 1 ] : ids[ 0 ] );
 		return data;
 	},
 
@@ -427,8 +706,8 @@ hqfw.quickView = {
 	 * Set the modal state.
 	 *
 	 * @since 1.0.0
-	 * 
-	 * @param  {string}  state  The state of the modal |show|hide.
+	 *
+	 * @param {string} state The state of the modal |show|hide.
 	 */
 	setModalState( state ) {
 		const modalElem = document.getElementById( 'hqfw-js-modal' );
@@ -441,10 +720,10 @@ hqfw.quickView = {
 
 		switch ( state ) {
 			case 'show':
-				modalElem.setAttribute( 'data-state',  'show' );
+				modalElem.setAttribute( 'data-state', 'show' );
 				break;
 			case 'hide':
-				modalElem.setAttribute( 'data-state',  'hide' );
+				modalElem.setAttribute( 'data-state', 'hide' );
 				break;
 		}
 	},
@@ -454,8 +733,8 @@ hqfw.quickView = {
 	 * state and product id.
 	 *
 	 * @since 1.0.0
-	 * 
-	 * @param {integer}  productId  The current product id viewed.
+	 *
+	 * @param {integer} productId The current product id viewed.
 	 */
 	setNavigationProperties( productId ) {
 		if ( ! productId ) {
@@ -492,11 +771,11 @@ hqfw.quickView = {
 			// Set modal state to show.
 			hqfw.quickView.setModalState( 'show' );
 
-			const res = await hqfw.fn.fetch({
+			const res = await hqfw.fn.fetch( {
 				nonce: hqfwLocal.nonce.getProductContent,
 				action: 'hqfw_get_product_content',
-				productId: productId
-			});
+				productId,
+			} );
 
 			if ( res.success === true ) {
 				if ( res.data.response === 'SUCCESSFULLY_RETRIEVED' ) {
@@ -506,13 +785,26 @@ hqfw.quickView = {
 					viewerProductElem.innerHTML = res.data.content;
 					viewerElem.setAttribute( 'data-state', 'default' );
 
-					// Refresh image zoom.
-					hqfw.photoSlider.imageZoom();
+					// Initialize photo slider.
+					hqfw.photoSlider.init();
+
+					// Initialize variation form.
+					hqfw.variation.init();
 				}
 			} else {
 				hqfw.prompt.errorMessage( res.data.error );
 			}
-		});
+		} );
+	},
+
+	/**
+	 * Hide the quick view modal.
+	 */
+	close() {
+		hqfw.fn.eventListener( 'click', '.hqfw-js-close-modal', function() {
+			// Set modal state to show.
+			hqfw.quickView.setModalState( 'hide' );
+		} );
 	},
 
 	/**
@@ -531,8 +823,8 @@ hqfw.quickView = {
 
 			// Set navigation properties.
 			hqfw.quickView.setNavigationProperties( productId );
-		});
-	}
+		} );
+	},
 };
 
 /**
@@ -561,10 +853,5 @@ hqfw.domReady = {
 };
 
 hqfw.domReady.execute( function() {
-	hqfw.photoSlider.init();
 	hqfw.quickView.init();
-
-	/**const form = document.querySelector( '.variations_form' );
-	const variations = form.getAttribute( 'data-product_variations' );
-	console.log( JSON.parse( variations ) );**/
 } );
