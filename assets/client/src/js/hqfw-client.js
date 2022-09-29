@@ -107,6 +107,22 @@ hqfw.fn = {
 	},
 
 	/**
+	 * Return the image name from an image source path.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @params {string} imagePath The full path of the image.
+	 * @return {string} The name of the image.
+	 */
+	getImageName( imagePath ) {
+		if ( ! imagePath ) {
+			return;
+		}
+
+		return imagePath.split( '/' ).pop();
+	},
+
+	/**
 	 * Check if the element animation is done or into end.
 	 *
 	 * @since 1.0.0
@@ -120,7 +136,7 @@ hqfw.fn = {
 				resolve( false );
 			}
 
-			element.addEventListener( 'animationend', function() {
+			element.addEventListener( 'animationend', function( e ) {
 				resolve( true );
 			} );
 		} );
@@ -170,6 +186,41 @@ hqfw.fn = {
 		elements.forEach( function( element ) {
 			element.remove();
 		} );
+	},
+
+	/**
+	 * Enable the document fullscreen.
+	 *
+	 * @since 1.0.0
+	 */
+	enableFullScreen() {
+	 	const documentElem = document.documentElement;
+	 	if ( documentElem.requestFullscreen ) {
+	 		documentElem.requestFullscreen();
+	 	} else if ( documentElem.mozRequestFullScreen ) {
+	 		documentElem.mozRequestFullScreen();
+	 	} else if ( documentElem.webkitRequestFullscreen ) {
+	 		documentElem.webkitRequestFullscreen();
+	 	} else if ( documentElem.msRequestFullscreen ) {
+	 		documentElem.msRequestFullscreen();
+	 	}
+	},
+
+	/**
+	 * Disable the document fullscreen.
+	 *
+	 * @since 1.0.0
+	 */
+	disableFullScreen() {
+		if ( document.fullscreenElement ) {
+		 	if ( document.exitFullscreen ) {
+		 		document.exitFullscreen();
+		 	} else if ( document.mozCancelFullScreen ) {
+		 		document.mozCancelFullScreen();
+		 	} else if ( document.webkitExitFullscreen ) {
+		 		document.webkitExitFullscreen();
+		 	}
+	 	}
 	},
 };
 
@@ -256,47 +307,69 @@ hqfw.photoSlider = {
 	 * @since 1.0.0
 	 */
 	init() {
-		if ( ! this.setSlider() ) {
+		if ( ! this.constructor() ) {
 			return;
 		}
 
-		this.setPrimaryImageSrc();
 		this.setSlideSize();
 		this.enableImageZoom();
 		this.navigationController();
 		this.shortcutController();
+		this.screenResize();
 	},
 
 	/**
-	 * Set the slider element property.
+	 * Constructor.
 	 *
 	 * @since 1.0.0
-	 *
-	 * @return {boolean} Check if the slider element has found.
 	 */
-	setSlider() {
-		const sliderElem = document.getElementById( 'hqfw-js-photo-slider' );
-		if ( ! sliderElem ) {
-			return;
+	constructor() {
+		// Set sliderElem property.
+		if ( ! this.setSliderElemProperty() ) {
+			return false;
 		}
 
-		hqfw.photoSlider.sliderElem = sliderElem;
+		// Set primaryImageSrc property.
+		if ( ! this.setPrimaryImageElemProperty() ) {
+			return false;
+		}
+
 		return true;
 	},
 
 	/**
-	 * Set the primary image property its source.
+	 * Set the value of property sliderElem.
 	 *
 	 * @since 1.0.0
+	 *
+	 * @return {boolean} Check if the property has a value.
 	 */
-	setPrimaryImageSrc() {
+	setSliderElemProperty() {
+		const sliderElem = document.getElementById( 'hqfw-js-photo-slider' );
+		if ( sliderElem ) {
+			hqfw.photoSlider.sliderElem = sliderElem;
+			return true;
+		}
+		
+		return false;
+	},
+
+	/**
+	 * Set the value of property primaryImageElem.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return {boolean} Check if the property has a value.
+	 */
+	setPrimaryImageElemProperty() {
 		const sliderElem = hqfw.photoSlider.sliderElem;
 		const primaryImageElem = sliderElem.querySelector( '.hqfw-photo-slider__image-primary' );
-		if ( ! primaryImageElem ) {
-			return;
+		if ( primaryImageElem ) {
+			hqfw.photoSlider.primaryImageSrc = primaryImageElem.src;
+			return true;
 		}
 
-		hqfw.photoSlider.primaryImageSrc = primaryImageElem.getAttribute( 'src' );
+		return false;
 	},
 
 	/**
@@ -352,12 +425,65 @@ hqfw.photoSlider = {
 			return;
 		}
 
+		const width = window.innerWidth;
+
+		// OnResize.
+		let height = primaryImage.height;
+		if ( width > 992 ) {
+			height = ( height < 350 ? 350 : height );
+		}
+
+		slideElems.forEach( function( slideElem ) {
+			slideElem.style.height = `${ height }px`;
+		} );
+
+		// OnLoad.
 		primaryImage.addEventListener( 'load', function() {
-			const height = ( primaryImage.height < 350 ? 350 : primaryImage.height );
+			height = primaryImage.height;
+			if ( width > 992 ) {
+				height = ( height < 350 ? 350 : height );
+			}
+			
 			slideElems.forEach( function( slideElem ) {
 				slideElem.style.height = `${ height }px`;
 			} );
 		} );
+	},
+
+	/**
+	 * Get image source url and name of the current active
+	 * image in the slider.
+	 *
+	 * @since 1.0.0
+	 * 
+	 * @return {Object} Image url source and name.
+	 */
+	getCurrentImage() {
+		const sliderElem = hqfw.photoSlider.sliderElem;
+		const currentSlide = sliderElem.getAttribute( 'data-current-slide' );
+		if ( currentSlide === '' ) {
+			return;
+		}
+
+		const slideElems = sliderElem.querySelectorAll( '.hqfw-photo-slider__slide' );
+		if ( ! slideElems ) {
+			return;
+		}
+
+		const currentSlideElem = slideElems[ currentSlide ];
+		if ( ! currentSlideElem ) {
+			return;
+		}
+
+		const imageElem = currentSlideElem.querySelector( 'img' );
+		if ( ! imageElem ) {
+			return;
+		}
+
+		return {
+			source: imageElem.src,
+			title: imageElem.getAttribute( 'alt' )
+		};
 	},
 
 	/**
@@ -507,6 +633,274 @@ hqfw.photoSlider = {
 			hqfw.photoSlider.moveSlide();
 		} );
 	},
+
+	/**
+	 * Window screen resize event.
+	 *
+	 * @since 1.0.0
+	 */
+	screenResize() {
+		window.addEventListener( 'resize', function() {
+			hqfw.photoSlider.setSlideSize();
+		});
+	}
+};
+
+/**
+ * Holds the photo box component.
+ *
+ * @since 1.0.0
+ * 
+ * @type {Object}
+ */
+hqfw.photoBox = {
+
+	/**
+	 * Holds modal element.
+	 *
+	 * @since 1.0.0
+	 * 
+	 * @type {element}
+	 */
+	modalElem: null,
+
+	/**
+	 * Initialize.
+	 *
+	 * @since 1.0.0
+	 */
+	init() {
+		if ( ! this.constructor() ) {
+			return;
+		}
+
+		this.openModal();
+		this.closeModal();
+		this.keyPressCloseModal();
+		this.toggleFullScreen();
+		this.keyPressExitFullScreen();
+		this.screenResize();
+	},
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 1.0.0
+	 */
+	constructor() {
+		// Set modalElem property.
+		if ( ! this.setModalElemProperty() ) {
+			return false;
+		}
+
+		return true;
+	},
+
+	/**
+	 * Set the value of property modalElem.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return {boolean} Check if the property has a value.
+	 */
+	setModalElemProperty() {
+		const modalElem = document.getElementById( 'hqfw-js-photobox-viewer' );
+		if ( modalElem ) {
+			hqfw.photoBox.modalElem = modalElem;
+			return true;
+		}
+
+		return false;
+	},
+
+	/**
+	 * Get the current state of the modal or component.
+	 *
+	 * @since 1.0.0
+	 * 
+	 * @return {string} The current state.
+	 */
+	getState() {
+		return hqfw.photoBox.modalElem.getAttribute( 'data-state' );
+	},
+
+	/**
+	 * Set the image size.
+	 *
+	 * @since 1.0.0
+	 */
+	setImageSize() {
+		if ( hqfw.photoBox.getState() !== 'show' ) {
+			return;
+		}
+
+		const bodyElem = document.querySelector( '.hqfw-photobox-viewer__body' );
+		if ( ! bodyElem ) {
+			return;
+		}
+
+		const imageElem = document.getElementById( 'hqfw-js-photobox-viewer-image' );
+		if ( ! imageElem ) {
+			return;
+		}
+
+		let bodyHeight = bodyElem.offsetHeight;
+		let imageHeight = imageElem.naturalHeight;
+		imageHeight = ( imageHeight > bodyHeight ? bodyHeight : imageHeight );
+		imageElem.style.maxHeight = `${ imageHeight }px`;
+	},
+
+	/**
+	 * Hide the photo box viewier modal.
+	 *
+	 * @since 1.0.0
+	 */
+	hideModal() {
+		const modalElem = hqfw.photoBox.modalElem;
+		const modalState = modalElem.getAttribute( 'data-state' );
+		if ( modalState !== 'show' ) {
+			return;
+		}
+
+		hqfw.fn.disableFullScreen();
+		modalElem.setAttribute( 'data-state', 'hide' );
+	},
+
+	/**
+	 * Opem the photo box viewer modal
+	 *
+	 * @since 1.0.0
+	 */
+	openModal() {
+		hqfw.fn.eventListener( 'click', '#hqfw-js-photobox-trigger-btn', function( e ) {
+			const image = hqfw.photoSlider.getCurrentImage();
+			if ( ! image ) {
+				return;
+			}
+
+			const modalElem = hqfw.photoBox.modalElem;
+			const imageElem = document.getElementById( 'hqfw-js-photobox-viewer-image' );
+			if ( ! imageElem ) {
+				return;
+			}
+
+			const captionElem = document.getElementById( 'hqfw-js-photobox-viewer-caption' );
+			if ( ! captionElem ) {
+				return;
+			}
+
+			const fullScreenBtnElem = document.getElementById( 'hqfw-js-photobox-fullscreen-btn' );
+			if ( fullScreenBtnElem ) {
+				fullScreenBtnElem.setAttribute( 'data-event', 'show' );
+				fullScreenBtnElem.setAttribute( 'aria-label', 'Fullscreen' );
+				fullScreenBtnElem.setAttribute( 'title', 'Fullscreen' );
+			}
+
+			const imageName = hqfw.fn.getImageName( image.source );
+			imageElem.setAttribute( 'src', image.source );
+			imageElem.setAttribute( 'alt', image.title );
+			imageElem.setAttribute( 'title', image.title );
+			captionElem.textContent = ( ! image.title ? imageName : image.title );
+			modalElem.setAttribute( 'data-state', 'show' );
+			imageElem.addEventListener( 'load', function() {
+				// Set image size.
+				hqfw.photoBox.setImageSize();
+			});
+		});
+	},
+
+	/**
+	 * Close the photo box viewer moda via click event.
+	 *
+	 * @since 1.0.0
+	 */
+	closeModal() {
+		hqfw.fn.eventListener( 'click', '#hqfw-js-photobox-close-btn', function() {
+			hqfw.photoBox.hideModal();
+		});
+	},
+
+	/**
+	 * Close photo box viewer by key press (ESC) event.
+	 *
+	 * @since 1.0.0
+	 */
+	keyPressCloseModal() {
+		document.addEventListener( 'keydown', function( e ) {
+			if ( e.key === 'Escape' ) {
+				setTimeout( function() {
+					hqfw.photoBox.hideModal();
+				}, 300 );
+			}
+		});
+	},
+
+	/**
+	 * Toggle document full screen depeneds on the current event.
+	 *
+	 * @since 1.0.0
+	 */
+	toggleFullScreen() {
+		hqfw.fn.eventListener( 'click', '#hqfw-js-photobox-fullscreen-btn', function( e ) {
+			const target = e.target
+			const event = target.getAttribute( 'data-event' );
+			if ( ! [ 'show', 'exit' ].includes( event ) ) {
+				return;
+			}
+
+			if ( event === 'show' ) {
+				hqfw.fn.enableFullScreen();
+			}
+
+			if ( event === 'exit' ) {
+				hqfw.fn.disableFullScreen();
+			}
+
+			const latestEvent = ( event === 'show' ? 'exit' : 'show' );
+			const latestLabel = ( event === 'show' ? 'Fullscreen Exit' : 'Fullscreen' );
+			target.setAttribute( 'data-event', latestEvent );
+			target.setAttribute( 'aria-label', latestLabel );
+			target.setAttribute( 'title', latestLabel );
+
+			// Set image size.
+			hqfw.photoBox.setImageSize();
+		});
+	},
+
+	/**
+	 * Fire key event using (Esc) key during leaving fullscreen mode.
+	 *
+	 * @since 1.0.0
+	 */
+	keyPressExitFullScreen() {
+		document.addEventListener( 'fullscreenchange', hqfw.photoBox.exitFullScreenHandler() );
+		document.addEventListener( 'webkitfullscreenchange', hqfw.photoBox.exitFullScreenHandler()) ;
+		document.addEventListener( 'mozfullscreenchange', hqfw.photoBox.exitFullScreenHandler() );
+		document.addEventListener( 'MSFullscreenChange', hqfw.photoBox.exitFullScreenHandler() );
+	},
+
+	/**
+	 * Exit fullscreen mode event handler.
+	 *
+	 * @since 1.0.0
+	 */
+	exitFullScreenHandler() {
+		if ( ! document.fullscreenElement && ! document.webkitIsFullScreen && ! document.mozFullScreen && ! document.msFullscreenElement ) {
+			//alert();
+		}
+	},
+
+	/**
+	 * Screen resize event.
+	 *
+	 * @since 1.0.0
+	 */
+	screenResize() {
+		window.addEventListener( 'resize', function() {
+			// Set image size.
+			hqfw.photoBox.setImageSize();
+		});
+	},
 };
 
 /**
@@ -533,13 +927,27 @@ hqfw.variation = {
 	 * @since 1.0.0
 	 */
 	init() {
-		if ( ! this.setVariationForm() ) {
+		if ( ! this.constructor() ) {
 			return;
 		}
 
 		this.form();
 		this.variationIdInputListener();
 		this.variatioWrapListener();
+	},
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 1.0.0
+	 */
+	constructor() {
+		// Set variation form.
+		if ( ! this.setVariationForm() ) {
+			return false;
+		}
+
+		return true;
 	},
 
 	/**
@@ -552,20 +960,16 @@ hqfw.variation = {
 	setVariationForm() {
 		const viewerElem = document.getElementById( 'hqfw-js-viewer-content' );
 		if ( ! viewerElem ) {
-			return;
+			return false;
 		}
 
 		const variationFormElem = viewerElem.querySelector( '.variations_form' );
 		if ( ! variationFormElem ) {
-			return;
+			return false;
 		}
 
 		hqfw.variation.variationFormElem = variationFormElem;
 		return true;
-	},
-
-	setPhotoSlider() {
-
 	},
 
 	/**
@@ -595,6 +999,9 @@ hqfw.variation = {
 				if ( ! variationId ) {
 					// Move the photo slider to primary image.
 					hqfw.photoSlider.moveSlideToPrimary();
+
+					// Update the product summary height.
+					hqfw.quickView.setProductSummaryBodyHeight();
 				}
 			}, 200 );
 		} );
@@ -615,9 +1022,11 @@ hqfw.variation = {
 		jQuery( variationWrapElem ).on( 'show_variation', function( event, variation ) {
 			// Move photo slider based on the image id and source.
 			hqfw.photoSlider.moveSlideByImageId( variation.image_id, variation.image.full_src );
+
+			// Update the product summary height.
+			hqfw.quickView.setProductSummaryBodyHeight();
 		} );
 	},
-
 };
 
 /**
@@ -637,15 +1046,120 @@ hqfw.quickView = {
 	productIds: [],
 
 	/**
+	 * Holds the modal element.
+	 *
+	 * @since 1.0.0
+	 * 
+	 * @type {element}
+	 */
+	modalElem: null,
+
+	/**
+	 * Holds the content viewer element.
+	 *
+	 * @since 1.0.0
+	 * 
+	 * @type {element}
+	 */
+	viewerElem: null,
+
+	/**
 	 * Initialize.
 	 *
 	 * @since 1.0.0
 	 */
 	init() {
+		if ( ! this.constructor() ) {
+			return;
+		}
+
+		this.openModal();
+		this.closeModal();
+		this.autoCloseModal();
+		this.keyPressCloseModal();
+		this.slideNavigation();
+		this.screenResize();
+	},
+
+	/**
+	 * Constructor.
+	 *
+	 * @since 1.0.0
+	 */
+	constructor() {
+		// Set modalElem property.
+		if ( ! this.setModalElemProperty() ) {
+			return false;
+		}
+
+		// Set viewerElem property.
+		if ( ! this.setViewerElemProperty() ) {
+			return false;
+		}
+
+		// Set viewerProductElem property.
+		if ( ! this.setViewerProductElem() ) {
+			return false;
+		}
+
+		// Set productIds property.
 		this.setProductIds();
-		this.show();
-		this.close();
-		this.navigation();
+
+		// Set slide navigation visibility.
+		this.setSlideNavigationVisibility();
+
+		return true;
+	},
+
+	/**
+	 * Set the value of property modalElem.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return {boolean} Check if the property has a value.
+	 */
+	setModalElemProperty() {
+		const modalElem = document.getElementById( 'hqfw-js-modal' );
+		if ( modalElem ) {
+			hqfw.quickView.modalElem = modalElem;
+			return true;
+		}
+
+		return false;
+	},
+
+	/**
+	 * Set the value of property viewerElem.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return {boolean} Check if the property has a value.
+	 */
+	setViewerElemProperty() {
+		const viewerElem = document.getElementById( 'hqfw-js-viewer-content' );
+		if ( viewerElem ) {
+			hqfw.quickView.viewerElem = viewerElem;
+			return true;
+		}
+		
+		return false;
+	},
+
+	/**
+	 * Set the value of property viewerProductElem.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @return {boolean} Check if the property has a value.
+	 */
+	setViewerProductElem() {
+		const viewerProductElem = document.getElementById( 'hqfw-js-viewer-product' );
+		if ( viewerProductElem ) {
+			hqfw.quickView.viewerProductElem = viewerProductElem;
+			return true;
+		}
+		
+		return false;
 	},
 
 	/**
@@ -669,6 +1183,65 @@ hqfw.quickView = {
 				}
 			}
 		} );
+	},
+
+	/**
+	 * Set the height of product summary section.
+	 *
+	 * @since 1.0.0
+	 */
+	setProductSummaryBodyHeight() {
+		if ( window.innerWidth <= 992 ) {
+			return;
+		}
+
+		const viewerProductElem = hqfw.quickView.viewerElem;
+		const galleryElem = viewerProductElem.querySelector( '.hqfw-product__gallery' );
+		if ( ! galleryElem ) {
+			return;
+		}
+
+		const summaryBodyElem = viewerProductElem.querySelector( '.hqfw-product__summary__body' );
+		if ( ! summaryBodyElem ) {
+			return;
+		}
+
+		let headHeight = 0;
+		const summaryHeadElem = viewerProductElem.querySelector( '.hqfw-product__summary__head' );
+		if ( summaryHeadElem ) {
+			headHeight = summaryHeadElem.offsetHeight;
+		} 
+
+		setTimeout( function() {
+			const galleryHeight = galleryElem.clientHeight;
+			summaryBodyElem.style.maxHeight = `${( galleryHeight - headHeight )}px`;
+		}, 300 );
+	},
+
+	/**
+	 * Set the product viewer height in mobile state.
+	 *
+	 * @since 1.0.0
+	 */
+	setProductViewerMobileHeight() {
+		const modalElem = hqfw.quickView.modalElem;
+		const modalState = modalElem.getAttribute( 'data-state' );
+		if ( modalState !== 'show' ) {
+			return;
+		}
+
+		const productViewerElem = modalElem.querySelector( '.hqfw-product' );
+		if ( ! productViewerElem ) {
+			return;
+		}
+
+		const width = window.innerWidth;
+		const height = window.innerHeight;
+		if ( width <= 992 && height <= 850 ) {
+			productViewerElem.style.height = `${( height - 40 )}px`;
+		} else {
+			productViewerElem.style.height = 'auto';
+		}
 	},
 
 	/**
@@ -703,40 +1276,14 @@ hqfw.quickView = {
 	},
 
 	/**
-	 * Set the modal state.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param {string} state The state of the modal |show|hide.
-	 */
-	setModalState( state ) {
-		const modalElem = document.getElementById( 'hqfw-js-modal' );
-		const viewerContentElem = document.getElementById( 'hqfw-js-viewer-content' );
-		if ( ! modalElem || ! viewerContentElem || ! [ 'show', 'hide' ].includes( state ) ) {
-			return;
-		}
-
-		viewerContentElem.setAttribute( 'data-state', 'loading' );
-
-		switch ( state ) {
-			case 'show':
-				modalElem.setAttribute( 'data-state', 'show' );
-				break;
-			case 'hide':
-				modalElem.setAttribute( 'data-state', 'hide' );
-				break;
-		}
-	},
-
-	/**
-	 * Set the viewer controller navigation attributes
+	 * Set the viewer slide controller navigation attributes
 	 * state and product id.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @param {integer} productId The current product id viewed.
 	 */
-	setNavigationProperties( productId ) {
+	setSlideNavigationProperties( productId ) {
 		if ( ! productId ) {
 			return;
 		}
@@ -753,24 +1300,61 @@ hqfw.quickView = {
 	},
 
 	/**
+	 * Set the viewer slide controller navigation visibility
+	 * based on the number of productIds property.
+	 *
+	 * @since 1.0.0
+	 */
+	setSlideNavigationVisibility() {
+		const totalIds = hqfw.quickView.productIds.length;
+		const state = ( totalIds > 1 ? 'default' : 'hidden' );
+		hqfw.fn.setAttribute( '.hqfw-js-navigation-btn', 'data-state', state );
+	},
+
+	/**
+	 * Hide quick view modal.
+	 *
+	 * @since 1.0.0
+	 */
+	async hideModal() {
+		const modalElem = hqfw.quickView.modalElem;
+		const viewerElem = hqfw.quickView.viewerElem;
+		const modalState = modalElem.getAttribute( 'data-state' );
+		if ( modalState !== 'show' ) {
+			return;
+		} 
+
+		viewerElem.setAttribute( 'data-state', 'hidden' );
+		const isAnimationDone = await hqfw.fn.isAnimationDone( viewerElem );
+		if ( isAnimationDone ) {
+			modalElem.setAttribute( 'data-state', 'hide' );
+		}
+	},
+
+	/**
 	 * Directly opened using the quick view button.
 	 *
 	 * @since 1.0.0
 	 */
-	show() {
+	openModal() {
 		hqfw.fn.eventListener( 'click', '.hqfw-js-quick-view-btn', async function( e ) {
 			const target = e.target;
+			const modalElem = hqfw.quickView.modalElem;
+			const viewerElem = hqfw.quickView.viewerElem;
+			const viewerProductElem = hqfw.quickView.viewerProductElem;
 			const productId = parseInt( target.getAttribute( 'data-product_id' ) );
 			if ( ! productId || isNaN( productId ) ) {
 				return;
 			}
 
 			// Set navigation properties.
-			hqfw.quickView.setNavigationProperties( productId );
+			hqfw.quickView.setSlideNavigationProperties( productId );
 
-			// Set modal state to show.
-			hqfw.quickView.setModalState( 'show' );
+			// Show quick view modal.
+			modalElem.setAttribute( 'data-state', 'show' );
+			viewerElem.setAttribute( 'data-state', 'loading' );
 
+			// Get the product content.
 			const res = await hqfw.fn.fetch( {
 				nonce: hqfwLocal.nonce.getProductContent,
 				action: 'hqfw_get_product_content',
@@ -779,32 +1363,74 @@ hqfw.quickView = {
 
 			if ( res.success === true ) {
 				if ( res.data.response === 'SUCCESSFULLY_RETRIEVED' ) {
-					const viewerElem = document.getElementById( 'hqfw-js-viewer-content' );
-					const viewerProductElem = document.getElementById( 'hqfw-js-viewer-product' );
-
+					// Inject product content.
 					viewerProductElem.innerHTML = res.data.content;
-					viewerElem.setAttribute( 'data-state', 'default' );
+					viewerElem.setAttribute( 'data-state', 'prepare' );
 
 					// Initialize photo slider.
 					hqfw.photoSlider.init();
 
 					// Initialize variation form.
 					hqfw.variation.init();
+
+					// Update the product summary height.
+					hqfw.quickView.setProductSummaryBodyHeight();
+
+					// Show product viewer.
+					setTimeout( function() {
+						viewerElem.setAttribute( 'data-state', 'default' );
+					}, 500 );
+
+					// Resize at mobile state.
+					hqfw.quickView.setProductViewerMobileHeight();
+
+					return;
 				}
 			} else {
 				hqfw.prompt.errorMessage( res.data.error );
 			}
+
+			// Hide modal.
+			modalElem.setAttribute( 'data-state', 'hide' );
 		} );
 	},
 
 	/**
-	 * Hide the quick view modal.
+	 * Close quick view modal via click event.
+	 *
+	 * @since 1.0.0
 	 */
-	close() {
-		hqfw.fn.eventListener( 'click', '.hqfw-js-close-modal', function() {
-			// Set modal state to show.
-			hqfw.quickView.setModalState( 'hide' );
-		} );
+	closeModal() {
+		hqfw.fn.eventListener( 'click', '.hqfw-js-close-modal', async function( e ) {
+			hqfw.quickView.hideModal();
+		});
+	},
+
+	/**
+	 * Close quick view modal after adding to cart event.
+	 *
+	 * @since 1.0.0
+	 */
+	autoCloseModal() {
+		jQuery( 'body' ).on( 'added_to_cart', function() {
+			hqfw.quickView.hideModal();
+		});
+	},
+
+	/**
+	 * Close quick view modal by key press (ESC) event.
+	 *
+	 * @since 1.0.0
+	 */
+	keyPressCloseModal() {
+		document.addEventListener( 'keydown', function( e ) {
+			if ( e.key === 'Escape' ) {
+				// Close first if photobox state is hide.
+				if ( hqfw.photoBox.getState() === 'hide' ) { 
+					hqfw.quickView.hideModal();
+				}
+			}
+		});
 	},
 
 	/**
@@ -812,9 +1438,12 @@ hqfw.quickView = {
 	 *
 	 * @since 1.0.0
 	 */
-	navigation() {
-		hqfw.fn.eventListener( 'click', '.hqfw-js-navigation-btn', function( e ) {
+	slideNavigation() {
+		hqfw.fn.eventListener( 'click', '.hqfw-js-navigation-btn', async function( e ) {
 			const target = e.target;
+			const modalElem = hqfw.quickView.modalElem;
+			const viewerElem = hqfw.quickView.viewerElem;
+			const viewerProductElem = hqfw.quickView.viewerProductElem;
 			const event = target.getAttribute( 'data-event' );
 			const productId = parseInt( target.getAttribute( 'data-product_id' ) );
 			if ( ! [ 'prev', 'next' ].includes( event ) || ! productId || isNaN( productId ) ) {
@@ -822,8 +1451,67 @@ hqfw.quickView = {
 			}
 
 			// Set navigation properties.
-			hqfw.quickView.setNavigationProperties( productId );
+			hqfw.quickView.setSlideNavigationProperties( productId );
+
+			// Set product viewer to loading.
+			viewerElem.setAttribute( 'data-state', 'loading' );
+
+			// Disable navigation button.
+			hqfw.fn.setAttribute( '.hqfw-js-navigation-btn', 'data-state', 'disabled' );
+
+			// Get the product content.
+			const res = await hqfw.fn.fetch( {
+				nonce: hqfwLocal.nonce.getProductContent,
+				action: 'hqfw_get_product_content',
+				productId,
+			} );
+
+			if ( res.success === true ) {
+				if ( res.data.response === 'SUCCESSFULLY_RETRIEVED' ) {
+					// Inject product content.
+					viewerProductElem.innerHTML = res.data.content;
+					viewerElem.setAttribute( 'data-state', 'prepare' );
+
+					// Initialize photo slider.
+					hqfw.photoSlider.init();
+
+					// Initialize variation form.
+					hqfw.variation.init();
+
+					// Update the product summary height.
+					hqfw.quickView.setProductSummaryBodyHeight();
+
+					// Display product viewer.
+					setTimeout( function() {
+						viewerElem.setAttribute( 'data-state', 'display' );
+					}, 500 );
+
+					// Enable navigation button.
+					hqfw.fn.setAttribute( '.hqfw-js-navigation-btn', 'data-state', 'default' );
+
+					// Resize at mobile state.
+					hqfw.quickView.setProductViewerMobileHeight();
+
+					return;
+				}
+			} else {
+				hqfw.prompt.errorMessage( res.data.error );
+			}
+
+			// Hide modal.
+			modalElem.setAttribute( 'data-state', 'hide' );
 		} );
+	},
+
+	/**
+	 * Update the width and height of the product viewer.
+	 *
+	 * @since 1.0.0
+	 */
+	screenResize() {
+		window.addEventListener( 'resize', function() {
+			hqfw.quickView.setProductViewerMobileHeight();
+		});
 	},
 };
 
@@ -853,5 +1541,6 @@ hqfw.domReady = {
 };
 
 hqfw.domReady.execute( function() {
+	hqfw.photoBox.init();
 	hqfw.quickView.init();
 } );

@@ -60,7 +60,7 @@ final class Events {
         }
 
        	$productId = absint( sanitize_text_field( $_POST['productId'] ) );
-       	$product = wc_get_product( $productId );
+       	$product   = wc_get_product( $productId );
        	if ( ! $product ) {
        		wp_send_json_success([
        			'response' => 'PRODUCT_ID_NOT_FOUND',

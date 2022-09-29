@@ -31,6 +31,9 @@ final class Actions {
 
         // Render quick view modal.
         add_action( 'wp_footer', [ $this, 'render_quick_view_modal' ] );
+
+        // Render photobox viewer modal.
+        add_action( 'wp_footer', [ $this, 'render_photo_box_viewer_modal' ] );
     }
 
     /**
@@ -50,5 +53,14 @@ final class Actions {
      */
     public function render_quick_view_modal() {
         echo Helper::render_view( 'component/modal' );
+    }
+
+    /**
+     * Render the photobox viewer modal in wp_footer.
+     *
+     * @since 1.0.0
+     */
+    public function render_photo_box_viewer_modal() {
+        echo Helper::render_view( 'component/photobox-viewer' );
     }
 }

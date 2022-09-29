@@ -34,21 +34,53 @@ final class Content {
      * @since 1.0.0
      */
     public static function generate() {
-
+        // Product gallery.
         add_action( 'hqfw_product_gallery', [ __CLASS__, 'product_image_gallery' ], 5 );
 
-        add_action( 'hqfw_product_summary', 'woocommerce_template_single_title', 5 );
-        add_action( 'hqfw_product_summary', 'woocommerce_template_single_rating', 10 );
-        add_action( 'hqfw_product_summary', 'woocommerce_template_single_price', 15 );
-        add_action( 'hqfw_product_summary', 'woocommerce_template_single_excerpt', 20 );
-        add_action( 'hqfw_product_summary', 'woocommerce_template_single_add_to_cart', 25 );
-        add_action( 'hqfw_product_summary', 'woocommerce_template_single_meta', 30 );
+        // Product gallery slider.
+        add_action( 'hqfw_product_gallery_slider', [ __CLASS__, 'close_button' ], 5 );
+        add_action( 'hqfw_product_gallery_slider', [ __CLASS__, 'photo_box_button' ], 10 );
+        add_action( 'hqfw_product_gallery_slider', 'woocommerce_show_product_sale_flash', 15 );
+
+        // Product summary head.
+        add_action( 'hqfw_product_summary_head', [ __CLASS__, 'close_button' ], 5 );
+
+        // Product summary body.
+        add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_title', 5 );
+        add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_rating', 10 );
+        add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_price', 15 );
+        add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_excerpt', 20 );
+        add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_add_to_cart', 25 );
+        add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_meta', 30 );
     }
 
+    /**
+     * Render the product image gallery.
+     *
+     * @since 1.0.0
+     */
     public static function product_image_gallery() {
         echo Helper::render_view( 'component/product-gallery', [
             'images' => self::get_product_images( get_the_ID() )
         ] );
+    }
+
+    /**
+     * Render the close button.
+     *
+     * @since 1.0.0
+     */
+    public static function close_button() {
+        echo Helper::render_view( 'component/close-button' );
+    }
+
+    /**
+     * Render the photobox button.
+     *
+     * @since 1.0.0
+     */
+    public static function photo_box_button() {
+        echo Helper::render_view( 'component/photobox-button' );
     }
 
     /**

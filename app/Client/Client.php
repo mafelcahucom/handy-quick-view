@@ -110,12 +110,8 @@ final class Client {
             wp_enqueue_script( 'handy-toaster-js' );
         }
 
-        if ( ! wp_script_is( 'zoom' ) ) {
-            wp_register_script( 'zoom', Helper::get_asset_src( 'zoom/jquery.zoom.min.js' ), [], '', true );
-            wp_enqueue_script( 'zoom' );
-        }
-
-        wp_register_script( 'hqfw-client-js', Helper::get_asset_src( 'js/hqfw-client.min.js' ), [], '1.0.0', true );
+        $client_dependency = [ 'jquery', 'wc-add-to-cart-variation', 'zoom' ];
+        wp_register_script( 'hqfw-client-js', Helper::get_asset_src( 'js/hqfw-client.min.js' ), $client_dependency, '1.0.0', true );
         wp_enqueue_script( 'hqfw-client-js' );
 
         // Get settings.
@@ -125,6 +121,10 @@ final class Client {
         wp_localize_script( 'hqfw-client-js', 'hqfwLocal', [
             'crafter' => 'Y35qwbAlyt+y60cldwAatUDyxikpRb30wBPT9Y1Xymk=',
             'url'     => admin_url( 'admin-ajax.php' ),
+            'toaster' => [
+                'isUseToaster' => 1,
+                'duration'     => 3000
+            ],
             'nonce'   => [
                 'getProductContent' => wp_create_nonce( 'hqfw_get_product_content' )
             ]

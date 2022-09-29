@@ -25,6 +25,16 @@ $total_images = count( $args['images'] );
 ?>
 
 <div id="hqfw-js-photo-slider" class="hqfw-photo-slider" data-current-slide="0">
+    <?php
+        /**
+         * HOOK: hqfw_product_gallery_slider.
+         *
+         * @hooked close_button - 5
+         * @hooked photo_box_button - 10
+         * @hooked woocommerce_show_product_sale_flash - 15
+        */
+        do_action( 'hqfw_product_gallery_slider' ); 
+    ?>
     <div class="hqfw-photo-slider__container">
         <?php foreach ( $args['images'] as $key => $value ): ?>
             <?php
@@ -65,6 +75,7 @@ $total_images = count( $args['images'] );
         </ul>
     <?php endif; ?>
 </div>
+
 <?php if ( $total_images > 1 ): ?>
     <ul class="hqfw-photo-slider__collection">
         <?php foreach ( $args['images'] as $key => $value ): ?>
