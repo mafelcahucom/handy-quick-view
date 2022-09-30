@@ -121,6 +121,9 @@ final class Client {
         wp_localize_script( 'hqfw-client-js', 'hqfwLocal', [
             'crafter' => 'Y35qwbAlyt+y60cldwAatUDyxikpRb30wBPT9Y1Xymk=',
             'url'     => admin_url( 'admin-ajax.php' ),
+            'icon'    => [
+                'searchPlus' => Helper::get_icon( 'bs-search-plus' )
+            ],
             'toaster' => [
                 'isUseToaster' => 1,
                 'duration'     => 3000

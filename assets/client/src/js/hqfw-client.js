@@ -1,10 +1,18 @@
 /**
+ * Strict mode.
+ *
+ * @since 1.0.0
+ * 
+ * @author Mafel John Cahucom
+ */
+"use strict";
+
+/**
  * Namespace.
  *
  * @since 1.0.0
  *
  * @type {Object}
- * @author Mafel John Cahucom
  */
 const hqfw = hqfw || {};
 
@@ -284,6 +292,15 @@ hqfw.prompt = {
 hqfw.photoSlider = {
 
 	/**
+	 * Holds the initialize state of this object.
+	 *
+	 * @since 1.0.0
+	 * 
+	 * @type {Boolean}
+	 */
+	isInitialized: false,
+
+	/**
 	 * Holds the photo slider element.
 	 *
 	 * @since 1.0.0
@@ -313,9 +330,12 @@ hqfw.photoSlider = {
 
 		this.setSlideSize();
 		this.enableImageZoom();
-		this.navigationController();
-		this.shortcutController();
-		this.screenResize();
+
+		if ( ! this.hasInitialized() ) {
+			this.navigationController();
+			this.shortcutController();
+			this.screenResize();
+		}
 	},
 
 	/**
@@ -335,6 +355,23 @@ hqfw.photoSlider = {
 		}
 
 		return true;
+	},
+
+	/**
+	 * Check if this object has been already initialize, and also
+	 * it will set the isInitialized property to avoid multiple initialization.
+	 *
+	 * @since 1.0.00
+	 * 
+	 * @return {Boolean} Is object component has been initialized.
+	 */
+	hasInitialized() {
+		const isInitialized = hqfw.photoSlider.isInitialized;
+		if ( isInitialized === false ) {
+			hqfw.photoSlider.isInitialized = true;
+		}
+
+		return isInitialized;
 	},
 
 	/**
@@ -656,6 +693,15 @@ hqfw.photoSlider = {
 hqfw.photoBox = {
 
 	/**
+	 * Holds the state of image zoom.
+	 *
+	 * @since 1.0.0
+	 * 
+	 * @type {Boolean}
+	 */
+	isZoomEnabled: false,
+
+	/**
 	 * Holds modal element.
 	 *
 	 * @since 1.0.0
@@ -663,6 +709,42 @@ hqfw.photoBox = {
 	 * @type {element}
 	 */
 	modalElem: null,
+
+	/**
+	 * Holds viewer body element.
+	 *
+	 * @since 1.0.0
+	 * 
+	 * @type {element}
+	 */
+	bodyElem: null,
+
+	/**
+	 * Holds viewer container element.
+	 *
+	 * @since 1.0.0
+	 * 
+	 * @type {element}
+	 */
+	containerElem: null,
+
+	/**
+	 * Holds viewer caption element.
+	 *
+	 * @since 1.0.0
+	 * 
+	 * @type {element}
+	 */
+	captionElem: null,
+
+	/**
+	 * Holds viewer image element.
+	 *
+	 * @since 1.0.0
+	 * 
+	 * @type {element}
+	 */
+	imageElem: null,
 
 	/**
 	 * Initialize.
@@ -688,8 +770,8 @@ hqfw.photoBox = {
 	 * @since 1.0.0
 	 */
 	constructor() {
-		// Set modalElem property.
-		if ( ! this.setModalElemProperty() ) {
+		// Set all element properties.
+		if ( ! this.setElementProperties() ) {
 			return false;
 		}
 
@@ -697,20 +779,55 @@ hqfw.photoBox = {
 	},
 
 	/**
-	 * Set the value of property modalElem.
+	 * Set all element property values.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return {boolean} Check if the property has a value.
+	 * @return {boolean} Check if all property element has a value.
 	 */
-	setModalElemProperty() {
+	setElementProperties() {
+		// Set modalElem property.
 		const modalElem = document.getElementById( 'hqfw-js-photobox-viewer' );
-		if ( modalElem ) {
-			hqfw.photoBox.modalElem = modalElem;
-			return true;
+		if ( ! modalElem ) {
+			return false;
 		}
 
-		return false;
+		hqfw.photoBox.modalElem = modalElem;
+
+		// Set bodyElem property.
+		const bodyElem = document.querySelector( '.hqfw-photobox-viewer__body' );
+		if ( ! bodyElem ) {
+			return false;
+		}
+
+		hqfw.photoBox.bodyElem = bodyElem;
+
+		// Set containerElem property.
+		const containerElem = document.querySelector( '.hqfw-photobox-viewer__container' );
+		if ( ! containerElem ) {
+			return false;
+		}
+
+		hqfw.photoBox.containerElem = containerElem;
+
+		// Set captionElem property.
+		const captionElem = document.getElementById( 'hqfw-js-photobox-viewer-caption' );
+		if ( ! captionElem ) {
+			return false;
+		}
+
+		hqfw.photoBox.captionElem = captionElem;
+
+		// Set imageElem property.
+		const imageElem = document.getElementById( 'hqfw-js-photobox-viewer-image' );
+		if ( ! imageElem ) {
+			return false;
+		}
+
+		hqfw.photoBox.imageElem = imageElem;
+
+		// Return success.
+		return true;
 	},
 
 	/**
@@ -734,20 +851,57 @@ hqfw.photoBox = {
 			return;
 		}
 
-		const bodyElem = document.querySelector( '.hqfw-photobox-viewer__body' );
-		if ( ! bodyElem ) {
-			return;
-		}
-
-		const imageElem = document.getElementById( 'hqfw-js-photobox-viewer-image' );
-		if ( ! imageElem ) {
-			return;
-		}
+		const bodyElem = hqfw.photoBox.bodyElem;
+		const imageElem = hqfw.photoBox.imageElem;
 
 		let bodyHeight = bodyElem.offsetHeight;
 		let imageHeight = imageElem.naturalHeight;
 		imageHeight = ( imageHeight > bodyHeight ? bodyHeight : imageHeight );
 		imageElem.style.maxHeight = `${ imageHeight }px`;
+	},
+
+	/**
+	 * Check if zoom has already implemented or enabled to avoid
+	 * multitple initialization.
+	 *
+	 * @since 1.0.00
+	 * 
+	 * @return {Boolean} Is zoom implemented.
+	 */
+	hasZoomEnabled() {
+		const isZoomEnabled = hqfw.photoBox.isZoomEnabled;
+		if ( isZoomEnabled === false ) {
+			hqfw.photoBox.isZoomEnabled = true;
+		}
+
+		return isZoomEnabled;
+	},
+
+	/**
+	 * Zoom in the image on photobox image.
+	 *
+	 * @since 1.0.0
+	 */
+	enableImageZoom() {
+		const bodyElem = hqfw.photoBox.bodyElem;
+		const containerElem = hqfw.photoBox.containerElem;
+		const imageElem = hqfw.photoBox.imageElem;
+
+		const bodyHeight = bodyElem.offsetHeight;
+		const imageHeight = imageElem.naturalHeight;
+
+		containerElem.classList.remove( 'hqfw-photobox-zoom' );
+		if ( imageHeight > bodyHeight ) {
+			// Enable zoom.
+			containerElem.classList.add( 'hqfw-photobox-zoom' );
+
+			// Call only this .zoom event once.
+			if ( ! hqfw.photoBox.hasZoomEnabled() ) {
+				const n = jQuery( '.hqfw-photobox-zoom' ).zoom({
+					on: 'grab'
+				});
+			}
+		}
 	},
 
 	/**
@@ -779,13 +933,10 @@ hqfw.photoBox = {
 			}
 
 			const modalElem = hqfw.photoBox.modalElem;
-			const imageElem = document.getElementById( 'hqfw-js-photobox-viewer-image' );
-			if ( ! imageElem ) {
-				return;
-			}
+			const captionElem = hqfw.photoBox.captionElem;
 
-			const captionElem = document.getElementById( 'hqfw-js-photobox-viewer-caption' );
-			if ( ! captionElem ) {
+			const imageElems = modalElem.querySelectorAll( 'img' );
+			if ( ! imageElems ) {
 				return;
 			}
 
@@ -797,14 +948,23 @@ hqfw.photoBox = {
 			}
 
 			const imageName = hqfw.fn.getImageName( image.source );
-			imageElem.setAttribute( 'src', image.source );
-			imageElem.setAttribute( 'alt', image.title );
-			imageElem.setAttribute( 'title', image.title );
 			captionElem.textContent = ( ! image.title ? imageName : image.title );
 			modalElem.setAttribute( 'data-state', 'show' );
-			imageElem.addEventListener( 'load', function() {
-				// Set image size.
-				hqfw.photoBox.setImageSize();
+
+			imageElems.forEach( function( imageElem, index ) {
+				imageElem.setAttribute( 'src', image.source );
+				imageElem.setAttribute( 'alt', image.title );
+				imageElem.setAttribute( 'title', image.title );
+
+				if ( index === 0 ) {
+					imageElem.addEventListener( 'load', function() {
+						// Set image size.
+						hqfw.photoBox.setImageSize();
+						
+						// Enable zoom.
+						hqfw.photoBox.enableImageZoom();
+					});
+				}
 			});
 		});
 	},
@@ -873,21 +1033,21 @@ hqfw.photoBox = {
 	 * @since 1.0.0
 	 */
 	keyPressExitFullScreen() {
-		document.addEventListener( 'fullscreenchange', hqfw.photoBox.exitFullScreenHandler() );
-		document.addEventListener( 'webkitfullscreenchange', hqfw.photoBox.exitFullScreenHandler()) ;
-		document.addEventListener( 'mozfullscreenchange', hqfw.photoBox.exitFullScreenHandler() );
-		document.addEventListener( 'MSFullscreenChange', hqfw.photoBox.exitFullScreenHandler() );
-	},
+			const vendorPrefix = [ '', 'webkit', 'moz', 'ms' ];
+			vendorPrefix.forEach( function( prefix ) {
+				document.addEventListener( `${ prefix }fullscreenchange`, function() {
+					if ( ! document.fullscreenElement && ! document.webkitIsFullScreen && ! document.mozFullScreen && ! document.msFullscreenElement ) {
+						const fullScreenBtnElem = document.getElementById( 'hqfw-js-photobox-fullscreen-btn' );
+						if ( ! fullScreenBtnElem ) {
+							return;
+						}
 
-	/**
-	 * Exit fullscreen mode event handler.
-	 *
-	 * @since 1.0.0
-	 */
-	exitFullScreenHandler() {
-		if ( ! document.fullscreenElement && ! document.webkitIsFullScreen && ! document.mozFullScreen && ! document.msFullscreenElement ) {
-			//alert();
-		}
+						fullScreenBtnElem.setAttribute( 'data-event', 'show' );
+						fullScreenBtnElem.setAttribute( 'aria-label', 'Fullscreen' );
+						fullScreenBtnElem.setAttribute( 'title', 'Fullscreen' );
+					}
+				});
+			});
 	},
 
 	/**
@@ -1079,6 +1239,8 @@ hqfw.quickView = {
 		this.keyPressCloseModal();
 		this.slideNavigation();
 		this.screenResize();
+		this.setSlideNavigationVisibility();
+		this.setProductGalleryTriggerIcon();
 	},
 
 	/**
@@ -1104,9 +1266,6 @@ hqfw.quickView = {
 
 		// Set productIds property.
 		this.setProductIds();
-
-		// Set slide navigation visibility.
-		this.setSlideNavigationVisibility();
 
 		return true;
 	},
@@ -1245,6 +1404,24 @@ hqfw.quickView = {
 	},
 
 	/**
+	 * Set or override the maginify icon in woocommerce-product-gallery__trigger.
+	 *
+	 * @since 1.0.0
+	 */
+	setProductGalleryTriggerIcon() {
+		setTimeout( function() {
+			const galleryTriggerElems = document.querySelectorAll( 'a.woocommerce-product-gallery__trigger' );
+			if ( ! galleryTriggerElems ) {
+				return;
+			}
+
+			Array.from( galleryTriggerElems ).forEach( function( galleryTriggerElem ) {
+				galleryTriggerElem.innerHTML = hqfwLocal.icon.searchPlus;
+			});
+		}, 300 );
+	},
+
+	/**
 	 * Return the previous and next product id based on
 	 * the current id viewed.
 	 *
@@ -1367,7 +1544,6 @@ hqfw.quickView = {
 					viewerProductElem.innerHTML = res.data.content;
 					viewerElem.setAttribute( 'data-state', 'prepare' );
 
-					// Initialize photo slider.
 					hqfw.photoSlider.init();
 
 					// Initialize variation form.
