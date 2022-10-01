@@ -66,7 +66,7 @@ final class Content {
     }
 
     /**
-     * Render the close button.
+     * Render the quick view modal close button.
      *
      * @since 1.0.0
      */

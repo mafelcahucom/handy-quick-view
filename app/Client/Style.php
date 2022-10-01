@@ -653,6 +653,9 @@ final class Style {
                 max-height: 100%;
                 display: block;
             }
+            .hqfw-photobox-viewer__container.hqfw-photobox-zoom {
+                cursor: zoom-in;
+            }
             .hqfw-photobox-viewer__container img:nth-child(2) {
                 display: none !important;
             }

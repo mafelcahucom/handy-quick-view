@@ -2,10 +2,10 @@
  * Strict mode.
  *
  * @since 1.0.0
- * 
+ *
  * @author Mafel John Cahucom
  */
-"use strict";
+'use strict';
 
 /**
  * Namespace.
@@ -119,6 +119,7 @@ hqfw.fn = {
 	 *
 	 * @since 1.0.0
 	 *
+	 * @param  imagePath
 	 * @params {string} imagePath The full path of the image.
 	 * @return {string} The name of the image.
 	 */
@@ -144,7 +145,7 @@ hqfw.fn = {
 				resolve( false );
 			}
 
-			element.addEventListener( 'animationend', function( e ) {
+			element.addEventListener( 'animationend', function() {
 				resolve( true );
 			} );
 		} );
@@ -202,16 +203,16 @@ hqfw.fn = {
 	 * @since 1.0.0
 	 */
 	enableFullScreen() {
-	 	const documentElem = document.documentElement;
-	 	if ( documentElem.requestFullscreen ) {
-	 		documentElem.requestFullscreen();
-	 	} else if ( documentElem.mozRequestFullScreen ) {
-	 		documentElem.mozRequestFullScreen();
-	 	} else if ( documentElem.webkitRequestFullscreen ) {
-	 		documentElem.webkitRequestFullscreen();
-	 	} else if ( documentElem.msRequestFullscreen ) {
-	 		documentElem.msRequestFullscreen();
-	 	}
+		const documentElem = document.documentElement;
+		if ( documentElem.requestFullscreen ) {
+			documentElem.requestFullscreen();
+		} else if ( documentElem.mozRequestFullScreen ) {
+			documentElem.mozRequestFullScreen();
+		} else if ( documentElem.webkitRequestFullscreen ) {
+			documentElem.webkitRequestFullscreen();
+		} else if ( documentElem.msRequestFullscreen ) {
+			documentElem.msRequestFullscreen();
+		}
 	},
 
 	/**
@@ -221,13 +222,13 @@ hqfw.fn = {
 	 */
 	disableFullScreen() {
 		if ( document.fullscreenElement ) {
-		 	if ( document.exitFullscreen ) {
-		 		document.exitFullscreen();
-		 	} else if ( document.mozCancelFullScreen ) {
-		 		document.mozCancelFullScreen();
-		 	} else if ( document.webkitExitFullscreen ) {
-		 		document.webkitExitFullscreen();
-		 	}
+			if ( document.exitFullscreen ) {
+				document.exitFullscreen();
+			} else if ( document.mozCancelFullScreen ) {
+				document.mozCancelFullScreen();
+			} else if ( document.webkitExitFullscreen ) {
+				document.webkitExitFullscreen();
+			}
 	 	}
 	},
 };
@@ -295,8 +296,8 @@ hqfw.photoSlider = {
 	 * Holds the initialize state of this object.
 	 *
 	 * @since 1.0.0
-	 * 
-	 * @type {Boolean}
+	 *
+	 * @type {boolean}
 	 */
 	isInitialized: false,
 
@@ -344,13 +345,13 @@ hqfw.photoSlider = {
 	 * @since 1.0.0
 	 */
 	constructor() {
-		// Set sliderElem property.
-		if ( ! this.setSliderElemProperty() ) {
+		// Set all element property.
+		if ( ! this.setElementProperties() ) {
 			return false;
 		}
 
 		// Set primaryImageSrc property.
-		if ( ! this.setPrimaryImageElemProperty() ) {
+		if ( ! this.setPrimaryImageSrc() ) {
 			return false;
 		}
 
@@ -362,8 +363,8 @@ hqfw.photoSlider = {
 	 * it will set the isInitialized property to avoid multiple initialization.
 	 *
 	 * @since 1.0.00
-	 * 
-	 * @return {Boolean} Is object component has been initialized.
+	 *
+	 * @return {boolean} Is object component has been initialized.
 	 */
 	hasInitialized() {
 		const isInitialized = hqfw.photoSlider.isInitialized;
@@ -375,30 +376,32 @@ hqfw.photoSlider = {
 	},
 
 	/**
-	 * Set the value of property sliderElem.
+	 * Set all element property values.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return {boolean} Check if the property has a value.
+	 * @return {boolean} Check if all property element has a value.
 	 */
-	setSliderElemProperty() {
+	setElementProperties() {
+		// Set sliderElem property.
 		const sliderElem = document.getElementById( 'hqfw-js-photo-slider' );
-		if ( sliderElem ) {
-			hqfw.photoSlider.sliderElem = sliderElem;
-			return true;
+		if ( ! sliderElem ) {
+			return false;
 		}
-		
-		return false;
+
+		hqfw.photoSlider.sliderElem = sliderElem;
+
+		return true;
 	},
 
 	/**
-	 * Set the value of property primaryImageElem.
+	 * Set the value of property primaryImageSrc.
 	 *
 	 * @since 1.0.0
 	 *
 	 * @return {boolean} Check if the property has a value.
 	 */
-	setPrimaryImageElemProperty() {
+	setPrimaryImageSrc() {
 		const sliderElem = hqfw.photoSlider.sliderElem;
 		const primaryImageElem = sliderElem.querySelector( '.hqfw-photo-slider__image-primary' );
 		if ( primaryImageElem ) {
@@ -480,7 +483,7 @@ hqfw.photoSlider = {
 			if ( width > 992 ) {
 				height = ( height < 350 ? 350 : height );
 			}
-			
+
 			slideElems.forEach( function( slideElem ) {
 				slideElem.style.height = `${ height }px`;
 			} );
@@ -492,7 +495,7 @@ hqfw.photoSlider = {
 	 * image in the slider.
 	 *
 	 * @since 1.0.0
-	 * 
+	 *
 	 * @return {Object} Image url source and name.
 	 */
 	getCurrentImage() {
@@ -519,7 +522,7 @@ hqfw.photoSlider = {
 
 		return {
 			source: imageElem.src,
-			title: imageElem.getAttribute( 'alt' )
+			title: imageElem.getAttribute( 'alt' ),
 		};
 	},
 
@@ -679,15 +682,15 @@ hqfw.photoSlider = {
 	screenResize() {
 		window.addEventListener( 'resize', function() {
 			hqfw.photoSlider.setSlideSize();
-		});
-	}
+		} );
+	},
 };
 
 /**
  * Holds the photo box component.
  *
  * @since 1.0.0
- * 
+ *
  * @type {Object}
  */
 hqfw.photoBox = {
@@ -696,8 +699,8 @@ hqfw.photoBox = {
 	 * Holds the state of image zoom.
 	 *
 	 * @since 1.0.0
-	 * 
-	 * @type {Boolean}
+	 *
+	 * @type {boolean}
 	 */
 	isZoomEnabled: false,
 
@@ -705,7 +708,7 @@ hqfw.photoBox = {
 	 * Holds modal element.
 	 *
 	 * @since 1.0.0
-	 * 
+	 *
 	 * @type {element}
 	 */
 	modalElem: null,
@@ -714,7 +717,7 @@ hqfw.photoBox = {
 	 * Holds viewer body element.
 	 *
 	 * @since 1.0.0
-	 * 
+	 *
 	 * @type {element}
 	 */
 	bodyElem: null,
@@ -723,7 +726,7 @@ hqfw.photoBox = {
 	 * Holds viewer container element.
 	 *
 	 * @since 1.0.0
-	 * 
+	 *
 	 * @type {element}
 	 */
 	containerElem: null,
@@ -732,7 +735,7 @@ hqfw.photoBox = {
 	 * Holds viewer caption element.
 	 *
 	 * @since 1.0.0
-	 * 
+	 *
 	 * @type {element}
 	 */
 	captionElem: null,
@@ -741,7 +744,7 @@ hqfw.photoBox = {
 	 * Holds viewer image element.
 	 *
 	 * @since 1.0.0
-	 * 
+	 *
 	 * @type {element}
 	 */
 	imageElem: null,
@@ -834,7 +837,7 @@ hqfw.photoBox = {
 	 * Get the current state of the modal or component.
 	 *
 	 * @since 1.0.0
-	 * 
+	 *
 	 * @return {string} The current state.
 	 */
 	getState() {
@@ -854,7 +857,7 @@ hqfw.photoBox = {
 		const bodyElem = hqfw.photoBox.bodyElem;
 		const imageElem = hqfw.photoBox.imageElem;
 
-		let bodyHeight = bodyElem.offsetHeight;
+		const bodyHeight = bodyElem.offsetHeight;
 		let imageHeight = imageElem.naturalHeight;
 		imageHeight = ( imageHeight > bodyHeight ? bodyHeight : imageHeight );
 		imageElem.style.maxHeight = `${ imageHeight }px`;
@@ -865,8 +868,8 @@ hqfw.photoBox = {
 	 * multitple initialization.
 	 *
 	 * @since 1.0.00
-	 * 
-	 * @return {Boolean} Is zoom implemented.
+	 *
+	 * @return {boolean} Is zoom implemented.
 	 */
 	hasZoomEnabled() {
 		const isZoomEnabled = hqfw.photoBox.isZoomEnabled;
@@ -897,9 +900,9 @@ hqfw.photoBox = {
 
 			// Call only this .zoom event once.
 			if ( ! hqfw.photoBox.hasZoomEnabled() ) {
-				const n = jQuery( '.hqfw-photobox-zoom' ).zoom({
-					on: 'grab'
-				});
+				jQuery( '.hqfw-photobox-zoom' ).zoom( {
+					on: 'grab',
+				} );
 			}
 		}
 	},
@@ -926,7 +929,7 @@ hqfw.photoBox = {
 	 * @since 1.0.0
 	 */
 	openModal() {
-		hqfw.fn.eventListener( 'click', '#hqfw-js-photobox-trigger-btn', function( e ) {
+		hqfw.fn.eventListener( 'click', '#hqfw-js-photobox-trigger-btn', function() {
 			const image = hqfw.photoSlider.getCurrentImage();
 			if ( ! image ) {
 				return;
@@ -960,13 +963,13 @@ hqfw.photoBox = {
 					imageElem.addEventListener( 'load', function() {
 						// Set image size.
 						hqfw.photoBox.setImageSize();
-						
+
 						// Enable zoom.
 						hqfw.photoBox.enableImageZoom();
-					});
+					} );
 				}
-			});
-		});
+			} );
+		} );
 	},
 
 	/**
@@ -977,7 +980,7 @@ hqfw.photoBox = {
 	closeModal() {
 		hqfw.fn.eventListener( 'click', '#hqfw-js-photobox-close-btn', function() {
 			hqfw.photoBox.hideModal();
-		});
+		} );
 	},
 
 	/**
@@ -992,7 +995,7 @@ hqfw.photoBox = {
 					hqfw.photoBox.hideModal();
 				}, 300 );
 			}
-		});
+		} );
 	},
 
 	/**
@@ -1002,7 +1005,7 @@ hqfw.photoBox = {
 	 */
 	toggleFullScreen() {
 		hqfw.fn.eventListener( 'click', '#hqfw-js-photobox-fullscreen-btn', function( e ) {
-			const target = e.target
+			const target = e.target;
 			const event = target.getAttribute( 'data-event' );
 			if ( ! [ 'show', 'exit' ].includes( event ) ) {
 				return;
@@ -1024,7 +1027,7 @@ hqfw.photoBox = {
 
 			// Set image size.
 			hqfw.photoBox.setImageSize();
-		});
+		} );
 	},
 
 	/**
@@ -1033,21 +1036,21 @@ hqfw.photoBox = {
 	 * @since 1.0.0
 	 */
 	keyPressExitFullScreen() {
-			const vendorPrefix = [ '', 'webkit', 'moz', 'ms' ];
-			vendorPrefix.forEach( function( prefix ) {
-				document.addEventListener( `${ prefix }fullscreenchange`, function() {
-					if ( ! document.fullscreenElement && ! document.webkitIsFullScreen && ! document.mozFullScreen && ! document.msFullscreenElement ) {
-						const fullScreenBtnElem = document.getElementById( 'hqfw-js-photobox-fullscreen-btn' );
-						if ( ! fullScreenBtnElem ) {
-							return;
-						}
-
-						fullScreenBtnElem.setAttribute( 'data-event', 'show' );
-						fullScreenBtnElem.setAttribute( 'aria-label', 'Fullscreen' );
-						fullScreenBtnElem.setAttribute( 'title', 'Fullscreen' );
+		const vendorPrefix = [ '', 'webkit', 'moz', 'ms' ];
+		vendorPrefix.forEach( function( prefix ) {
+			document.addEventListener( `${ prefix }fullscreenchange`, function() {
+				if ( ! document.fullscreenElement && ! document.webkitIsFullScreen && ! document.mozFullScreen && ! document.msFullscreenElement ) {
+					const fullScreenBtnElem = document.getElementById( 'hqfw-js-photobox-fullscreen-btn' );
+					if ( ! fullScreenBtnElem ) {
+						return;
 					}
-				});
-			});
+
+					fullScreenBtnElem.setAttribute( 'data-event', 'show' );
+					fullScreenBtnElem.setAttribute( 'aria-label', 'Fullscreen' );
+					fullScreenBtnElem.setAttribute( 'title', 'Fullscreen' );
+				}
+			} );
+		} );
 	},
 
 	/**
@@ -1059,7 +1062,7 @@ hqfw.photoBox = {
 		window.addEventListener( 'resize', function() {
 			// Set image size.
 			hqfw.photoBox.setImageSize();
-		});
+		} );
 	},
 };
 
@@ -1091,7 +1094,7 @@ hqfw.variation = {
 			return;
 		}
 
-		this.form();
+		this.variationForm();
 		this.variationIdInputListener();
 		this.variatioWrapListener();
 	},
@@ -1137,7 +1140,7 @@ hqfw.variation = {
 	 *
 	 * @since 1.0.0
 	 */
-	form() {
+	variationForm() {
 		jQuery( hqfw.variation.variationFormElem ).wc_variation_form();
 	},
 
@@ -1209,7 +1212,7 @@ hqfw.quickView = {
 	 * Holds the modal element.
 	 *
 	 * @since 1.0.0
-	 * 
+	 *
 	 * @type {element}
 	 */
 	modalElem: null,
@@ -1218,10 +1221,19 @@ hqfw.quickView = {
 	 * Holds the content viewer element.
 	 *
 	 * @since 1.0.0
-	 * 
+	 *
 	 * @type {element}
 	 */
 	viewerElem: null,
+
+	/**
+	 * Holds the product viewer element.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @type {element}
+	 */
+	viewerProductElem: null,
 
 	/**
 	 * Initialize.
@@ -1249,76 +1261,51 @@ hqfw.quickView = {
 	 * @since 1.0.0
 	 */
 	constructor() {
-		// Set modalElem property.
-		if ( ! this.setModalElemProperty() ) {
-			return false;
-		}
-
-		// Set viewerElem property.
-		if ( ! this.setViewerElemProperty() ) {
-			return false;
-		}
-
-		// Set viewerProductElem property.
-		if ( ! this.setViewerProductElem() ) {
+		// Set all elements property.
+		if ( ! this.setElementProperties() ) {
 			return false;
 		}
 
 		// Set productIds property.
 		this.setProductIds();
 
+		// Return success.
 		return true;
 	},
 
 	/**
-	 * Set the value of property modalElem.
+	 * Set all element property values.
 	 *
 	 * @since 1.0.0
 	 *
-	 * @return {boolean} Check if the property has a value.
+	 * @return {boolean} Check if all property element has a value.
 	 */
-	setModalElemProperty() {
+	setElementProperties() {
+		// Set modalElem property.
 		const modalElem = document.getElementById( 'hqfw-js-modal' );
-		if ( modalElem ) {
-			hqfw.quickView.modalElem = modalElem;
-			return true;
+		if ( ! modalElem ) {
+			return false;
 		}
 
-		return false;
-	},
+		hqfw.quickView.modalElem = modalElem;
 
-	/**
-	 * Set the value of property viewerElem.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return {boolean} Check if the property has a value.
-	 */
-	setViewerElemProperty() {
+		// Set viewerElem property.
 		const viewerElem = document.getElementById( 'hqfw-js-viewer-content' );
-		if ( viewerElem ) {
-			hqfw.quickView.viewerElem = viewerElem;
-			return true;
+		if ( ! viewerElem ) {
+			return false;
 		}
-		
-		return false;
-	},
 
-	/**
-	 * Set the value of property viewerProductElem.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @return {boolean} Check if the property has a value.
-	 */
-	setViewerProductElem() {
+		hqfw.quickView.viewerElem = viewerElem;
+
+		// Set viewerProductElem property.
 		const viewerProductElem = document.getElementById( 'hqfw-js-viewer-product' );
-		if ( viewerProductElem ) {
-			hqfw.quickView.viewerProductElem = viewerProductElem;
-			return true;
+		if ( ! viewerProductElem ) {
+			return false;
 		}
-		
-		return false;
+
+		hqfw.quickView.viewerProductElem = viewerProductElem;
+
+		return true;
 	},
 
 	/**
@@ -1354,7 +1341,7 @@ hqfw.quickView = {
 			return;
 		}
 
-		const viewerProductElem = hqfw.quickView.viewerElem;
+		const viewerProductElem = hqfw.quickView.viewerProductElem;
 		const galleryElem = viewerProductElem.querySelector( '.hqfw-product__gallery' );
 		if ( ! galleryElem ) {
 			return;
@@ -1369,11 +1356,11 @@ hqfw.quickView = {
 		const summaryHeadElem = viewerProductElem.querySelector( '.hqfw-product__summary__head' );
 		if ( summaryHeadElem ) {
 			headHeight = summaryHeadElem.offsetHeight;
-		} 
+		}
 
 		setTimeout( function() {
 			const galleryHeight = galleryElem.clientHeight;
-			summaryBodyElem.style.maxHeight = `${( galleryHeight - headHeight )}px`;
+			summaryBodyElem.style.maxHeight = `${ ( galleryHeight - headHeight ) }px`;
 		}, 300 );
 	},
 
@@ -1397,7 +1384,7 @@ hqfw.quickView = {
 		const width = window.innerWidth;
 		const height = window.innerHeight;
 		if ( width <= 992 && height <= 850 ) {
-			productViewerElem.style.height = `${( height - 40 )}px`;
+			productViewerElem.style.height = `${ ( height - 40 ) }px`;
 		} else {
 			productViewerElem.style.height = 'auto';
 		}
@@ -1417,7 +1404,7 @@ hqfw.quickView = {
 
 			Array.from( galleryTriggerElems ).forEach( function( galleryTriggerElem ) {
 				galleryTriggerElem.innerHTML = hqfwLocal.icon.searchPlus;
-			});
+			} );
 		}, 300 );
 	},
 
@@ -1499,7 +1486,7 @@ hqfw.quickView = {
 		const modalState = modalElem.getAttribute( 'data-state' );
 		if ( modalState !== 'show' ) {
 			return;
-		} 
+		}
 
 		viewerElem.setAttribute( 'data-state', 'hidden' );
 		const isAnimationDone = await hqfw.fn.isAnimationDone( viewerElem );
@@ -1577,9 +1564,9 @@ hqfw.quickView = {
 	 * @since 1.0.0
 	 */
 	closeModal() {
-		hqfw.fn.eventListener( 'click', '.hqfw-js-close-modal', async function( e ) {
+		hqfw.fn.eventListener( 'click', '.hqfw-js-close-modal', async function() {
 			hqfw.quickView.hideModal();
-		});
+		} );
 	},
 
 	/**
@@ -1590,7 +1577,7 @@ hqfw.quickView = {
 	autoCloseModal() {
 		jQuery( 'body' ).on( 'added_to_cart', function() {
 			hqfw.quickView.hideModal();
-		});
+		} );
 	},
 
 	/**
@@ -1602,11 +1589,11 @@ hqfw.quickView = {
 		document.addEventListener( 'keydown', function( e ) {
 			if ( e.key === 'Escape' ) {
 				// Close first if photobox state is hide.
-				if ( hqfw.photoBox.getState() === 'hide' ) { 
+				if ( hqfw.photoBox.getState() === 'hide' ) {
 					hqfw.quickView.hideModal();
 				}
 			}
-		});
+		} );
 	},
 
 	/**
@@ -1687,7 +1674,7 @@ hqfw.quickView = {
 	screenResize() {
 		window.addEventListener( 'resize', function() {
 			hqfw.quickView.setProductViewerMobileHeight();
-		});
+		} );
 	},
 };
 

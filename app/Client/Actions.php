@@ -26,7 +26,7 @@ final class Actions {
      * @since 1.0.0
      */
     protected function __construct() {
-        // Render quick view buttn.
+        // Render quick view button.
         add_action( 'woocommerce_after_shop_loop_item', [ $this, 'render_quick_view_button' ], 20 );
 
         // Render quick view modal.

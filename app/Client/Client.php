@@ -2,6 +2,7 @@
 namespace HQFW\Client;
 
 use HQFW\Inc\Traits\Singleton;
+use HQFW\Inc\Plugins;
 use HQFW\Client\Inc\Helper;
 use HQFW\Client\Filters;
 use HQFW\Client\Actions;

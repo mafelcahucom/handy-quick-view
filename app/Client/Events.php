@@ -3,6 +3,7 @@ namespace HQFW\Client;
 
 use HQFW\Inc\Traits\Singleton;
 use HQFW\Inc\Traits\Security;
+use HQFW\Inc\Plugins;
 use HQFW\Client\Inc\Content;
 use HQFW\Client\Inc\Helper;
 
@@ -67,6 +68,18 @@ final class Events {
        		]);
       	}
 
+      	// Apply filter if hady-add-to-cart-for-woocommerce is active.
+      	if ( Plugins::is_active( 'handy-add-to-cart-for-woocommerce' ) ) {
+      		if ( $product->is_type( 'grouped' ) ) {
+      			// Additional class to quantity_input.
+	            add_filter( 'woocommerce_quantity_input_classes', function( $classes, $product ) {
+	                $classes['additional'] = 'hafw-js-grouped-quantity-input';
+	                return $classes;
+	            }, 10, 2 );
+	        }
+      	}
+
+      	// Query post based on product id.
       	$query = new \WP_Query([
       		'p'				 => $productId,
       		'post_type' 	 => 'product',
@@ -80,7 +93,6 @@ final class Events {
 
       			// Generate product content.
       			Content::generate();
-
       			wp_send_json_success([
       				'response' => 'SUCCESSFULLY_RETRIEVED',
       				'content'  => Helper::render_view( 'component/product-content' )
