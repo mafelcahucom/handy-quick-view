@@ -27,7 +27,7 @@ final class Actions {
      */
     protected function __construct() {
         // Render quick view button.
-        add_action( 'woocommerce_after_shop_loop_item', [ $this, 'render_quick_view_button' ], 20 );
+        $this->render_quick_view_button();
 
         // Render quick view modal.
         add_action( 'wp_footer', [ $this, 'render_quick_view_modal' ] );
@@ -37,13 +37,54 @@ final class Actions {
     }
 
     /**
-     * Render the quick view button component/shortcode in
-     * the woocommerce product list thumbnail.
+     * Render the quick view button component/shortcode
      *
      * @since 1.0.0
      */
     public function render_quick_view_button() {
-        echo do_shortcode( '[handy-quick-view-button id="'. get_the_ID() .'"]' );
+        $index = 1;
+        $hooks = [
+            [
+                'name'      => 'woocommerce_after_shop_loop_item',
+                'priority'  => 1
+            ],
+            [
+                'name'      => 'woocommerce_after_shop_loop_item',
+                'priority'  => 20
+            ],
+            [
+                'name'      => 'woocommerce_before_shop_loop_item_title',
+                'priority'  => 9
+            ],
+            [
+                'name'      => 'woocommerce_before_shop_loop_item_title',
+                'priority'  => 11
+            ],
+            [
+                'name'      => 'woocommerce_shop_loop_item_title',
+                'priority'  => 11
+            ],
+            [
+                'name'      => 'woocommerce_after_shop_loop_item_title',
+                'priority'  => 6
+            ],
+            [
+                'name'      => 'woocommerce_after_shop_loop_item_title',
+                'priority'  => 7
+            ],
+            [
+                'name'      => 'woocommerce_after_shop_loop_item_title',
+                'priority'  => 11
+            ]
+        ];
+
+        if ( ! isset( $hooks[ $index ] ) ) {
+            return;
+        }
+
+        add_action( $hooks[ $index ]['name'], function() {
+            echo do_shortcode( '[handy-quick-view-button id="'. get_the_ID() .'"]' );
+        }, $hooks[ $index ]['priority'] );
     }
 
     /**
