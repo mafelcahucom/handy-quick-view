@@ -3,6 +3,7 @@ namespace HQFW\Admin\Inc;
 
 use HQFW\Inc\Traits\Singleton;
 use HQFW\Admin\Inc\Icon;
+use HQFW\Admin\Tab\Setting\SettingApi; // TOBE DELETED IN PRDD
 
 defined( 'ABSPATH' ) || exit;
 
@@ -320,5 +321,44 @@ final class Helper {
         }
 
         return $output;
+    }
+
+
+    /**
+     * Checks if there's a missing field in SettingApi and Installer.
+     * NOTE: Delete this method in production.
+     *
+     * @since 1.0.0
+     * 
+     * @return array
+     */
+    public static function check_settings_field( $fields = [] ) {
+        if ( empty( $fields ) ) {
+            return;
+        }
+
+        $setting_fields = SettingApi::get_settings();
+        $errors = [];
+        foreach ( $fields as $key => $value ) {
+            if ( ! in_array( $key, array_keys( $setting_fields ) ) ) {
+                array_push( $errors, [
+                    'field' => $key,
+                    'error' => 'Field Not Found'
+                ] );
+            } else {
+                if ( $value !== $setting_fields[ $key ] ) {
+                    array_push( $errors, [
+                        'field' => $key,
+                        'error' => 'Value Not Matched'
+                    ] );
+                }
+            }
+        }
+
+        if ( empty( $errors ) ) {
+            var_dump( 'PASS' );
+        } else {
+            var_dump( $errors );
+        }
     }
 }

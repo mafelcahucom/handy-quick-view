@@ -353,9 +353,9 @@ final class Style {
         // Loader
         $class .= Loader::get([
             'classname' => 'hqfw-viewer__loader',
-            'name'      => 'pulse-2',
-            'width'     => '40px',
-            'height'    => '40px',
+            'name'      => 'spinner-5',
+            'width'     => '30px',
+            'height'    => '30px',
             'stroke'    => '2px',
             'color_1'   => 'rgba(255,255,255,1)',
             'color_2'   => 'rgba(255,255,255,1)'
