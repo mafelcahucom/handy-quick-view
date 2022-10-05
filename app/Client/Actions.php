@@ -20,12 +20,24 @@ final class Actions {
 	 */
 	use Singleton;
 
+    /**
+     * Holds the settings.
+     *
+     * @since 1.0.0
+     * 
+     * @var array
+     */
+    private $settings;
+
 	/**
      * Execute Actions.
      *
      * @since 1.0.0
      */
     protected function __construct() {
+        // Set the value of setting property.
+        $this->settings = get_option( '_hqfw_main_settings' );
+
         // Render quick view button.
         $this->render_quick_view_button();
 
@@ -33,7 +45,9 @@ final class Actions {
         add_action( 'wp_footer', [ $this, 'render_quick_view_modal' ] );
 
         // Render photobox viewer modal.
-        add_action( 'wp_footer', [ $this, 'render_photo_box_viewer_modal' ] );
+        if ( $this->settings['gn_pt_enable_lightbox'] ) {
+            add_action( 'wp_footer', [ $this, 'render_photo_box_viewer_modal' ] );
+        }
     }
 
     /**
@@ -42,7 +56,8 @@ final class Actions {
      * @since 1.0.0
      */
     public function render_quick_view_button() {
-        $index = 1;
+        // Get the hook index.
+        $position = ( $this->settings['gn_qv_btn_position'] - 1 );
         $hooks = [
             [
                 'name'      => 'woocommerce_after_shop_loop_item',
@@ -78,13 +93,13 @@ final class Actions {
             ]
         ];
 
-        if ( ! isset( $hooks[ $index ] ) ) {
+        if ( ! isset( $hooks[ $position ] ) ) {
             return;
         }
 
-        add_action( $hooks[ $index ]['name'], function() {
+        add_action( $hooks[ $position ]['name'], function() {
             echo do_shortcode( '[handy-quick-view-button id="'. get_the_ID() .'"]' );
-        }, $hooks[ $index ]['priority'] );
+        }, $hooks[ $position ]['priority'] );
     }
 
     /**

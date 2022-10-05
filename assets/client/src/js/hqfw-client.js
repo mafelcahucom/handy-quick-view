@@ -532,7 +532,9 @@ hqfw.photoSlider = {
 	 * @since 1.0.0
 	 */
 	enableImageZoom() {
-		jQuery( '.hqfw-image-zoom' ).zoom();
+		if ( hqfwLocal.setting.isZoomEnabled ) {
+			jQuery( '.hqfw-image-zoom' ).zoom();
+		}
 	},
 
 	/**
@@ -900,9 +902,11 @@ hqfw.photoBox = {
 
 			// Call only this .zoom event once.
 			if ( ! hqfw.photoBox.hasZoomEnabled() ) {
-				jQuery( '.hqfw-photobox-zoom' ).zoom( {
-					on: 'grab',
-				} );
+				if ( hqfwLocal.setting.isZoomEnabled ) {
+					jQuery( '.hqfw-photobox-zoom' ).zoom( {
+						on: 'grab',
+					} );
+				}
 			}
 		}
 	},

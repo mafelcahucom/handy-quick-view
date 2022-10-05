@@ -12,6 +12,6 @@ use HQFW\Client\Inc\Helper;
 defined( 'ABSPATH' ) || exit;
 ?>
 
-<button id="hqfw-js-photobox-trigger-btn" class="hqfw-photobox__trigger-btn hqfw-hover hqfw-flex-c" title="Zoom In" aria-label="Zoom In">
+<button id="hqfw-js-photobox-trigger-btn" class="hqfw-photobox__trigger-btn hqfw-hover" title="Zoom In" aria-label="Zoom In">
     <?php echo Helper::get_icon( 'bs-search-plus' ); ?>
 </button>

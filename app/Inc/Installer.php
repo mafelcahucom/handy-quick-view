@@ -54,9 +54,9 @@ final class Installer {
      * @since 1.0.0
      */
     private static function set_option_main_settings() {
-        /**if ( get_option( '_hqfw_main_settings' ) ) {
+        if ( get_option( '_hqfw_main_settings' ) ) {
             return;
-        }**/
+        }
 
         $settings = [
 
@@ -68,15 +68,14 @@ final class Installer {
             'gn_md_show_close_btn'          => 1,
 
             // gn_pt
-            'gn_ps_show'                    => 1,
             'gn_pt_enable_slider'           => 1,
             'gn_pt_enable_zoom'             => 1,
             'gn_pt_enable_lightbox'         => 1,
             'gn_pt_show_collection'         => 1,
             'gn_pt_show_bullet'             => 1,
+            'gn_pt_show_flash_sale'         => 1,
 
             // gn_ps.
-            'gn_ps_show'                    => 1,
             'gn_ps_show_title'              => 1,
             'gn_ps_show_rating'             => 1,
             'gn_ps_show_price'              => 1,
@@ -102,7 +101,7 @@ final class Installer {
             'qv_btn_hv_clr'                 => 'rgba(0,0,0,0.8)',
             'qv_btn_bg_clr'                 => 'rgba(224,225,226,1)',
             'qv_btn_bg_hv_clr'              => 'rgba(202,203,205,1)',
-            'qv_btn_wd'                     => '100%',
+            'qv_btn_wd'                     => 'fit-content',
             'qv_btn_ht'                     => 'auto',
             'qv_btn_pt'                     => '10px',
             'qv_btn_pb'                     => '10px',
@@ -172,7 +171,7 @@ final class Installer {
             'pt_sldr_btn_icon_next'         => 'bs-chevron-right',
             'pt_sldr_btn_icon_wd'           => '20px',
             'pt_sldr_btn_icon_ht'           => '20px',
-            'pt_sldr_btn_icon_clr'          => 'rgba(255,255,255,0.7)',
+            'pt_sldr_btn_icon_clr'          => 'rgba(0,0,0,0.7)',
             'pt_sldr_btn_icon_hv_clr'       => 'rgba(255,255,255,1)',
             'pt_sldr_btn_bg_clr'            => 'rgba(0,0,0,0)',
             'pt_sldr_btn_bg_hv_clr'         => 'rgba(0,0,0,0.7)',
@@ -200,8 +199,8 @@ final class Installer {
             // pt_bul.
             'pt_bul_wd'                     => '8px',
             'pt_bul_ht'                     => '8px',
-            'pt_bul_bg_clr'                 => 'rgba(0,0,0,0.7)',
-            'pt_bul_bg_ac_clr'              => 'rgba(0,0,0,0.4)',
+            'pt_bul_bg_clr'                 => 'rgba(0,0,0,0.4)',
+            'pt_bul_bg_ac_clr'              => 'rgba(0,0,0,0.7)',
             'pt_bul_gap'                    => '4px',
             'pt_bul_br'                     => '10px',
 

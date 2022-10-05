@@ -7,8 +7,6 @@
  * @author  Mafel John Cahucom
  */
 
-use HQFW\Client\Inc\Helper;
-
 defined( 'ABSPATH' ) || exit;
 ?>
 

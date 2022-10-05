@@ -10,13 +10,10 @@
 use HQFW\Admin\Inc\Helper;
 use HQFW\Admin\Inc\Component;
 use HQFW\Admin\Inc\Field;
-use HQFW\Admin\Tab\Setting\SettingApi; // TO BE REMOVED.
-
 
 defined( 'ABSPATH' ) || exit;
 
-//$settings = get_option( '_hqfw_main_settings' );
-$settings = SettingApi::get_settings(); // TO BE REMOVED.
+$settings = get_option( '_hqfw_main_settings' );
 
 /**
  * Header
@@ -75,7 +72,7 @@ echo Component::get_header( $args['page_title'] ); ?>
          */
         echo Component::get_button([
             'type'  => 'normal',
-            'class' => 'hsfw-js-save-setting-btn hd-ds-block hd-mb-30 hd-ml-auto',
+            'class' => 'hqfw-js-save-setting-btn hd-ds-block hd-mb-30 hd-ml-auto',
             'label' => 'Save Changes',
             'attr'  => [
                 'data-group-target' => 'general_setting_group'
@@ -231,6 +228,14 @@ echo Component::get_header( $args['page_title'] ); ?>
             'description' => 'Enable this to show the slider bullets shortcut in the product thumbnail.',
         ]);
 
+        echo Field::get_switch_field([
+            'name'  => 'gn_pt_show_flash_sale',
+            'group' => 'general_setting_group',
+            'value' => $settings['gn_pt_show_flash_sale'],
+            'label' => 'Show Product Flash Sale Badge',
+            'description' => 'Enable this to show product flash sale badge in the product thumbnail.',
+        ]);
+
         /**
          * Product Thumbnail - Card Closing.
          */
@@ -340,7 +345,7 @@ echo Component::get_header( $args['page_title'] ); ?>
          */
         echo Component::get_button([
             'type'  => 'normal',
-            'class' => 'hsfw-js-save-setting-btn hd-ds-block hd-ml-auto',
+            'class' => 'hqfw-js-save-setting-btn hd-ds-block hd-ml-auto',
             'label' => 'Save Changes',
             'attr'  => [
                 'data-group-target' => 'general_setting_group'
@@ -368,7 +373,7 @@ echo Component::get_header( $args['page_title'] ); ?>
          */
         echo Component::get_button([
             'type'  => 'normal',
-            'class' => 'hsfw-js-save-setting-btn hd-ds-block hd-mb-30 hd-ml-auto',
+            'class' => 'hqfw-js-save-setting-btn hd-ds-block hd-mb-30 hd-ml-auto',
             'label' => 'Save Changes',
             'attr'  => [
                 'data-group-target' => 'quick_view_button_setting_group'
@@ -528,15 +533,13 @@ echo Component::get_header( $args['page_title'] ); ?>
                     'name'  => 'qv_btn_bg_clr',
                     'group' => 'quick_view_button_setting_group',
                     'value' => $settings['qv_btn_bg_clr'],
-                    'label' => 'Color',
-                    'placeholder' => 'Color'
+                    'label' => 'Color'
                 ]),
                 Field::get_color_picker_field([
                     'name'  => 'qv_btn_bg_hv_clr',
                     'group' => 'quick_view_button_setting_group',
                     'value' => $settings['qv_btn_bg_hv_clr'],
-                    'label' => 'Hover & Focus Color',
-                    'placeholder' => 'Hover & Focus Color'
+                    'label' => 'Hover & Focus Color'
                 ])
             ]
         ]);
@@ -624,7 +627,7 @@ echo Component::get_header( $args['page_title'] ); ?>
          */
         echo Component::get_button([
             'type'  => 'normal',
-            'class' => 'hsfw-js-save-setting-btn hd-ds-block hd-ml-auto',
+            'class' => 'hqfw-js-save-setting-btn hd-ds-block hd-ml-auto',
             'label' => 'Save Changes',
             'attr'  => [
                 'data-group-target' => 'quick_view_button_setting_group'
@@ -651,7 +654,7 @@ echo Component::get_header( $args['page_title'] ); ?>
          */
         echo Component::get_button([
             'type'  => 'normal',
-            'class' => 'hsfw-js-save-setting-btn hd-ds-block hd-mb-30 hd-ml-auto',
+            'class' => 'hqfw-js-save-setting-btn hd-ds-block hd-mb-30 hd-ml-auto',
             'label' => 'Save Changes',
             'attr'  => [
                 'data-group-target' => 'modal_setting_group'
@@ -770,15 +773,13 @@ echo Component::get_header( $args['page_title'] ); ?>
                     'name'  => 'md_close_btn_bg_clr',
                     'group' => 'modal_setting_group',
                     'value' => $settings['md_close_btn_bg_clr'],
-                    'label' => 'Color',
-                    'placeholder' => 'Color'
+                    'label' => 'Color'
                 ]),
                 Field::get_color_picker_field([
                     'name'  => 'md_close_btn_bg_hv_clr',
                     'group' => 'modal_setting_group',
                     'value' => $settings['md_close_btn_bg_hv_clr'],
-                    'label' => 'Hover & Focus Color',
-                    'placeholder' => 'Hover & Focus Color'
+                    'label' => 'Hover & Focus Color'
                 ])
             ]
         ]);
@@ -926,15 +927,13 @@ echo Component::get_header( $args['page_title'] ); ?>
                     'name'  => 'md_sldr_btn_bg_clr',
                     'group' => 'modal_setting_group',
                     'value' => $settings['md_sldr_btn_bg_clr'],
-                    'label' => 'Color',
-                    'placeholder' => 'Color'
+                    'label' => 'Color'
                 ]),
                 Field::get_color_picker_field([
                     'name'  => 'md_sldr_btn_bg_hv_clr',
                     'group' => 'modal_setting_group',
                     'value' => $settings['md_sldr_btn_bg_hv_clr'],
-                    'label' => 'Hover & Focus Color',
-                    'placeholder' => 'Hover & Focus Color'
+                    'label' => 'Hover & Focus Color'
                 ])
             ]
         ]);
@@ -1060,7 +1059,7 @@ echo Component::get_header( $args['page_title'] ); ?>
          */
         echo Component::get_button([
             'type'  => 'normal',
-            'class' => 'hsfw-js-save-setting-btn hd-ds-block hd-ml-auto',
+            'class' => 'hqfw-js-save-setting-btn hd-ds-block hd-ml-auto',
             'label' => 'Save Changes',
             'attr'  => [
                 'data-group-target' => 'modal_setting_group'
@@ -1087,7 +1086,7 @@ echo Component::get_header( $args['page_title'] ); ?>
          */
         echo Component::get_button([
             'type'  => 'normal',
-            'class' => 'hsfw-js-save-setting-btn hd-ds-block hd-mb-30 hd-ml-auto',
+            'class' => 'hqfw-js-save-setting-btn hd-ds-block hd-mb-30 hd-ml-auto',
             'label' => 'Save Changes',
             'attr'  => [
                 'data-group-target' => 'product_thumbnail_setting_group'
@@ -1240,15 +1239,13 @@ echo Component::get_header( $args['page_title'] ); ?>
                     'name'  => 'pt_sldr_btn_bg_clr',
                     'group' => 'product_thumbnail_setting_group',
                     'value' => $settings['pt_sldr_btn_bg_clr'],
-                    'label' => 'Color',
-                    'placeholder' => 'Color'
+                    'label' => 'Color'
                 ]),
                 Field::get_color_picker_field([
                     'name'  => 'pt_sldr_btn_bg_hv_clr',
                     'group' => 'product_thumbnail_setting_group',
                     'value' => $settings['pt_sldr_btn_bg_hv_clr'],
-                    'label' => 'Hover & Focus Color',
-                    'placeholder' => 'Hover & Focus Color'
+                    'label' => 'Hover & Focus Color'
                 ])
             ]
         ]);
@@ -1370,15 +1367,13 @@ echo Component::get_header( $args['page_title'] ); ?>
                     'name'  => 'pt_zoom_btn_bg_clr',
                     'group' => 'product_thumbnail_setting_group',
                     'value' => $settings['pt_zoom_btn_bg_clr'],
-                    'label' => 'Color',
-                    'placeholder' => 'Color'
+                    'label' => 'Color'
                 ]),
                 Field::get_color_picker_field([
                     'name'  => 'pt_zoom_btn_bg_hv_clr',
                     'group' => 'product_thumbnail_setting_group',
                     'value' => $settings['pt_zoom_btn_bg_hv_clr'],
-                    'label' => 'Hover & Focus Color',
-                    'placeholder' => 'Hover & Focus Color'
+                    'label' => 'Hover & Focus Color'
                 ])
             ]
         ]);
@@ -1462,15 +1457,13 @@ echo Component::get_header( $args['page_title'] ); ?>
                     'name'  => 'pt_bul_bg_clr',
                     'group' => 'product_thumbnail_setting_group',
                     'value' => $settings['pt_bul_bg_clr'],
-                    'label' => 'Color',
-                    'placeholder' => 'Color'
+                    'label' => 'Color'
                 ]),
                 Field::get_color_picker_field([
                     'name'  => 'pt_bul_bg_ac_clr',
                     'group' => 'product_thumbnail_setting_group',
                     'value' => $settings['pt_bul_bg_ac_clr'],
-                    'label' => 'Hover & Active Color',
-                    'placeholder' => 'Hover & Active Color'
+                    'label' => 'Hover & Active Color'
                 ])
             ]
         ]);
@@ -1538,7 +1531,7 @@ echo Component::get_header( $args['page_title'] ); ?>
          */
         echo Component::get_button([
             'type'  => 'normal',
-            'class' => 'hsfw-js-save-setting-btn hd-ds-block hd-ml-auto',
+            'class' => 'hqfw-js-save-setting-btn hd-ds-block hd-ml-auto',
             'label' => 'Save Changes',
             'attr'  => [
                 'data-group-target' => 'product_thumbnail_setting_group'
@@ -1565,7 +1558,7 @@ echo Component::get_header( $args['page_title'] ); ?>
          */
         echo Component::get_button([
             'type'  => 'normal',
-            'class' => 'hsfw-js-save-setting-btn hd-ds-block hd-mb-30 hd-ml-auto',
+            'class' => 'hqfw-js-save-setting-btn hd-ds-block hd-mb-30 hd-ml-auto',
             'label' => 'Save Changes',
             'attr'  => [
                 'data-group-target' => 'product_summary_setting_group'
@@ -1723,15 +1716,13 @@ echo Component::get_header( $args['page_title'] ); ?>
                     'name'  => 'ps_rating_star_clr_1',
                     'group' => 'product_summary_setting_group',
                     'value' => $settings['ps_rating_star_clr_1'],
-                    'label' => 'Primary',
-                    'placeholder' => 'Primary'
+                    'label' => 'Primary'
                 ]),
                 Field::get_color_picker_field([
                     'name'  => 'ps_rating_star_clr_2',
                     'group' => 'product_summary_setting_group',
                     'value' => $settings['ps_rating_star_clr_2'],
-                    'label' => 'Secondary',
-                    'placeholder' => 'Secondary'
+                    'label' => 'Secondary'
                 ])
             ]
         ]);
@@ -1928,19 +1919,19 @@ echo Component::get_header( $args['page_title'] ); ?>
             'fields' => [
                 Field::get_color_picker_field([
                     'name'  => 'ps_stst_ink_clr',
-                    'group' => 'quick_view_button_setting_group',
+                    'group' => 'product_summary_setting_group',
                     'value' => $settings['ps_stst_ink_clr'],
                     'label' => 'In Stock',
                 ]),
                 Field::get_color_picker_field([
                     'name'  => 'ps_stst_aob_clr',
-                    'group' => 'quick_view_button_setting_group',
+                    'group' => 'product_summary_setting_group',
                     'value' => $settings['ps_stst_aob_clr'],
                     'label' => 'Available On Backorder'
                 ]),
                 Field::get_color_picker_field([
                     'name'  => 'ps_stst_ook_clr',
-                    'group' => 'quick_view_button_setting_group',
+                    'group' => 'product_summary_setting_group',
                     'value' => $settings['ps_stst_ook_clr'],
                     'label' => 'Out Of Stock',
                 ])
@@ -2047,7 +2038,7 @@ echo Component::get_header( $args['page_title'] ); ?>
          */
         echo Component::get_button([
             'type'  => 'normal',
-            'class' => 'hsfw-js-save-setting-btn hd-ds-block hd-ml-auto',
+            'class' => 'hqfw-js-save-setting-btn hd-ds-block hd-ml-auto',
             'label' => 'Save Changes',
             'attr'  => [
                 'data-group-target' => 'product_summary_setting_group'
@@ -2075,7 +2066,7 @@ echo Component::get_header( $args['page_title'] ); ?>
          */
         echo Component::get_button([
             'type'  => 'normal',
-            'class' => 'hsfw-js-save-setting-btn hd-ds-block hd-mb-30 hd-ml-auto',
+            'class' => 'hqfw-js-save-setting-btn hd-ds-block hd-mb-30 hd-ml-auto',
             'label' => 'Save Changes',
             'attr'  => [
                 'data-group-target' => 'advanced_setting_group'
@@ -2109,7 +2100,7 @@ echo Component::get_header( $args['page_title'] ); ?>
          */
         echo Component::get_button([
             'type'  => 'normal',
-            'class' => 'hsfw-js-save-setting-btn hd-ds-block hd-ml-auto',
+            'class' => 'hqfw-js-save-setting-btn hd-ds-block hd-ml-auto',
             'label' => 'Save Changes',
             'attr'  => [
                 'data-group-target' => 'advanced_setting_group'
@@ -2121,8 +2112,6 @@ echo Component::get_header( $args['page_title'] ); ?>
          */
         echo Component::get_tab_panel_closing();
     ?>
-
-
 
 </div>
 

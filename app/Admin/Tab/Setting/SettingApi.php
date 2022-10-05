@@ -53,15 +53,11 @@ final class SettingApi {
                 'default' => 1
             ],
             'gn_md_show_close_btn'          => [
-                'type'    => 'number',
+                'type'    => 'switch',
                 'default' => 1
             ],
 
             // gn_pt.
-            'gn_pt_show'                    => [
-                'type'    => 'switch',
-                'default' => 1
-            ],
             'gn_pt_enable_slider'           => [
                 'type'    => 'switch',
                 'default' => 1
@@ -82,12 +78,12 @@ final class SettingApi {
                 'type'    => 'switch',
                 'default' => 1
             ],
-
-            // gn_ps.
-            'gn_ps_show'                    => [
+            'gn_pt_show_flash_sale'         => [
                 'type'    => 'switch',
                 'default' => 1
             ],
+
+            // gn_ps.
             'gn_ps_show_title'              => [
                 'type'    => 'switch',
                 'default' => 1
@@ -187,7 +183,7 @@ final class SettingApi {
             ],
             'qv_btn_wd'                     => [
                 'type'     => 'size',
-                'default'  => '100%'
+                'default'  => 'fit-content'
             ],
             'qv_btn_ht'                     => [
                 'type'     => 'size',
@@ -460,7 +456,7 @@ final class SettingApi {
             ],
             'pt_sldr_btn_icon_clr'          => [
                 'type'     => 'color',
-                'default'  => 'rgba(255,255,255,0.7)'
+                'default'  => 'rgba(0,0,0,0.7)'
             ],
             'pt_sldr_btn_icon_hv_clr'       => [
                 'type'     => 'color',
@@ -562,11 +558,11 @@ final class SettingApi {
             ],
             'pt_bul_bg_clr'                 => [
                 'type'     => 'color',
-                'default'  => 'rgba(0,0,0,0.7)'
+                'default'  => 'rgba(0,0,0,0.4)'
             ],
             'pt_bul_bg_ac_clr'              => [
                 'type'     => 'color',
-                'default'  => 'rgba(0,0,0,0.4)'
+                'default'  => 'rgba(0,0,0,0.7)'
             ],
             'pt_bul_gap'                    => [
                 'type'     => 'size',
@@ -822,12 +818,12 @@ final class SettingApi {
      * @return array
      */
     public static function get_settings() {
-        /**$settings = get_option( '_hqfw_main_settings' );
+        $settings = get_option( '_hqfw_main_settings' );
         if ( empty( $settings ) ) {
             $settings = self::get_fields_default_values();
-        }**/
+        }
 
-        return self::get_fields_default_values();
+        return $settings;
     }
 
     /**

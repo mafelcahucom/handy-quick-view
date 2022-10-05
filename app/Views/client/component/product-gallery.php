@@ -22,6 +22,7 @@ if ( empty( $args['images'] ) ) {
 }
 
 $total_images = count( $args['images'] );
+$settings     = get_option( '_hqfw_main_settings' );
 ?>
 
 <div id="hqfw-js-photo-slider" class="hqfw-photo-slider" data-current-slide="0">
@@ -43,8 +44,10 @@ $total_images = count( $args['images'] );
                 }
 
                 $image_class = ( $key === 0 ? 'hqfw-photo-slider__image-primary' : 'hqfw-photo-slider__image' );
-                $zoom_class  = Helper::get_zoom_class( $value['image'][1], $value['image'][2] );
-
+                $zoom_class  = '';
+                if ( $settings['gn_pt_enable_zoom'] ) {
+                    $zoom_class  = Helper::get_zoom_class( $value['image'][1], $value['image'][2] );
+                }
             ?>
             <div class="hqfw-photo-slider__slide <?php echo esc_attr( $zoom_class ); ?>" data-image_id="<?php echo esc_attr( $value['id'] ); ?>">
                 <img src="<?php echo esc_url( $value['image'][0] ); ?>" class="<?php echo esc_attr( $image_class ); ?>" width="<?php echo esc_attr( $value['image'][1] ); ?>" height="<?php echo esc_attr( $value['image'][2] ); ?>" alt="<?php echo esc_attr( $value['title'] ); ?>" role="presentation">
@@ -52,16 +55,24 @@ $total_images = count( $args['images'] );
         <?php endforeach; ?>
     </div>
 
-    <?php if ( $total_images > 1 ): ?>
-        <button class="hqfw-js-photo-slider-controller hqfw-photo-slider__controller hqfw-flex-c hqfw-hover" data-event="prev" aria-label="Previous">
-            <?php echo Helper::get_icon( 'bs-chevron-left' ); ?>
+    <?php if ( $settings['gn_pt_enable_slider'] && $total_images > 1 ): ?>
+        <button class="hqfw-js-photo-slider-controller hqfw-photo-slider__controller hqfw-flex-c hqfw-hover" data-event="prev" title="Previous" aria-label="Previous">
+            <?php
+                if ( ! empty( $settings['pt_sldr_btn_icon_prev'] ) ) {
+                    echo Helper::get_icon( $settings['pt_sldr_btn_icon_prev'] );
+                }
+            ?>
         </button>
-        <button class="hqfw-js-photo-slider-controller hqfw-photo-slider__controller hqfw-flex-c hqfw-hover" data-event="next" aria-label="Next">
-            <?php echo Helper::get_icon( 'bs-chevron-right' ); ?>
+        <button class="hqfw-js-photo-slider-controller hqfw-photo-slider__controller hqfw-flex-c hqfw-hover" data-event="next" title="Next" aria-label="Next">
+            <?php
+                if ( ! empty( $settings['pt_sldr_btn_icon_next'] ) ) {
+                    echo Helper::get_icon( $settings['pt_sldr_btn_icon_next'] );
+                }
+            ?>
         </button>
     <?php endif; ?>
 
-    <?php if ( $total_images > 1 ): ?>
+    <?php if ( $settings['gn_pt_show_bullet'] && $total_images > 1 ): ?>
         <ul class="hqfw-photo-slider__bullet hqfw-flex hqfw-flex-jc-c">
             <?php foreach ( $args['images'] as $key => $value ): ?>
                 <?php
@@ -76,7 +87,7 @@ $total_images = count( $args['images'] );
     <?php endif; ?>
 </div>
 
-<?php if ( $total_images > 1 ): ?>
+<?php if ( $settings['gn_pt_show_collection'] && $total_images > 1 ): ?>
     <ul class="hqfw-photo-slider__collection">
         <?php foreach ( $args['images'] as $key => $value ): ?>
             <?php

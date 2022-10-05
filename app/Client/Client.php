@@ -106,22 +106,41 @@ final class Client {
      * @since 1..0.0
      */
     public function register_scripts() {
+        // Settings.
+        $settings = get_option( '_hqfw_main_settings' );
+
+        // Toaster.
         if ( ! wp_script_is( 'handy-toaster-js' ) ) {
             wp_register_script( 'handy-toaster-js', Helper::get_asset_src( 'js/handy-toaster.min.js' ), [], '1.0.0', true );
             wp_enqueue_script( 'handy-toaster-js' );
         }
 
-        $client_dependency = [ 'jquery', 'wc-add-to-cart-variation', 'zoom' ];
+        // Client dependency.
+        $client_dependency = [ 'jquery' ];
+
+        // Zoom dependency.
+        $is_zoom_enabled = false;
+        if ( $settings['gn_pt_enable_zoom'] || $settings['gn_pt_enable_lightbox'] ) {
+            $is_zoom_enabled     = true;
+            $client_dependency[] = 'zoom';
+        }
+
+        // Add to cart variation dependency.
+        if ( $settings['gn_ps_show_add_to_cart'] ) {
+            $client_dependency[] = 'wc-add-to-cart-variation';
+        }
+
+        // Client js.
         wp_register_script( 'hqfw-client-js', Helper::get_asset_src( 'js/hqfw-client.min.js' ), $client_dependency, '1.0.0', true );
         wp_enqueue_script( 'hqfw-client-js' );
-
-        // Get settings.
-        $settings = get_option( '_hqfw_main_settings' );
 
         // Localize variables.
         wp_localize_script( 'hqfw-client-js', 'hqfwLocal', [
             'crafter' => 'Y35qwbAlyt+y60cldwAatUDyxikpRb30wBPT9Y1Xymk=',
             'url'     => admin_url( 'admin-ajax.php' ),
+            'setting' => [
+                'isZoomEnabled' => $is_zoom_enabled
+            ], 
             'icon'    => [
                 'searchPlus' => Helper::get_icon( 'bs-search-plus' )
             ],

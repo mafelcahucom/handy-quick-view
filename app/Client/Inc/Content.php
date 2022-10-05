@@ -34,24 +34,54 @@ final class Content {
      * @since 1.0.0
      */
     public static function generate() {
+        // Settings
+        $settings = get_option( '_hqfw_main_settings' );
+
         // Product gallery.
         add_action( 'hqfw_product_gallery', [ __CLASS__, 'product_image_gallery' ], 5 );
 
         // Product gallery slider.
-        add_action( 'hqfw_product_gallery_slider', [ __CLASS__, 'close_button' ], 5 );
-        add_action( 'hqfw_product_gallery_slider', [ __CLASS__, 'photo_box_button' ], 10 );
-        add_action( 'hqfw_product_gallery_slider', 'woocommerce_show_product_sale_flash', 15 );
+        if ( $settings['gn_md_show_close_btn'] ) {
+            add_action( 'hqfw_product_gallery_slider', [ __CLASS__, 'close_button' ], 5 );
+        }
+        
+        if ( $settings['gn_pt_enable_lightbox'] ) {
+            add_action( 'hqfw_product_gallery_slider', [ __CLASS__, 'photo_box_button' ], 10 );
+        }
+
+        if ( $settings['gn_pt_show_flash_sale'] ) {
+            add_action( 'hqfw_product_gallery_slider', 'woocommerce_show_product_sale_flash', 15 );
+        }
 
         // Product summary head.
-        add_action( 'hqfw_product_summary_head', [ __CLASS__, 'close_button' ], 5 );
+        if ( $settings['gn_md_show_close_btn'] ) {
+            add_action( 'hqfw_product_summary_head', [ __CLASS__, 'close_button' ], 5 );
+        }
 
         // Product summary body.
-        add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_title', 5 );
-        add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_rating', 10 );
-        add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_price', 15 );
-        add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_excerpt', 20 );
-        add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_add_to_cart', 25 );
-        add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_meta', 30 );
+        if ( $settings['gn_ps_show_title'] ) {
+            add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_title', 5 );
+        }
+
+        if ( $settings['gn_ps_show_rating'] ) {
+            add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_rating', 10 );
+        }
+
+        if ( $settings['gn_ps_show_price'] ) {
+            add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_price', 15 );
+        }
+
+        if ( $settings['gn_ps_show_exerpt'] ) {
+            add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_excerpt', 20 );
+        }
+
+        if ( $settings['gn_ps_show_add_to_cart'] ) {
+            add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_add_to_cart', 25 );
+        }
+
+        if ( $settings['gn_ps_show_meta'] ) {
+            add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_meta', 30 );
+        }
     }
 
     /**
