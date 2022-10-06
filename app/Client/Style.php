@@ -287,6 +287,7 @@ final class Style {
         $class .= "
             .hqfw-quick-view-btn {
                 display: inline-block;
+                cursor: pointer;
                 width: {$settings['qv_btn_wd']};
                 height: {$settings['qv_btn_ht']};
                 font-size: {$settings['qv_btn_fs']};
@@ -595,11 +596,22 @@ final class Style {
         if ( $settings['gn_pt_show_flash_sale'] ) {
             $class .= "
                 .hqfw-photo-slider .onsale {
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    margin: 15px;
-                    z-index: 9;
+                    display: -webkit-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    -webkit-box-pack: center;
+                    -ms-flex-pack: center;
+                    justify-content: center;
+                    position: absolute !important;
+                    top: 0 !important;
+                    left: 0 !important;
+                    margin: 15px !important;
+                    font-size: 1em !important;
+                    line-height: 1em !important;
+                    z-index: 9 !important;
                 }
             ";
         }
@@ -655,6 +667,7 @@ final class Style {
                     height: {$settings['pt_bul_ht']};
                     background-color: {$settings['pt_bul_bg_clr']};
                     border-radius: {$settings['pt_bul_br']};
+                    border: 0;
                 }
                 .hqfw-photo-slider__bullet button:hover,
                 .hqfw-photo-slider__bullet button:focus {
@@ -970,6 +983,7 @@ final class Style {
                     display: block;
                     padding: 0;
                     margin-bottom: 5px;
+                    text-align: left;
                     background-color: transparent;
                 }
                 .hqfw table.variations td.value {

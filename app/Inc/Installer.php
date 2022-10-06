@@ -86,7 +86,7 @@ final class Installer {
             // qv_btn.
             'qv_btn_style'                  => 'text-icon',
             'qv_btn_text'                   => 'Quick View',
-            'qv_btn_fs'                     => '14px',
+            'qv_btn_fs'                     => '16px',
             'qv_btn_fw'                     => '500',
             'qv_btn_icon'                   => 'bs-eye',
             'qv_btn_icon_wd'                => '20px',

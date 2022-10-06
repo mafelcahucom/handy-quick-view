@@ -124,7 +124,7 @@ final class SettingApi {
             ],
             'qv_btn_fs'                     => [
                 'type'     => 'size',
-                'default'  => '14px'
+                'default'  => '16px'
             ],
             'qv_btn_fw'                     => [
                 'type'     => 'select',
