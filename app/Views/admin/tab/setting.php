@@ -164,7 +164,7 @@ echo Component::get_header( $args['page_title'] ); ?>
             'group' => 'general_setting_group',
             'value' => $settings['gn_md_show_close_btn'],
             'label' => 'Show Close Button',
-            'description' => 'Enable this to show the close button in the modal. Note the modal can be close by just clicking the modal overlay.',
+            'description' => 'Enable this to show the close button in the modal.',
         ]);
 
         /**
@@ -178,14 +178,6 @@ echo Component::get_header( $args['page_title'] ); ?>
         echo Component::get_card_opening([
             'title' => 'Product Thumbnail',
             'class' => 'hd-mb-30'
-        ]);
-
-        echo Field::get_switch_field([
-            'name'  => 'gn_pt_show',
-            'group' => 'general_setting_group',
-            'value' => $settings['gn_pt_show'],
-            'label' => 'Show Product Thumbnail Section',
-            'description' => 'Enable to show the product thumbnail section in the modal.',
         ]);
 
         echo Field::get_switch_field([
@@ -250,14 +242,6 @@ echo Component::get_header( $args['page_title'] ); ?>
         ]);
 
         echo Field::get_switch_field([
-            'name'  => 'gn_ps_show',
-            'group' => 'general_setting_group',
-            'value' => $settings['gn_ps_show'],
-            'label' => 'Show Product Summary Section',
-            'description' => 'Enable this to show product summary section in the modal.',
-        ]);
-
-        echo Field::get_switch_field([
             'name'  => 'gn_ps_show_title',
             'group' => 'general_setting_group',
             'value' => $settings['gn_ps_show_title'],
@@ -311,36 +295,6 @@ echo Component::get_header( $args['page_title'] ); ?>
         echo Component::get_card_closing();
 
         /**
-         * Toaster - Card Opening.
-         */
-        echo Component::get_card_opening([
-            'title' => 'Toaster',
-            'class' => 'hd-mb-30'
-        ]);
-
-        echo Field::get_switch_field([
-            'name'  => 'gn_tr_use_toaster',
-            'group' => 'general_setting_group',
-            'value' => $settings['gn_tr_use_toaster'],
-            'label' => 'Use Toaster',
-            'description' => 'Enable to use the prompt toaster.',
-        ]);
-
-        echo Field::get_number_field([
-            'name'  => 'gn_tr_show_duration',
-            'group' => 'general_setting_group',
-            'value' => $settings['gn_tr_show_duration'],
-            'label' => 'Duration',
-            'description' => 'Set the total milliseconds before the toaster will automatically hide.',
-            'placeholder' => 'Duration'
-        ]);
-
-        /**
-         * Toater - Card Closing.
-         */
-        echo Component::get_card_closing();
-
-        /**
          * Save button settings - general_setting_group
          */
         echo Component::get_button([
@@ -386,6 +340,11 @@ echo Component::get_header( $args['page_title'] ); ?>
         echo Component::get_card_opening([
             'title' => 'Quick View Button',
             'class' => 'hd-mb-30'
+        ]);
+
+        echo Field::get_note_field([
+            'title' => 'Instruction',
+            'message' => 'You can manually use or add a quick view button by using the shortcode <code>[handy-quick-view-button id="product_id"]</code>. Note do not forget to provide the product id.'
         ]);
 
         echo Field::get_select_field([

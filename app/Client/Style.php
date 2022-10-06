@@ -125,14 +125,14 @@ final class Style {
     }
 
     /**
-     * Minify the inline css.
+     * Minify the internal css.
      *
      * @since 1.0.0
      * 
-     * @param  string  $css  The inline css to be minify.
+     * @param  string  $css  The internal css to be minify.
      * @return string
      */
-    private function minify_inline_css( $css ) {
+    private function minify_internal_css( $css ) {
         $css = preg_replace( '/\s+/', ' ', $css );
         $css = preg_replace( '/\/\*[^\!](.*?)\*\//', '', $css );
         $css = preg_replace( '/(,|:|;|\{|}) /', '$1', $css );
@@ -396,6 +396,30 @@ final class Style {
                 background-color: {$settings['md_bg_clr']};
                 border-radius: {$settings['md_br']};
             }
+            @media ( max-width: 992px ) {
+                .hqfw-product {
+                    -ms-flex-direction: column;
+                    flex-direction: column;
+                    max-width: 500px;
+                    max-height: 770px;
+                    overflow: auto;
+                }
+                .hqfw-product::-webkit-scrollbar {
+                    width: 5px;
+                }
+                .hqfw-product::-webkit-scrollbar-thumb {
+                    background-color: rgba(224,225,226,1);
+                }
+                .hqfw-product::-webkit-scrollbar-thumb:hover {
+                    background-color: rgba(202, 203, 205, 1);
+                }
+                .hqfw-product__col-left {
+                    width: 100% !important;
+                }
+                .hqfw-product__col-right {
+                    width: 100% !important;
+                }
+            }
         ";
 
         // Navigation Button.
@@ -429,6 +453,21 @@ final class Style {
                     width: {$settings['md_sldr_btn_icon_wd']};
                     height: {$settings['md_sldr_btn_icon_ht']};
                 }
+                @media ( max-width: 992px ) {
+                    .hqfw-navigation-btn {
+                        width: 35px;
+                        height: 35px;
+                    }
+                    .hqfw-navigation-btn svg {
+                        width: 18px;
+                        height: auto;
+                    }
+                }
+                @media ( max-width: 480px ) {
+                    .hqfw-navigation-btn {
+                        display: none;
+                    }
+                }
             ";
         }
 
@@ -460,6 +499,19 @@ final class Style {
                 .hqfw-product__gallery .hqfw-modal__close-btn {
                     display: none;
                     position: absolute;
+                }
+                @media ( max-width: 992px ) {
+                    .hqfw-product__summary .hqfw-modal__close-btn {
+                        display: none;
+                    }
+                    .hqfw-product__gallery .hqfw-modal__close-btn {
+                        display: -webkit-box;
+                        display: -ms-flexbox;
+                        display: flex;
+                        top: 0;
+                        right: 0;
+                        z-index: 9;
+                    }
                 }
             ";
         }
@@ -639,6 +691,16 @@ final class Style {
                 }
                 .hqfw-photo-slider__collection img[data-state='active'] {
                     opacity: 1;
+                }
+                @media ( max-width: 992px ) {
+                    .hqfw-photo-slider__collection {
+                        grid-template-columns: repeat(auto-fill,minmax(40px,3fr));
+                        margin-top: 5px !important;
+                    }
+                    .hqfw-photo-slider__collection img {
+                        max-width: 40px;
+                        max-height: 40px;    
+                    }
                 }
             ";
         }
@@ -974,72 +1036,12 @@ final class Style {
             ";
         }
 
-        // Media Query.
-        $class .= "
-            @media ( max-width: 992px ) {
-                .hqfw-navigation-btn {
-                    width: 35px;
-                    height: 35px;
-                }
-                .hqfw-navigation-btn svg {
-                    width: 18px;
-                    height: auto;
-                }
-                .hqfw-product {
-                    -ms-flex-direction: column;
-                    flex-direction: column;
-                    max-width: 500px;
-                    max-height: 770px;
-                    overflow: auto;
-                }
-                .hqfw-product::-webkit-scrollbar {
-                    width: 5px;
-                }
-                .hqfw-product::-webkit-scrollbar-thumb {
-                    background-color: rgba(224,225,226,1);
-                }
-                .hqfw-product::-webkit-scrollbar-thumb:hover {
-                    background-color: rgba(202, 203, 205, 1);
-                }
-                .hqfw-product__col-left {
-                    width: 100%;
-                }
-                .hqfw-product__col-right {
-                    width: 100%;
-                }
-                .hqfw-photo-slider__collection {
-                    grid-template-columns: repeat(auto-fill,minmax(40px,3fr));
-                    margin-top: 5px !important;
-                }
-                .hqfw-photo-slider__collection img {
-                    max-width: 40px;
-                    max-height: 40px;    
-                }
-                .hqfw-product__summary .hqfw-modal__close-btn {
-                    display: none;
-                }
-                .hqfw-product__gallery .hqfw-modal__close-btn {
-                    display: -webkit-box;
-                    display: -ms-flexbox;
-                    display: flex;
-                    top: 0;
-                    right: 0;
-                    z-index: 9;
-                }
-            }
-            @media ( max-width: 480px ) {
-                .hqfw-navigation-btn {
-                    display: none;
-                }
-            }
-        ";
-
         // Additional CSS.
         if ( ! empty( $settings['ad_stg_additional_css'] ) ) {
             $class .= $settings['ad_stg_additional_css'];
         }
 
-        $style    = '<style id="hqfw-inline-style">'. $class .'</style>';
-        echo $this->minify_inline_css( $style );
+        $style    = '<style id="hqfw-internal-style">'. $class .'</style>';
+        echo $this->minify_internal_css( $style );
     }
 }

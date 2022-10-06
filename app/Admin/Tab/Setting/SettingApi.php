@@ -109,16 +109,6 @@ final class SettingApi {
                 'default' => 1
             ],
 
-            // gn_tr.
-            'gn_tr_use_toaster'             => [
-                'type'    => 'switch',
-                'default' => 1
-            ],
-            'gn_tr_show_duration'           => [
-                'type'    => 'number',
-                'default' => 5000
-            ],
-
             // qv_btn.
             'qv_btn_style'                  => [
                 'type'     => 'select',

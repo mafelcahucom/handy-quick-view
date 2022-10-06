@@ -85,7 +85,7 @@ final class SettingEvent {
         // Get the current settings value.
         $current_settings_value = get_option( '_hqfw_main_settings' );
         if ( empty( $current_settings_value ) ) {
-            // Get the default values of fields if _hqfw_main_settings is emty.
+            // Get the default values of fields if _hqfw_main_settings is empty.
             $current_settings_value = SettingApi::get_fields_default_values();
         }
 

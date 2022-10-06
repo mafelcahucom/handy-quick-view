@@ -1044,11 +1044,11 @@ hqfw.importerExporter = {
 			});
 
 			if ( res.success === true ) {
-				hqfw.fn.createTextFile( 'handy-sliding-cart-for-woocommerce-settings.txt', res.data.settings );
+				hqfw.fn.createTextFile( 'handy-quick-view-for-woocommerce-settings.txt', res.data.settings );
 				hqfw.toaster.show({
 					color: 'success',
 					title: 'Settings Successfully Exported',
-					content: 'Sliding cart settings has successfully exported.'
+					content: 'Quick view settings has successfully exported.'
 				});
 			} else {
 				hqfw.prompt.errorMessage( res.data.error );
@@ -1115,7 +1115,7 @@ hqfw.importerExporter = {
 					hqfw.toaster.show({
 						color: 'success',
 						title: 'Settings Successfully Imported',
-						content: 'Sliding cart settings has successfully imported.'
+						content: 'Quick view settings has successfully imported.'
 					});
 				} else {
 					hqfw.prompt.errorMessage( res.data.error );

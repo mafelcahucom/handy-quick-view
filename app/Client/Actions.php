@@ -35,7 +35,7 @@ final class Actions {
      * @since 1.0.0
      */
     protected function __construct() {
-        // Set the value of setting property.
+        // Set the value of settings property.
         $this->settings = get_option( '_hqfw_main_settings' );
 
         // Render quick view button.

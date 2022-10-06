@@ -119,8 +119,7 @@ hqfw.fn = {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param  imagePath
-	 * @params {string} imagePath The full path of the image.
+	 * @param {string} imagePath The full path of the image.
 	 * @return {string} The name of the image.
 	 */
 	getImageName( imagePath ) {
@@ -229,7 +228,7 @@ hqfw.fn = {
 			} else if ( document.webkitExitFullscreen ) {
 				document.webkitExitFullscreen();
 			}
-	 	}
+		}
 	},
 };
 
@@ -831,7 +830,6 @@ hqfw.photoBox = {
 
 		hqfw.photoBox.imageElem = imageElem;
 
-		// Return success.
 		return true;
 	},
 
@@ -1273,7 +1271,6 @@ hqfw.quickView = {
 		// Set productIds property.
 		this.setProductIds();
 
-		// Return success.
 		return true;
 	},
 
@@ -1440,6 +1437,7 @@ hqfw.quickView = {
 
 		data.prevId = ( idIndex > 0 ? ids[ idIndex - 1 ] : ids[ idsCount - 1 ] );
 		data.nextId = ( idIndex < ( idsCount - 1 ) ? ids[ idIndex + 1 ] : ids[ 0 ] );
+
 		return data;
 	},
 
@@ -1708,6 +1706,6 @@ hqfw.domReady = {
 };
 
 hqfw.domReady.execute( function() {
-	hqfw.photoBox.init();
-	hqfw.quickView.init();
+	hqfw.photoBox.init(); // Handle the photo box component events.
+	hqfw.quickView.init(); // Handle the quick view component events.
 } );

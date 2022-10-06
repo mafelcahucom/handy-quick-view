@@ -4,7 +4,6 @@ namespace HQFW\Client;
 use HQFW\Inc\Traits\Singleton;
 use HQFW\Inc\Plugins;
 use HQFW\Client\Inc\Helper;
-use HQFW\Client\Filters;
 use HQFW\Client\Actions;
 use HQFW\Client\Events;
 use HQFW\Client\Shortcodes;
@@ -55,7 +54,6 @@ final class Client {
      */
     private static function get_classes() {
         return [
-            Filters::class,
             Actions::class,
             Events::class,
             Shortcodes::class,

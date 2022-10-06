@@ -444,7 +444,7 @@ md_br                   - 4px - done
 
 # advance settings - ad_stg.
 [
-    'ad_stg_additional_css'         => ''
+    'ad_stg_additional_css'         => '' - done
 ]
 
 

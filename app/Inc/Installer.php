@@ -83,10 +83,6 @@ final class Installer {
             'gn_ps_show_add_to_cart'        => 1,
             'gn_ps_show_meta'               => 1,
 
-            // gn_tr.
-            'gn_tr_use_toaster'             => 1,
-            'gn_tr_show_duration'           => 5000,
-
             // qv_btn.
             'qv_btn_style'                  => 'text-icon',
             'qv_btn_text'                   => 'Quick View',
