@@ -1,5 +1,5 @@
 {
-  "name": "handy-quick-view-for-woocommerce",
+  "name": "handy-quick-view",
   "version": "1.0.0",
   "description": "A WordPress plugin for adding quick view in WooCommerce.",
   "main": "app.js",

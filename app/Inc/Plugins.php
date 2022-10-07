@@ -49,7 +49,7 @@ final class Plugins {
                 'name' => 'Handy Quick View For WooCommerce',
                 'slug' => 'handy-quick-view-for-woocommerce',
                 'file' => 'handy-quick-view-for-woocommerce.php'
-            ],
+            ]
         ];
     }
 

@@ -5,9 +5,9 @@
  * Author:        	  Mafel John Cahucom
  * Author URI:    	  https://www.facebook.com/mafeljohn.cahucom
  * Version:       	  1.0.0
- * Text Domain:   	  handy-quick-view-for-woocommerce
+ * Text Domain:   	  handy-quick-view
  * Domain Path: 	  /languages
- * Requires WP:   	  4.9
+ * Requires WP:   	  3.0
  * License: GPLv2 or later
  */
 
@@ -21,7 +21,7 @@ if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
 
 // Define plugin domain.
 if ( ! defined( 'HQFW_PLUGIN_DOMAIN' ) ) {
-    define( 'HQFW_PLUGIN_DOMAIN', 'handy-sliding-cart-for-woocommerce' );
+    define( 'HQFW_PLUGIN_DOMAIN', 'handy-quick-view' );
 }
 
 // Define plugin version.
