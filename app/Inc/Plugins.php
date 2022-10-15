@@ -35,20 +35,25 @@ final class Plugins {
      */
     public static function collections() {
         return [
-            'handy-add-to-cart-for-woocommerce' => [
+            'handy-add-to-cart' => [
                 'name' => 'Handy Add To Cart For WooCommerce',
-                'slug' => 'handy-add-to-cart-for-woocommerce',
-                'file' => 'handy-add-to-cart-for-woocommerce.php'
+                'slug' => 'handy-add-to-cart',
+                'file' => 'handy-add-to-cart.php'
             ],
-            'handy-sliding-cart-for-woocommerce' => [
+            'handy-sliding-cart' => [
                 'name' => 'Handy Sliding Cart For WooCommerce',
-                'slug' => 'handy-sliding-cart-for-woocommerce',
-                'file' => 'handy-sliding-cart-for-woocommerce.php'
+                'slug' => 'handy-sliding-cart',
+                'file' => 'handy-sliding-cart.php'
             ],
-            'handy-quick-view-for-woocommerce' => [
+            'handy-quick-view' => [
                 'name' => 'Handy Quick View For WooCommerce',
-                'slug' => 'handy-quick-view-for-woocommerce',
-                'file' => 'handy-quick-view-for-woocommerce.php'
+                'slug' => 'handy-quick-view',
+                'file' => 'handy-quick-view.php'
+            ],
+            'handy-added-to-cart-toaster-notifier' => [
+                'name' => 'Handy Added To Cart Toaster Notifier For WooCommerce',
+                'slug' => 'handy-added-to-cart-toaster-notifier',
+                'file' => 'handy-added-to-cart-toaster-notifier.php'
             ]
         ];
     }

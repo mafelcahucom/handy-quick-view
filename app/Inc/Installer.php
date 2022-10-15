@@ -60,6 +60,9 @@ final class Installer {
 
         $settings = [
 
+            // gn
+            'gn_enable'                     => 1,
+
             // gn_qv_btn
             'gn_qv_btn_position'            => 2,
 

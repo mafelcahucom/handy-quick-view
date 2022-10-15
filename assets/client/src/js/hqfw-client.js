@@ -136,7 +136,7 @@ hqfw.fn = {
 	 * @since 1.0.0
 	 *
 	 * @param {element} element The element to be watch.
-	 * @return {boolean}
+	 * @return {boolean} Is animation done.
 	 */
 	isAnimationDone( element ) {
 		return new Promise( function( resolve, reject ) {
@@ -271,15 +271,18 @@ hqfw.prompt = {
 			return ( value.error === error );
 		} );
 
-		if ( errorDetail ) {
-			handyToaster.show( {
-				type: 'alert',
-				color: 'danger',
-				title: errorDetail.title,
-				content: errorDetail.content,
-				duration: hqfwLocal.toaster.duration,
-				allowed: hqfwLocal.toaster.isUseToaster,
-			} );
+		if ( hqfwLocal.plugin.isHATFWActive ) {
+			// Alert toaster notifier.
+			if ( hqfwLocal.plugin.isHATFWActive ) {
+				handyToasterNotifier.show( {
+					type: 'alert',
+					color: 'danger',
+					title: errorDetail.title,
+					content: errorDetail.content,
+				} );
+			}
+		} else {
+			alert( errorDetail.content );
 		}
 	},
 };
@@ -454,7 +457,7 @@ hqfw.photoSlider = {
 	setSlideSize() {
 		const sliderElem = hqfw.photoSlider.sliderElem;
 		const slideElems = sliderElem.querySelectorAll( '.hqfw-photo-slider__slide' );
-		if ( ! slideElems ) {
+		if ( slideElems.length === 0 ) {
 			return;
 		}
 
@@ -505,7 +508,7 @@ hqfw.photoSlider = {
 		}
 
 		const slideElems = sliderElem.querySelectorAll( '.hqfw-photo-slider__slide' );
-		if ( ! slideElems ) {
+		if ( slideElems.length === 0 ) {
 			return;
 		}
 
@@ -592,7 +595,7 @@ hqfw.photoSlider = {
 
 		const sliderElem = hqfw.photoSlider.sliderElem;
 		const slideElems = sliderElem.querySelectorAll( '.hqfw-photo-slider__slide' );
-		if ( ! slideElems ) {
+		if ( slideElems.length === 0 ) {
 			return;
 		}
 
@@ -941,7 +944,7 @@ hqfw.photoBox = {
 			const captionElem = hqfw.photoBox.captionElem;
 
 			const imageElems = modalElem.querySelectorAll( 'img' );
-			if ( ! imageElems ) {
+			if ( imageElems.length === 0 ) {
 				return;
 			}
 
@@ -1317,7 +1320,7 @@ hqfw.quickView = {
 	 */
 	setProductIds() {
 		const quickViewBtnElems = document.querySelectorAll( '.hqfw-js-quick-view-btn' );
-		if ( ! quickViewBtnElems ) {
+		if ( quickViewBtnElems.length === 0 ) {
 			return;
 		}
 
@@ -1399,7 +1402,7 @@ hqfw.quickView = {
 	setProductGalleryTriggerIcon() {
 		setTimeout( function() {
 			const galleryTriggerElems = document.querySelectorAll( 'a.woocommerce-product-gallery__trigger' );
-			if ( ! galleryTriggerElems ) {
+			if ( galleryTriggerElems.length === 0 ) {
 				return;
 			}
 
@@ -1416,7 +1419,7 @@ hqfw.quickView = {
 	 * @since 1.0.0
 	 *
 	 * @param {integer} productId The current product id viewed.
-	 * @return {Object}
+	 * @return {Object} The previous and next product id.
 	 */
 	getProductIdAdjacent( productId ) {
 		const ids = hqfw.quickView.productIds;

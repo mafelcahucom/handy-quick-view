@@ -25,6 +25,15 @@ final class Client {
 	 */
 	use Singleton;
 
+    /**
+     * Holds the settings.
+     *
+     * @since 1.0.0
+     * 
+     * @var array
+     */
+    private $settings;
+
 	/**
      * Initialize.
      *
@@ -36,16 +45,20 @@ final class Client {
             return;
         }
 
+        // Check if the plugin is enable in front-end.
+        $this->settings = get_option( '_hqfw_main_settings' );
+        if ( $this->settings['gn_enable'] == false ) {
+            return;
+        }
+
         if ( ! is_admin() ) {
             // Enqueue styles and scripts.
-            add_action( 'wp_enqueue_scripts', [ $this, 'register_styles' ] );
             add_action( 'wp_enqueue_scripts', [ $this, 'register_scripts' ] );
         }
 
         // Register all classes.
         self::register_classes();
     }
-
 
     /**
      * Returns all the class services.
@@ -86,45 +99,24 @@ final class Client {
         $class::get_instance();
     }
 
-     /**
-     * Register all styles.
-     *
-     * @since 1.0.0
-     */
-    public function register_styles() {
-        if ( ! wp_style_is( 'handy-toaster-css' ) ) {
-            wp_register_style( 'handy-toaster-css', Helper::get_asset_src( 'css/handy-toaster.min.css' ), [], '1.0.0', 'all' );
-            wp_enqueue_style( 'handy-toaster-css' );
-        }
-    }
-
     /**
      * Register all scripts.
      *
      * @since 1..0.0
      */
     public function register_scripts() {
-        // Settings.
-        $settings = get_option( '_hqfw_main_settings' );
-
-        // Toaster.
-        if ( ! wp_script_is( 'handy-toaster-js' ) ) {
-            wp_register_script( 'handy-toaster-js', Helper::get_asset_src( 'js/handy-toaster.min.js' ), [], '1.0.0', true );
-            wp_enqueue_script( 'handy-toaster-js' );
-        }
-
-        // Client dependency.
+        // Include dependency.
         $client_dependency = [ 'jquery' ];
 
         // Zoom dependency.
         $is_zoom_enabled = false;
-        if ( $settings['gn_pt_enable_zoom'] || $settings['gn_pt_enable_lightbox'] ) {
+        if ( $this->settings['gn_pt_enable_zoom'] || $this->settings['gn_pt_enable_lightbox'] ) {
             $is_zoom_enabled     = true;
             $client_dependency[] = 'zoom';
         }
 
         // Add to cart variation dependency.
-        if ( $settings['gn_ps_show_add_to_cart'] ) {
+        if ( $this->settings['gn_ps_show_add_to_cart'] ) {
             $client_dependency[] = 'wc-add-to-cart-variation';
         }
 
@@ -136,15 +128,14 @@ final class Client {
         wp_localize_script( 'hqfw-client-js', 'hqfwLocal', [
             'crafter' => 'Y35qwbAlyt+y60cldwAatUDyxikpRb30wBPT9Y1Xymk=',
             'url'     => admin_url( 'admin-ajax.php' ),
+            'plugin'  => [
+                'isHATFWActive' => Plugins::is_active( 'handy-added-to-cart-toaster-notifier' )
+            ],
             'setting' => [
                 'isZoomEnabled' => $is_zoom_enabled
             ], 
             'icon'    => [
                 'searchPlus' => Helper::get_icon( 'bs-search-plus' )
-            ],
-            'toaster' => [
-                'isUseToaster' => 1,
-                'duration'     => 3000
             ],
             'nonce'   => [
                 'getProductContent' => wp_create_nonce( 'hqfw_get_product_content' )

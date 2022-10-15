@@ -38,6 +38,12 @@ final class SettingApi {
     public static function get_field_rules() {
         $rules = [
 
+            // gn.
+            'gn_enable'                     => [
+                'type'    => 'switch',
+                'default' => 1
+            ],
+
             // gn_qv_btn
             'gn_qv_btn_position'            => [
                 'type'     => 'select',

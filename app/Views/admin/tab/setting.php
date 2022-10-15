@@ -80,6 +80,27 @@ echo Component::get_header( $args['page_title'] ); ?>
         ]);
 
         /**
+         * General - Card Opening.
+         */
+        echo Component::get_card_opening([
+            'title' => 'General',
+            'class' => 'hd-mb-30'
+        ]);
+
+        echo Field::get_switch_field([
+            'name'  => 'gn_enable',
+            'group' => 'general_setting_group',
+            'value' => $settings['gn_enable'],
+            'label' => 'Enable Quick View',
+            'description' => 'Enable this to use quick view in the front-end.',
+        ]);
+
+        /**
+         * General - Card Closing.
+         */
+        echo Component::get_card_closing();
+
+        /**
          * Quick View Button - Card Opening.
          */
         echo Component::get_card_opening([
