@@ -271,15 +271,24 @@ hqfw.prompt = {
 			return ( value.error === error );
 		} );
 
-		if ( hqfwLocal.plugin.isHATFWActive ) {
+		if ( hafwLocal.plugin.isHATFWActive || hafwLocal.plugin.isHAPFWActive ) {
 			// Alert toaster notifier.
-			if ( hqfwLocal.plugin.isHATFWActive ) {
+			if ( hafwLocal.plugin.isHATFWActive ) {
 				handyToasterNotifier.show( {
 					type: 'alert',
 					color: 'danger',
 					title: errorDetail.title,
 					content: errorDetail.content,
 				} );
+			}
+
+			// Alert popup notifier.
+			if ( hafwLocal.plugin.isHAPFWActive ) {
+				handyPopupNotifier.showAlert({
+					status: 'error',
+					title: errorDetail.title,
+					message: errorDetail.content
+				});
 			}
 		} else {
 			alert( errorDetail.content );
@@ -327,7 +336,7 @@ hqfw.photoSlider = {
 	 * @since 1.0.0
 	 */
 	init() {
-		if ( ! this.constructor() ) {
+		if ( ! this.construct() ) {
 			return;
 		}
 
@@ -342,11 +351,11 @@ hqfw.photoSlider = {
 	},
 
 	/**
-	 * Constructor.
+	 * Construct.
 	 *
 	 * @since 1.0.0
 	 */
-	constructor() {
+	construct() {
 		// Set all element property.
 		if ( ! this.setElementProperties() ) {
 			return false;
@@ -759,7 +768,7 @@ hqfw.photoBox = {
 	 * @since 1.0.0
 	 */
 	init() {
-		if ( ! this.constructor() ) {
+		if ( ! this.construct() ) {
 			return;
 		}
 
@@ -772,11 +781,11 @@ hqfw.photoBox = {
 	},
 
 	/**
-	 * Constructor.
+	 * Construct.
 	 *
 	 * @since 1.0.0
 	 */
-	constructor() {
+	construct() {
 		// Set all element properties.
 		if ( ! this.setElementProperties() ) {
 			return false;
@@ -1095,7 +1104,7 @@ hqfw.variation = {
 	 * @since 1.0.0
 	 */
 	init() {
-		if ( ! this.constructor() ) {
+		if ( ! this.construct() ) {
 			return;
 		}
 
@@ -1105,11 +1114,11 @@ hqfw.variation = {
 	},
 
 	/**
-	 * Constructor.
+	 * Construct.
 	 *
 	 * @since 1.0.0
 	 */
-	constructor() {
+	construct() {
 		// Set variation form.
 		if ( ! this.setVariationForm() ) {
 			return false;
@@ -1246,7 +1255,7 @@ hqfw.quickView = {
 	 * @since 1.0.0
 	 */
 	init() {
-		if ( ! this.constructor() ) {
+		if ( ! this.construct() ) {
 			return;
 		}
 
@@ -1261,11 +1270,11 @@ hqfw.quickView = {
 	},
 
 	/**
-	 * Constructor.
+	 * Construct.
 	 *
 	 * @since 1.0.0
 	 */
-	constructor() {
+	construct() {
 		// Set all elements property.
 		if ( ! this.setElementProperties() ) {
 			return false;

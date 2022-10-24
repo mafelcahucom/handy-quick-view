@@ -129,7 +129,8 @@ final class Client {
             'crafter' => 'Y35qwbAlyt+y60cldwAatUDyxikpRb30wBPT9Y1Xymk=',
             'url'     => admin_url( 'admin-ajax.php' ),
             'plugin'  => [
-                'isHATFWActive' => Plugins::is_active( 'handy-added-to-cart-toaster-notifier' )
+                'isHATFWActive' => Plugins::is_active( 'handy-added-to-cart-toaster-notifier' ),
+                'isHAPFWActive' => Plugins::is_active( 'handy-added-to-cart-popup-notifier' )
             ],
             'setting' => [
                 'isZoomEnabled' => $is_zoom_enabled

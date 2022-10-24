@@ -130,11 +130,11 @@ final class SettingApi {
             ],
             'qv_btn_fs'                     => [
                 'type'     => 'size',
-                'default'  => '16px'
+                'default'  => '14px'
             ],
             'qv_btn_fw'                     => [
                 'type'     => 'select',
-                'default'  => '500',
+                'default'  => '600',
                 'choices'  => Helper::get_font_weight_choices( 'value' )
             ],
             'qv_btn_icon'                   => [
@@ -147,7 +147,7 @@ final class SettingApi {
             ],
             'qv_btn_icon_wd'                => [
                 'type'     => 'size',
-                'default'  => '20px'
+                'default'  => '18px'
             ],
             'qv_btn_icon_ht'                => [
                 'type'     => 'size',
@@ -155,27 +155,27 @@ final class SettingApi {
             ],
             'qv_btn_icon_clr'               => [
                 'type'     => 'color',
-                'default'  => 'rgba(0,0,0,0.6)'
+                'default'  => 'rgba(255,255,255,1)'
             ],
             'qv_btn_icon_hv_clr'            => [
                 'type'     => 'color',
-                'default'  => 'rgba(0,0,0,0.8)'
+                'default'  => 'rgba(255,255,255,1)'
             ],
             'qv_btn_clr'                    => [
                 'type'     => 'color',
-                'default'  => 'rgba(0,0,0,0.6)'
+                'default'  => 'rgba(255,255,255,1)'
             ],
             'qv_btn_hv_clr'                 => [
                 'type'     => 'color',
-                'default'  => 'rgba(0,0,0,0.8)'
+                'default'  => 'rgba(255,255,255,1)'
             ],
             'qv_btn_bg_clr'                 => [
                 'type'     => 'color',
-                'default'  => 'rgba(224,225,226,1)'
+                'default'  => 'rgba(0,113,242,1)'
             ],
             'qv_btn_bg_hv_clr'              => [
                 'type'     => 'color',
-                'default'  => 'rgba(202,203,205,1)'
+                'default'  => 'rgba(2,97,205,1)'
             ],
             'qv_btn_wd'                     => [
                 'type'     => 'size',
@@ -187,11 +187,11 @@ final class SettingApi {
             ],
             'qv_btn_pt'                     => [
                 'type'     => 'size',
-                'default'  => '10px'
+                'default'  => '13px'
             ],
             'qv_btn_pb'                     => [
                 'type'     => 'size',
-                'default'  => '10px'
+                'default'  => '13px'
             ],
             'qv_btn_pl'                     => [
                 'type'     => 'size',
@@ -208,7 +208,7 @@ final class SettingApi {
             ],
             'qv_btn_bw'                     => [
                 'type'     => 'size',
-                'default'  => '1px'
+                'default'  => '0px'
             ],
             'qv_btn_b_clr'                  => [
                 'type'     => 'color',
@@ -220,7 +220,7 @@ final class SettingApi {
             ],
             'qv_btn_br'                     => [
                 'type'     => 'size',
-                'default'  => '4px'
+                'default'  => '8px'
             ],
 
             // md.
@@ -234,7 +234,7 @@ final class SettingApi {
             ],
             'md_br'                         => [
                 'type'     => 'size',
-                'default'  => '4px'
+                'default'  => '8px'
             ],
 
             // md_close_btn.
@@ -248,27 +248,27 @@ final class SettingApi {
             ],
             'md_close_btn_icon_wd'          => [
                 'type'     => 'size',
-                'default'  => '18px'
+                'default'  => '16px'
             ],
             'md_close_btn_icon_ht'          => [
                 'type'     => 'size',
-                'default'  => '18px'
+                'default'  => '16px'
             ],
             'md_close_btn_icon_clr'         => [
                 'type'     => 'color',
-                'default'  => 'rgba(0,0,0,0.6)'
+                'default'  => 'rgba(5,5,6,1)'
             ],
             'md_close_btn_icon_hv_clr'      => [
                 'type'     => 'color',
-                'default'  => 'rgba(0,0,0,0.8)'
+                'default'  => 'rgba(5,5,6,1)'
             ],
             'md_close_btn_bg_clr'           => [
                 'type'     => 'color',
-                'default'  => 'rgba(0,0,0,0)'
+                'default'  => 'rgba(228,230,236,1)'
             ],
             'md_close_btn_bg_hv_clr'        => [
                 'type'     => 'color',
-                'default'  => 'rgba(0,0,0,0)'
+                'default'  => 'rgba(214,216,220,1)'
             ],
             'md_close_btn_bs'               => [
                 'type'     => 'select',
@@ -277,7 +277,7 @@ final class SettingApi {
             ],
             'md_close_btn_bw'               => [
                 'type'     => 'size',
-                'default'  => '1px'
+                'default'  => '0px'
             ],
             'md_close_btn_b_clr'            => [
                 'type'     => 'color',
@@ -289,7 +289,7 @@ final class SettingApi {
             ],
             'md_close_btn_br'               => [
                 'type'     => 'size',
-                'default'  => '4px'
+                'default'  => '100px'
             ],
 
             // md_sldr_btn.
@@ -333,7 +333,7 @@ final class SettingApi {
             ],
             'md_sldr_btn_icon_hv_clr'       => [
                 'type'     => 'color',
-                'default'  => 'rgba(255,255,255,1)'
+                'default'  => 'rgba(5,5,6,1)'
             ],
             'md_sldr_btn_bg_clr'            => [
                 'type'     => 'color',
@@ -341,7 +341,7 @@ final class SettingApi {
             ],
             'md_sldr_btn_bg_hv_clr'         => [
                 'type'     => 'color',
-                'default'  => 'rgba(0,0,0,0.7)'
+                'default'  => 'rgba(214,216,220,1)'
             ],
             'md_sldr_btn_bs'                => [
                 'type'     => 'select',
@@ -350,7 +350,7 @@ final class SettingApi {
             ],
             'md_sldr_btn_bw'                => [
                 'type'     => 'size',
-                'default'  => '1px'
+                'default'  => '0px'
             ],
             'md_sldr_btn_b_clr'             => [
                 'type'     => 'color',
@@ -362,7 +362,7 @@ final class SettingApi {
             ],
             'md_sldr_btn_br'                => [
                 'type'     => 'size',
-                'default'  => '4px'
+                'default'  => '100px'
             ],
 
             // md_loader.
@@ -444,19 +444,19 @@ final class SettingApi {
             ],
             'pt_sldr_btn_icon_wd'           => [
                 'type'     => 'size',
-                'default'  => '20px'
+                'default'  => '18px'
             ],
             'pt_sldr_btn_icon_ht'           => [
                 'type'     => 'size',
-                'default'  => '20px'
+                'default'  => '18px'
             ],
             'pt_sldr_btn_icon_clr'          => [
                 'type'     => 'color',
-                'default'  => 'rgba(0,0,0,0.7)'
+                'default'  => 'rgba(5,5,6,1)'
             ],
             'pt_sldr_btn_icon_hv_clr'       => [
                 'type'     => 'color',
-                'default'  => 'rgba(255,255,255,1)'
+                'default'  => 'rgba(5,5,6,1)'
             ],
             'pt_sldr_btn_bg_clr'            => [
                 'type'     => 'color',
@@ -464,7 +464,7 @@ final class SettingApi {
             ],
             'pt_sldr_btn_bg_hv_clr'         => [
                 'type'     => 'color',
-                'default'  => 'rgba(0,0,0,0.7)'
+                'default'  => 'rgba(214,216,220,1)'
             ],
             'pt_sldr_btn_bs'                => [
                 'type'     => 'select',
@@ -473,7 +473,7 @@ final class SettingApi {
             ],
             'pt_sldr_btn_bw'                => [
                 'type'     => 'size',
-                'default'  => '1px'
+                'default'  => '0px'
             ],
             'pt_sldr_btn_b_clr'             => [
                 'type'     => 'color',
@@ -485,21 +485,21 @@ final class SettingApi {
             ],
             'pt_sldr_btn_br'                => [
                 'type'     => 'size',
-                'default'  => '4px'
+                'default'  => '100px'
             ],
 
             // pt_zoom_btn.
             'pt_zoom_btn_wd'                => [
                 'type'     => 'size',
-                'default'  => '30px'
+                'default'  => '35px'
             ],
             'pt_zoom_btn_ht'                => [
                 'type'     => 'size',
-                'default'  => '30px'
+                'default'  => '35px'
             ],
             'pt_zoom_btn_icon_wd'           => [
                 'type'     => 'size',
-                'default'  => '18px'
+                'default'  => '16px'
             ],
             'pt_zoom_btn_icon_ht'           => [
                 'type'     => 'size',
@@ -507,19 +507,19 @@ final class SettingApi {
             ],
             'pt_zoom_btn_icon_clr'          => [
                 'type'     => 'color',
-                'default'  => 'rgba(51,51,51,1)'
+                'default'  => 'rgba(5,5,6,1)'
             ],
             'pt_zoom_btn_icon_hv_clr'       => [
                 'type'     => 'color',
-                'default'  => 'rgba(51,51,51,1)'
+                'default'  => 'rgba(5,5,6,1)'
             ],
             'pt_zoom_btn_bg_clr'            => [
                 'type'     => 'color',
-                'default'  => 'rgba(238,238,238,1)'
+                'default'  => 'rgba(228,230,236,1)'
             ],
             'pt_zoom_btn_bg_hv_clr'         => [
                 'type'     => 'color',
-                'default'  => 'rgba(213,213,213,1)'
+                'default'  => 'rgba(214,216,220,1)'
             ],
             'pt_zoom_btn_bs'                => [
                 'type'     => 'select',
@@ -528,7 +528,7 @@ final class SettingApi {
             ],
             'pt_zoom_btn_bw'                => [
                 'type'     => 'size',
-                'default'  => '1px'
+                'default'  => '0px'
             ],
             'pt_zoom_btn_b_clr'             => [
                 'type'     => 'color',
@@ -540,7 +540,7 @@ final class SettingApi {
             ],
             'pt_zoom_btn_br'                => [
                 'type'     => 'size',
-                'default'  => '4px'
+                'default'  => '100px'
             ],
 
             // pt_bul.
@@ -580,7 +580,7 @@ final class SettingApi {
             ],
             'pt_col_br'                     => [
                 'type'     => 'size',
-                'default'  => '4px'
+                'default'  => '8px'
             ],
 
             // ps_panel.
@@ -617,7 +617,7 @@ final class SettingApi {
             ],
             'ps_name_clr'                   => [
                 'type'     => 'color',
-                'default'  => 'rgba(51,51,51,1)'
+                'default'  => 'rgba(5,5,6,1)'
             ],
              'ps_name_mb'                   => [
                 'type'     => 'size',
@@ -640,11 +640,11 @@ final class SettingApi {
             ],
             'ps_rating_label_clr'           => [
                 'type'     => 'color',
-                'default'  => 'rgba(51,51,51,1)'
+                'default'  => 'rgba(96,103,113,1)'
             ],
             'ps_rating_star_clr_1'          => [
                 'type'     => 'color',
-                'default'  => 'rgba(127,84,179,1)'
+                'default'  => 'rgba(14,121,242,1)'
             ],
             'ps_rating_star_clr_2'          => [
                 'type'     => 'color',
@@ -671,7 +671,7 @@ final class SettingApi {
             ],
             'ps_price_clr'                  => [
                 'type'     => 'color',
-                'default'  => 'rgba(51,51,51,1)'
+                'default'  => 'rgba(96,103,113,1)'
             ],
              'ps_price_mb'                  => [
                 'type'     => 'size',
@@ -694,7 +694,7 @@ final class SettingApi {
             ],
             'ps_desc_clr'                   => [
                 'type'     => 'color',
-                'default'  => 'rgba(51,51,51,1)'
+                'default'  => 'rgba(96,103,113,1)'
             ],
              'ps_desc_mb'                   => [
                 'type'     => 'size',
@@ -731,7 +731,7 @@ final class SettingApi {
             ],
             'ps_stst_aob_clr'               => [
                 'type'     => 'color',
-                'default'  => 'rgba(51,51,51,1)'
+                'default'  => 'rgba(96,103,113,1)'
             ],
             'ps_stst_ook_clr'               => [
                 'type'     => 'color',
@@ -754,15 +754,15 @@ final class SettingApi {
             ],
             'ps_meta_clr'                   => [
                 'type'     => 'color',
-                'default'  => 'rgba(51,51,51,1)'
+                'default'  => 'rgba(96,103,113,1)'
             ],
             'ps_meta_link_clr'              => [
                 'type'     => 'color',
-                'default'  => 'rgba(127,84,179,1)'
+                'default'  => 'rgba(0,113,242,1)'
             ],
             'ps_meta_link_hv_clr'           => [
                 'type'     => 'color',
-                'default'  => 'rgba(96,35,171,1)'
+                'default'  => 'rgba(2,97,205,1)'
             ],
             'ps_meta_bs'                    => [
                 'type'     => 'select',

@@ -8,7 +8,7 @@ defined( 'ABSPATH' ) || exit;
 /**
  * Plugins.
  *
- * @since 	1.0.0
+ * @since   1.0.0
  * @version 1.0.0
  * @author Mafel John Cahucom
  */
@@ -36,24 +36,34 @@ final class Plugins {
     public static function collections() {
         return [
             'handy-add-to-cart' => [
-                'name' => 'Handy Add To Cart For WooCommerce',
-                'slug' => 'handy-add-to-cart',
-                'file' => 'handy-add-to-cart.php'
+                'name'   => 'Handy Add To Cart For WooCommerce',
+                'slug'   => 'handy-add-to-cart',
+                'file'   => 'handy-add-to-cart.php',
+                'prefix' => 'hafw'
             ],
             'handy-sliding-cart' => [
-                'name' => 'Handy Sliding Cart For WooCommerce',
-                'slug' => 'handy-sliding-cart',
-                'file' => 'handy-sliding-cart.php'
+                'name'   => 'Handy Sliding Cart For WooCommerce',
+                'slug'   => 'handy-sliding-cart',
+                'file'   => 'handy-sliding-cart.php',
+                'prefix' => 'hsfw'
             ],
             'handy-quick-view' => [
-                'name' => 'Handy Quick View For WooCommerce',
-                'slug' => 'handy-quick-view',
-                'file' => 'handy-quick-view.php'
+                'name'   => 'Handy Quick View For WooCommerce',
+                'slug'   => 'handy-quick-view',
+                'file'   => 'handy-quick-view.php',
+                'prefix' => 'hqfw'
             ],
             'handy-added-to-cart-toaster-notifier' => [
-                'name' => 'Handy Added To Cart Toaster Notifier For WooCommerce',
-                'slug' => 'handy-added-to-cart-toaster-notifier',
-                'file' => 'handy-added-to-cart-toaster-notifier.php'
+                'name'   => 'Handy Added To Cart Toaster Notifier For WooCommerce',
+                'slug'   => 'handy-added-to-cart-toaster-notifier',
+                'file'   => 'handy-added-to-cart-toaster-notifier.php',
+                'prefix' => 'hatfw'
+            ],
+            'handy-added-to-cart-popup-notifier' => [
+                'name'   => 'Handy Added To Cart Popup Notifier For WooCommerce',
+                'slug'   => 'handy-added-to-cart-popup-notifier',
+                'file'   => 'handy-added-to-cart-popup-notifier.php',
+                'prefix' => 'hapfw'
             ]
         ];
     }
@@ -99,7 +109,7 @@ final class Plugins {
     }
 
     /**
-     * Check if a certain plugin is active based on the collection slug.
+     * Check if a certain plugin is active and enabled based on the collection slug.
      *
      * @since 1.0.0
      * 
@@ -116,8 +126,17 @@ final class Plugins {
             return false;
         }
 
+        // Check if the plugin is active.
         $active_plugins = apply_filters( 'active_plugins', get_option( 'active_plugins' ) );
-        if ( in_array( $collection_path, $active_plugins ) ) {
+        if ( ! in_array( $collection_path, $active_plugins ) ) {
+            return false;
+        }
+
+        // Check if the plugin is enabled in the main settings.
+        $collections     = self::collections();
+        $plugin_prefix   = $collections[ $collection_slug ]['prefix'];
+        $plugin_settings = get_option( '_'. $plugin_prefix .'_main_settings' );
+        if ( ! empty( $plugin_settings ) && $plugin_settings['gn_enable'] ) {
             return true;
         }
 

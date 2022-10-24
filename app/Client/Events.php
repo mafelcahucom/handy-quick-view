@@ -4,8 +4,8 @@ namespace HQFW\Client;
 use HQFW\Inc\Traits\Singleton;
 use HQFW\Inc\Traits\Security;
 use HQFW\Inc\Plugins;
-use HQFW\Client\Inc\Content;
 use HQFW\Client\Inc\Helper;
+use HQFW\Client\Inc\Lib\Content;
 
 /**
  * Events.

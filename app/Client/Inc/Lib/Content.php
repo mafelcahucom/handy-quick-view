@@ -1,5 +1,5 @@
 <?php
-namespace HQFW\Client\Inc;
+namespace HQFW\Client\Inc\Lib;
 
 use HQFW\Inc\Traits\Singleton;
 use HQFW\Client\Inc\Helper;
