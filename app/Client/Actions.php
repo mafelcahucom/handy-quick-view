@@ -61,35 +61,11 @@ final class Actions {
         $hooks = [
             [
                 'name'      => 'woocommerce_after_shop_loop_item',
-                'priority'  => 1
+                'priority'  => 10
             ],
             [
                 'name'      => 'woocommerce_after_shop_loop_item',
                 'priority'  => 20
-            ],
-            [
-                'name'      => 'woocommerce_before_shop_loop_item_title',
-                'priority'  => 9
-            ],
-            [
-                'name'      => 'woocommerce_before_shop_loop_item_title',
-                'priority'  => 11
-            ],
-            [
-                'name'      => 'woocommerce_shop_loop_item_title',
-                'priority'  => 11
-            ],
-            [
-                'name'      => 'woocommerce_after_shop_loop_item_title',
-                'priority'  => 6
-            ],
-            [
-                'name'      => 'woocommerce_after_shop_loop_item_title',
-                'priority'  => 7
-            ],
-            [
-                'name'      => 'woocommerce_after_shop_loop_item_title',
-                'priority'  => 11
             ]
         ];
 

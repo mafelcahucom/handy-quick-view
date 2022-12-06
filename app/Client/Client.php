@@ -130,7 +130,8 @@ final class Client {
             'url'     => admin_url( 'admin-ajax.php' ),
             'plugin'  => [
                 'isHATFWActive' => Plugins::is_active( 'handy-added-to-cart-toaster-notifier' ),
-                'isHAPFWActive' => Plugins::is_active( 'handy-added-to-cart-popup-notifier' )
+                'isHAPFWActive' => Plugins::is_active( 'handy-added-to-cart-popup-notifier' ),
+                'isHVTFWActive' => Plugins::is_active( 'handy-product-variation-table' )
             ],
             'setting' => [
                 'isZoomEnabled' => $is_zoom_enabled

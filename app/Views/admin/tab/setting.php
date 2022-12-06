@@ -130,30 +130,6 @@ echo Component::get_header( $args['page_title'] ); ?>
                 ],
                 [
                     'value' => 3,
-                    'label' => 'Before Product Image'
-                ],
-                [
-                    'value' => 4,
-                    'label' => 'After Product Image'
-                ],
-                [
-                    'value' => 5,
-                    'label' => 'After Product Title'
-                ],
-                [
-                    'value' => 6,
-                    'label' => 'After Product Rating'
-                ],
-                [
-                    'value' => 7,
-                    'label' => 'After Product Flash Sale'
-                ],
-                [
-                    'value' => 8,
-                    'label' => 'After Product Price'
-                ],
-                [
-                    'value' => 9,
                     'label' => 'Manually Position Using Shortcode'
                 ]
             ]

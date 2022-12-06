@@ -8,7 +8,7 @@
  */
 
 /**
- * Delete all the options used by add to cart.
+ * Delete all the options used by quick view.
  *
  * @since 1.0.0
  */

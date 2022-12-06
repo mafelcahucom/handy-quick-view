@@ -271,9 +271,9 @@ hqfw.prompt = {
 			return ( value.error === error );
 		} );
 
-		if ( hafwLocal.plugin.isHATFWActive || hafwLocal.plugin.isHAPFWActive ) {
+		if ( hqfwLocal.plugin.isHATFWActive || hqfwLocal.plugin.isHAPFWActive ) {
 			// Alert toaster notifier.
-			if ( hafwLocal.plugin.isHATFWActive ) {
+			if ( hqfwLocal.plugin.isHATFWActive ) {
 				handyToasterNotifier.show( {
 					type: 'alert',
 					color: 'danger',
@@ -283,7 +283,7 @@ hqfw.prompt = {
 			}
 
 			// Alert popup notifier.
-			if ( hafwLocal.plugin.isHAPFWActive ) {
+			if ( hqfwLocal.plugin.isHAPFWActive ) {
 				handyPopupNotifier.showAlert({
 					status: 'error',
 					title: errorDetail.title,
@@ -1560,6 +1560,11 @@ hqfw.quickView = {
 
 					// Resize at mobile state.
 					hqfw.quickView.setProductViewerMobileHeight();
+
+					// Resize product variation table.
+					if ( hqfwLocal.plugin.isHVTFWActive ) {
+						window.handyVariationTable.setContainerSize();
+					}
 
 					return;
 				}
