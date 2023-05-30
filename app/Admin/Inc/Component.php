@@ -3,7 +3,6 @@ namespace HQFW\Admin\Inc;
 
 use HQFW\Inc\Traits\Singleton;
 use HQFW\Admin\Inc\Helper;
-use HQFW\Admin\Inc\Component;
 
 defined( 'ABSPATH' ) || exit;
 

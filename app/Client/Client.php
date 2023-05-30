@@ -5,6 +5,7 @@ use HQFW\Inc\Traits\Singleton;
 use HQFW\Inc\Plugins;
 use HQFW\Client\Inc\Helper;
 use HQFW\Client\Actions;
+use HQFW\Client\Filters;
 use HQFW\Client\Events;
 use HQFW\Client\Shortcodes;
 use HQFW\Client\Style;
@@ -67,10 +68,11 @@ final class Client {
      */
     private static function get_classes() {
         return [
+            Filters::class,
             Actions::class,
             Events::class,
             Shortcodes::class,
-            Style::class
+            Style::class,
         ];
     }
 
@@ -121,7 +123,9 @@ final class Client {
         }
 
         // Client js.
-        wp_register_script( 'hqfw-client-js', Helper::get_asset_src( 'js/hqfw-client.min.js' ), $client_dependency, '1.0.0', true );
+        $client_src     = Helper::get_asset_src( 'js/hqfw-client.min.js' );
+        $client_version = Helper::get_asset_version( 'js/hqfw-client.min.js' );
+        wp_register_script( 'hqfw-client-js', $client_src, $client_dependency, $client_version, true );
         wp_enqueue_script( 'hqfw-client-js' );
 
         // Localize variables.
