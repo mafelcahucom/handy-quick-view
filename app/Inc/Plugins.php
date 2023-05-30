@@ -65,6 +65,12 @@ final class Plugins {
                 'file'   => 'handy-added-to-cart-popup-notifier.php',
                 'prefix' => 'hapfw'
             ],
+            'handy-compare-products' => [
+                'name'   => 'Handy Compare Products For WooCommerce',
+                'slug'   => 'handy-compare-products',
+                'file'   => 'handy-compare-products.php',
+                'prefix' => 'hcpfw'
+            ],
             'handy-itemized-product-variation' => [
                 'name'   => 'Handy Itemized Product Variation For WooCommerce',
                 'slug'   => 'handy-itemized-product-variation',
@@ -76,6 +82,12 @@ final class Plugins {
                 'slug'   => 'handy-product-variation-table',
                 'file'   => 'handy-product-variation-table.php',
                 'prefix' => 'hvtfw'
+            ],
+            'handy-variation-swatches' => [
+                'name'   => 'Handy Variation Swatches For WooCommerce',
+                'slug'   => 'handy-variation-swatches',
+                'file'   => 'handy-variation-swatches.php',
+                'prefix' => 'hvsfw'
             ]
         ];
     }

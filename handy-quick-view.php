@@ -1,14 +1,15 @@
 <?php
 /**
- * Plugin Name:   	  Handy Quick View For WooCommerce
- * Description:   	  Handy Quick View For WooCommerce lets you add a modal to view a certain product in your woocommerce store
- * Author:        	  Mafel John Cahucom
- * Author URI:    	  https://www.facebook.com/mafeljohn.cahucom
- * Version:       	  1.0.0
- * Text Domain:   	  handy-quick-view
- * Domain Path: 	  /languages
- * Requires WP:   	  3.0
- * License: GPLv2 or later
+ * Plugin Name:          Handy Quick View For WooCommerce
+ * Description:          Handy Quick View For WooCommerce lets you add a modal to view a certain product in your woocommerce store.
+ * Author:               Mafel John Cahucom
+ * Author URI:           https://www.facebook.com/mafeljohn.cahucom
+ * Version:              1.0.0
+ * Text Domain:          handy-quick-view
+ * Domain Path:          /languages
+ * Requires at least:    5.8
+ * WC requires at least: 5.0.0
+ * License:              GPLv2 or later
  */
 
 // Exit if accessed directly.
