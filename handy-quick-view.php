@@ -61,11 +61,8 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
         HQFW\Init::get_instance();
     }
 } else {
-    add_action( 'admin_notices', function() {
-        $output = '';
-        $output .= '<div class="notice notice-error is-dismissible">';
-        $output .= '<p>Handy Quick View for WooCommerce requires WooCommerce Plugin to be activated. Please install WooCommerce to continue.</p>';
-        $output .= '</div>';
-        echo $output;
-    });
+    echo sprintf(
+        '<div class="notice notice-error is-dismissible"><p>%s</p></div>',
+        'Handy Quick View for WooCommerce requires WooCommerce Plugin to be activated. Please install WooCommerce to continue.'
+    );
 }

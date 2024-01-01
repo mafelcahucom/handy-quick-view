@@ -12,12 +12,14 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 	1.0.0
  * @version 1.0.0
- * @author Mafel John Cahucom
+ * @author  Mafel John Cahucom
  */
 final class Style {
 
 	/**
 	 * Inherit Singleton.
+     * 
+     * @since 1.0.0
 	 */
 	use Singleton;
 
@@ -36,8 +38,8 @@ final class Style {
      * @since 1.0.0
      *
      * @param  array   $settings  Contains all the settings from _hqfw_main_settings.
-     * @param  arrray  $rules     Contains the rule of the property key & default value.
-     * @param  string  $prefix    The prefix of the class name.
+     * @param  array   $rules     Contains the rule of the property key & default value.
+     * @param  string  $prefix    Contains the prefix of the class name.
      * @return string
      */
     private function get_properties( $settings, $rules, $prefix ) {
@@ -50,6 +52,7 @@ final class Style {
             $index   = $prefix .'_'. $key;
             $output .= ' '. ( isset( $settings[ $index ] ) ? $settings[ $index ] : $default );
         }
+
         return $output;
     }
 
@@ -59,7 +62,7 @@ final class Style {
      * @since 1.0.0
      * 
      * @param  array   $settings  Contains all the settings from _hqfw_main_settings.
-     * @param  string  $prefix    The prefix of the class name.
+     * @param  string  $prefix    Contains the prefix of the class name.
      * @return string
      */
     private function get_padding( $settings, $prefix ) {
@@ -83,7 +86,7 @@ final class Style {
      * @since 1.0.0
      * 
      * @param  array   $settings  Contains all the settings from _hqfw_main_settings.
-     * @param  string  $prefix    The prefix of the class name.
+     * @param  string  $prefix    Contains the prefix of the class name.
      * @return string
      */
     private function get_margin( $settings, $prefix ) {
@@ -107,7 +110,7 @@ final class Style {
      * @since 1.0.0
      * 
      * @param  array   $settings  Contains all the settings from _hqfw_main_settings.
-     * @param  string  $prefix    The prefix of the class name.
+     * @param  string  $prefix    Contains the prefix of the class name.
      * @return string
      */
     private function get_border( $settings, $prefix ) {
@@ -129,7 +132,7 @@ final class Style {
      *
      * @since 1.0.0
      * 
-     * @param  string  $css  The internal css to be minify.
+     * @param  string  $css  Contains the internal css to be minify.
      * @return string
      */
     private function minify_css( $css ) {
@@ -1062,12 +1065,10 @@ final class Style {
             $class .= $settings['ad_add_custom_css'];
         }
 
-        // Compose Style.
-        $style = '<style id="hqfw-internal-style">'. $class .'</style>';
-
-        // Minify CSS.
+        // Print Style.
+        $style = sprintf( '<style id="hqfw-internal-style">%s</style>', $class );
         if ( $settings['ad_opt_enable_minify'] ) {
-            $style = self::minify_css( $style );
+            $style = $this->minify_css( $style );
         }
         
         echo $style;

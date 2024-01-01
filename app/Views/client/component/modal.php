@@ -19,7 +19,7 @@ $settings = get_option( '_hqfw_main_settings' );
 		<div class="hqfw-js-close-modal hqfw-viewer hqfw-flex hqfw-flex-ai-c">
 			<?php if ( $settings['gn_md_enable_slider'] ): ?>
 				<div class="hqfw-viewer__navigation">
-					<button type="button" class="hqfw-js-navigation-btn hqfw-navigation-btn hqfw-flex-c hqfw-hover" data-product_id="0" data-event="prev" data-state="disabled" title="Previous" aria-label="Previous">
+					<button type="button" class="hqfw-js-navigation-btn hqfw-navigation-btn hqfw-flex-c hqfw-hover" data-product_id="0" data-event="prev" data-state="disabled" title="<?php echo __( 'Previous', HQFW_PLUGIN_DOMAIN ); ?>" aria-label="<?php echo __( 'Previous', HQFW_PLUGIN_DOMAIN ); ?>">
 						<?php
 							if ( ! empty( $settings['md_sldr_btn_icon_prev'] ) ) {
 								echo Helper::get_icon( $settings['md_sldr_btn_icon_prev'] );
@@ -36,7 +36,7 @@ $settings = get_option( '_hqfw_main_settings' );
 			</div>
 			<?php if ( $settings['gn_md_enable_slider'] ): ?>
 				<div class="hqfw-viewer__navigation">
-					<button type="button" class="hqfw-js-navigation-btn hqfw-navigation-btn hqfw-flex-c hqfw-hover" data-product_id="0" data-event="next" data-state="disabled" title="Next" aria-label="Next">
+					<button type="button" class="hqfw-js-navigation-btn hqfw-navigation-btn hqfw-flex-c hqfw-hover" data-product_id="0" data-event="next" data-state="disabled" title="<?php echo __( 'Next', HQFW_PLUGIN_DOMAIN ); ?>" aria-label="<?php echo __( 'Next', HQFW_PLUGIN_DOMAIN ); ?>">
 						<?php
 							if ( ! empty( $settings['md_sldr_btn_icon_next'] ) ) {
 								echo Helper::get_icon( $settings['md_sldr_btn_icon_next'] );

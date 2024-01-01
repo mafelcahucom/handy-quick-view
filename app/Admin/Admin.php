@@ -3,7 +3,6 @@ namespace HQFW\Admin;
 
 use HQFW\Inc\Traits\Singleton;
 use HQFW\Admin\Inc\Helper;
-use HQFW\Admin\Inc\Component;
 use HQFW\Admin\Tab\Setting\SettingTab;
 use HQFW\Admin\Tab\ImporterExporter\ImporterExporterTab;
 
@@ -20,6 +19,8 @@ final class Admin {
 
 	/**
 	 * Inherit Singleton.
+     * 
+     * @since 1.0.0
 	 */
 	use Singleton;
 
@@ -108,7 +109,7 @@ final class Admin {
     public function render_submenu_dashboard() {
         // Check if the plugin has error.
         if ( Helper::plugin_has_error() ) {
-            echo Component::get_plugin_error_message();
+            echo Helper::render_view( 'component/error-notice' );
             return;
         }
 
@@ -175,11 +176,14 @@ final class Admin {
      * @since 1.0.0
      */
     public function register_styles() {
-        wp_register_style( 'pickr', Helper::get_asset_src( 'pickr/pickr.min.css' ), [], '1.0.0', 'all' );
-        wp_register_style( 'hqfw-admin-css', Helper::get_asset_src( 'css/hqfw-admin.min.css' ), [], '1.0.0', 'all' );
+        wp_register_style( 'lexend-deca', Helper::get_asset_src( 'fonts/lexend-deca/lexend-deca.css' ), [], '1.0.0', 'all' );
+        wp_enqueue_style( 'lexend-deca' );
 
+        wp_register_style( 'pickr', Helper::get_asset_src( 'pickr/pickr.min.css' ), [], '1.0.0', 'all' );
         wp_enqueue_style( 'pickr' );
-        wp_enqueue_style( 'hqfw-admin-css' );
+
+        wp_register_style( 'hqfw-admin', Helper::get_asset_src( 'css/hqfw-admin.min.css' ), [], '1.0.0', 'all' );
+        wp_enqueue_style( 'hqfw-admin' );
     }
 
     /**
@@ -189,13 +193,13 @@ final class Admin {
      */
     public function register_scripts() {
         wp_register_script( 'pickr', Helper::get_asset_src( 'pickr/pickr.min.js' ), [], '1.0.0', true );
-        wp_register_script( 'hqfw-admin-js', Helper::get_asset_src( 'js/hqfw-admin.min.js' ), [], '1.0.0', true );
-
         wp_enqueue_script( 'pickr' );
-        wp_enqueue_script( 'hqfw-admin-js' );
+
+        wp_register_script( 'hqfw-admin', Helper::get_asset_src( 'js/hqfw-admin.min.js' ), [], '1.0.0', true );
+        wp_enqueue_script( 'hqfw-admin' );
 
         // Localize variables.
-        wp_localize_script( 'hqfw-admin-js', 'hqfwLocal', [
+        wp_localize_script( 'hqfw-admin', 'hqfwLocal', [
             'crafter' => 'Y35qwbAlyt+y60cldwAatUDyxikpRb30wBPT9Y1Xymk=',
             'url'     => admin_url( 'admin-ajax.php' ),
             'tab'     => [

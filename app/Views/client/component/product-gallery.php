@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * $args = [
- *     'images'  => (object) Containing the product images.
+ *     'images'  => (object) Contains the product images.
  * ]
  */
 
@@ -56,14 +56,14 @@ $settings     = get_option( '_hqfw_main_settings' );
     </div>
 
     <?php if ( $settings['gn_pt_enable_slider'] && $total_images > 1 ): ?>
-        <button class="hqfw-js-photo-slider-controller hqfw-photo-slider__controller hqfw-flex-c hqfw-hover" data-event="prev" title="Previous" aria-label="Previous">
+        <button class="hqfw-js-photo-slider-controller hqfw-photo-slider__controller hqfw-flex-c hqfw-hover" data-event="prev" title="<?php echo __( 'Previous', HQFW_PLUGIN_DOMAIN ); ?>" aria-label="<?php echo __( 'Previous', HQFW_PLUGIN_DOMAIN ); ?>">
             <?php
                 if ( ! empty( $settings['pt_sldr_btn_icon_prev'] ) ) {
                     echo Helper::get_icon( $settings['pt_sldr_btn_icon_prev'] );
                 }
             ?>
         </button>
-        <button class="hqfw-js-photo-slider-controller hqfw-photo-slider__controller hqfw-flex-c hqfw-hover" data-event="next" title="Next" aria-label="Next">
+        <button class="hqfw-js-photo-slider-controller hqfw-photo-slider__controller hqfw-flex-c hqfw-hover" data-event="next" title="<?php echo __( 'Next', HQFW_PLUGIN_DOMAIN ); ?>" aria-label="<?php echo __( 'Next', HQFW_PLUGIN_DOMAIN ); ?>">
             <?php
                 if ( ! empty( $settings['pt_sldr_btn_icon_next'] ) ) {
                     echo Helper::get_icon( $settings['pt_sldr_btn_icon_next'] );

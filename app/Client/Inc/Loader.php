@@ -10,12 +10,14 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 	1.0.0
  * @version 1.0.0
- * @author Mafel John Cahucom
+ * @author  Mafel John Cahucom
  */
 final class loader {
 
 	/**
 	 * Inherit Singleton.
+     * 
+     * @since 1.0.0
 	 */
 	use Singleton;
 
@@ -33,13 +35,13 @@ final class loader {
      * 
      * @param  array  $args  Contains the necessary parameters for rendering loaders.
      * $args = [
-     *     'name'      => (string) The name of the loader.
-     *     'classname' => (string) The new classname will be named for the loader.
-     *     'width'     => (string) The width of the loader.
-     *     'height'    => (string) The height of the loader.
-     *     'stroke'    => (string) The border width of the loader.
-     *     'color_1'   => (string) The primary color of the loader.
-     *     'color-2'   => (string) THe secondary color of the loader.
+     *     'name'      => (string) Contains the name of the loader.
+     *     'classname' => (string) Contains the new classname will be named for the loader.
+     *     'width'     => (string) Contains the width of the loader.
+     *     'height'    => (string) Contains the height of the loader.
+     *     'stroke'    => (string) Contains the border width of the loader.
+     *     'color_1'   => (string) Contains the primary color of the loader.
+     *     'color-2'   => (string) Contains the secondary color of the loader.
      * ]
      * @return HTMLElement
      */
@@ -123,6 +125,7 @@ final class loader {
                 ";
                 break;
         }
+        
         return $output;
     }
 }

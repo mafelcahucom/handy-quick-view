@@ -1,4 +1,16 @@
 /**
+ * Internal Dependencies.
+ */
+import {
+	getFetch,
+	getImageName,
+	setAttribute,
+	setFullScreen,
+	isAnimationDone,
+	eventListener,
+} from '../../../helpers';
+
+/**
  * Strict mode.
  *
  * @since 1.0.0
@@ -15,222 +27,6 @@
  * @type {Object}
  */
 const hqfw = hqfw || {};
-
-/**
- * Helper.
- *
- * @since 1.0.0
- *
- * @type {Object}
- */
-hqfw.fn = {
-
-	/**
-	 * Global event listener delegation.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param {string}   type     Event type can be multiple seperate with space.
-	 * @param {string}   selector Target element.
-	 * @param {Function} callback Callback function.
-	 */
-	async eventListener( type, selector, callback ) {
-		const events = type.split( ' ' );
-		events.forEach( function( event ) {
-			document.addEventListener( event, function( e ) {
-				if ( e.target.matches( selector ) ) {
-					callback( e );
-				}
-			} );
-		} );
-	},
-
-	/**
-	 * Fetch handler.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param {Object} params Containing the parameters.
-	 * @return {Object} Fetch response
-	 */
-	async fetch( params ) {
-		let result = {
-			success: false,
-			data: {
-				error: 'NETWORK_ERROR',
-			},
-		};
-
-		if ( this.isObjectEmpty( params ) ) {
-			result.data.error = 'MISSING_DATA_ERROR';
-			return result;
-		}
-
-		try {
-			const response = await fetch( hqfwLocal.url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/x-www-form-urlencoded',
-				},
-				body: new URLSearchParams( params ),
-			} );
-
-			if ( response.ok ) {
-				result = await response.json();
-			}
-		} catch ( e ) {
-			console.log( 'error', e );
-		}
-
-		return result;
-	},
-
-	/**
-	 * Checks if the object is empty.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param {Object} object The object to be checked.
-	 * @return {boolean} Whether has empty key.
-	 */
-	isObjectEmpty( object ) {
-		return Object.keys( object ).length === 0;
-	},
-
-	/**
-	 * Return the extracted number from a string.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param {string} data The string to be filter.
-	 * @return {integer} The extracted numbers from string.
-	 */
-	getExtractedNumbers( data ) {
-		if ( ! data ) {
-			return 0;
-		}
-
-		const number = parseInt( data.replace( /[^0-9]/g, '' ) );
-		return ( isNaN( number ) ? 0 : number );
-	},
-
-	/**
-	 * Return the image name from an image source path.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param {string} imagePath The full path of the image.
-	 * @return {string} The name of the image.
-	 */
-	getImageName( imagePath ) {
-		if ( ! imagePath ) {
-			return;
-		}
-
-		return imagePath.split( '/' ).pop();
-	},
-
-	/**
-	 * Check if the element animation is done or into end.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param {element} element The element to be watch.
-	 * @return {boolean} Is animation done.
-	 */
-	isAnimationDone( element ) {
-		return new Promise( function( resolve, reject ) {
-			if ( ! element ) {
-				resolve( false );
-			}
-
-			element.addEventListener( 'animationend', function() {
-				resolve( true );
-			} );
-		} );
-	},
-
-	/**
-	 * Sets the attribute of target elements.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param {string} selector  The element selector.
-	 * @param {string} attribute The Attribute to be set.
-	 * @param {string} value     The value of the attribute.
-	 */
-	setAttribute( selector, attribute, value ) {
-		if ( ! selector || ! attribute ) {
-			return;
-		}
-
-		const elems = document.querySelectorAll( selector );
-		if ( elems.length === 0 ) {
-			return;
-		}
-
-		elems.forEach( function( elem ) {
-			elem.setAttribute( attribute, value );
-		} );
-	},
-
-	/**
-	 * Remove elements based on the selector.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param {string} selector The element query selector.
-	 */
-	removeElements( selector ) {
-		if ( ! selector ) {
-			return;
-		}
-
-		const elements = document.querySelectorAll( selector );
-		if ( elements.length === 0 ) {
-			return;
-		}
-
-		elements.forEach( function( element ) {
-			element.remove();
-		} );
-	},
-
-	/**
-	 * Enable the document fullscreen.
-	 *
-	 * @since 1.0.0
-	 */
-	enableFullScreen() {
-		const documentElem = document.documentElement;
-		if ( documentElem.requestFullscreen ) {
-			documentElem.requestFullscreen();
-		} else if ( documentElem.mozRequestFullScreen ) {
-			documentElem.mozRequestFullScreen();
-		} else if ( documentElem.webkitRequestFullscreen ) {
-			documentElem.webkitRequestFullscreen();
-		} else if ( documentElem.msRequestFullscreen ) {
-			documentElem.msRequestFullscreen();
-		}
-	},
-
-	/**
-	 * Disable the document fullscreen.
-	 *
-	 * @since 1.0.0
-	 */
-	disableFullScreen() {
-		if ( document.fullscreenElement ) {
-			if ( document.exitFullscreen ) {
-				document.exitFullscreen();
-			} else if ( document.mozCancelFullScreen ) {
-				document.mozCancelFullScreen();
-			} else if ( document.webkitExitFullscreen ) {
-				document.webkitExitFullscreen();
-			}
-		}
-	},
-};
 
 /**
  * Holds all the prompt compnents.
@@ -284,11 +80,11 @@ hqfw.prompt = {
 
 			// Alert popup notifier.
 			if ( hqfwLocal.plugin.isHAPFWActive ) {
-				handyPopupNotifier.showAlert({
+				handyPopupNotifier.showAlert( {
 					status: 'error',
 					title: errorDetail.title,
-					message: errorDetail.content
-				});
+					message: errorDetail.content,
+				} );
 			}
 		} else {
 			alert( errorDetail.content );
@@ -336,17 +132,15 @@ hqfw.photoSlider = {
 	 * @since 1.0.0
 	 */
 	init() {
-		if ( ! this.construct() ) {
-			return;
-		}
+		if ( this.construct() ) {
+			this.setSlideSize();
+			this.enableImageZoom();
 
-		this.setSlideSize();
-		this.enableImageZoom();
-
-		if ( ! this.hasInitialized() ) {
-			this.navigationController();
-			this.shortcutController();
-			this.screenResize();
+			if ( ! this.hasInitialized() ) {
+				this.navigationController();
+				this.shortcutController();
+				this.screenResize();
+			}
 		}
 	},
 
@@ -394,12 +188,10 @@ hqfw.photoSlider = {
 	 * @return {boolean} Check if all property element has a value.
 	 */
 	setElementProperties() {
-		// Set sliderElem property.
 		const sliderElem = document.getElementById( 'hqfw-js-photo-slider' );
 		if ( ! sliderElem ) {
 			return false;
 		}
-
 		hqfw.photoSlider.sliderElem = sliderElem;
 
 		return true;
@@ -429,7 +221,7 @@ hqfw.photoSlider = {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param {string} source The new image source.
+	 * @param {string} source Contains the new image source.
 	 */
 	setPrimaryImage( source = '' ) {
 		if ( ! source ) {
@@ -558,16 +350,14 @@ hqfw.photoSlider = {
 		const sliderWidth = sliderElem.offsetWidth;
 		const currentSlide = parseInt( sliderElem.getAttribute( 'data-current-slide' ) );
 		const sliderContainerElem = sliderElem.querySelector( '.hqfw-photo-slider__container' );
-		if ( ! sliderContainerElem ) {
-			return;
+		if ( sliderContainerElem ) {
+			// Move the slide.
+			sliderContainerElem.style.transform = `translateX(-${ currentSlide * sliderWidth }px)`;
+
+			// Update shortcut state.
+			setAttribute.elem( '.hqfw-js-photo-slider-shortcut', 'data-state', 'default' );
+			setAttribute.elem( `.hqfw-js-photo-slider-shortcut[data-slide="${ currentSlide }"]`, 'data-state', 'active' );
 		}
-
-		// Move the slide.
-		sliderContainerElem.style.transform = `translateX(-${ currentSlide * sliderWidth }px)`;
-
-		// Update shortcut state.
-		hqfw.fn.setAttribute( '.hqfw-js-photo-slider-shortcut', 'data-state', 'default' );
-		hqfw.fn.setAttribute( `.hqfw-js-photo-slider-shortcut[data-slide="${ currentSlide }"]`, 'data-state', 'active' );
 	},
 
 	/**
@@ -587,15 +377,8 @@ hqfw.photoSlider = {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param
-	 */
-	/**
-	 * Move the slides based on the image_id.
-	 *
-	 * @since 1.0.0
-	 *
-	 * @param {integer} imageId     The target image id.
-	 * @param {string}  imageSource The image url
+	 * @param {integer} imageId     Contains the target image id.
+	 * @param {string}  imageSource Contains the image url.
 	 */
 	moveSlideByImageId( imageId, imageSource ) {
 		if ( ! imageId || ! imageSource ) {
@@ -642,28 +425,26 @@ hqfw.photoSlider = {
 	 * @since 1.0.0
 	 */
 	navigationController() {
-		hqfw.fn.eventListener( 'click', '.hqfw-js-photo-slider-controller', function( e ) {
+		eventListener( 'click', '.hqfw-js-photo-slider-controller', function( e ) {
 			const target = e.target;
 			const event = target.getAttribute( 'data-event' );
-			if ( ! [ 'prev', 'next' ].includes( event ) ) {
-				return;
-			}
+			if ( [ 'prev', 'next' ].includes( event ) ) {
+				const sliderElem = hqfw.photoSlider.sliderElem;
+				const totalSlides = sliderElem.querySelectorAll( '.hqfw-photo-slider__slide' ).length;
+				const currentSlide = parseInt( sliderElem.getAttribute( 'data-current-slide' ) );
+				let updatedSlideValue = currentSlide;
+				switch ( event ) {
+					case 'prev':
+						updatedSlideValue = currentSlide <= 0 ? totalSlides - 1 : currentSlide - 1;
+						break;
+					case 'next':
+						updatedSlideValue = currentSlide >= totalSlides - 1 ? 0 : currentSlide + 1;
+						break;
+				}
 
-			const sliderElem = hqfw.photoSlider.sliderElem;
-			const totalSlides = sliderElem.querySelectorAll( '.hqfw-photo-slider__slide' ).length;
-			const currentSlide = parseInt( sliderElem.getAttribute( 'data-current-slide' ) );
-			let updatedSlideValue = currentSlide;
-			switch ( event ) {
-				case 'prev':
-					updatedSlideValue = currentSlide <= 0 ? totalSlides - 1 : currentSlide - 1;
-					break;
-				case 'next':
-					updatedSlideValue = currentSlide >= totalSlides - 1 ? 0 : currentSlide + 1;
-					break;
+				sliderElem.setAttribute( 'data-current-slide', updatedSlideValue );
+				hqfw.photoSlider.moveSlide();
 			}
-
-			sliderElem.setAttribute( 'data-current-slide', updatedSlideValue );
-			hqfw.photoSlider.moveSlide();
 		} );
 	},
 
@@ -673,17 +454,15 @@ hqfw.photoSlider = {
 	 * @since 1.0.0
 	 */
 	shortcutController() {
-		hqfw.fn.eventListener( 'click', '.hqfw-js-photo-slider-shortcut', function( e ) {
+		eventListener( 'click', '.hqfw-js-photo-slider-shortcut', function( e ) {
 			const target = e.target;
 			const state = target.getAttribute( 'data-state' );
 			const slide = parseInt( target.getAttribute( 'data-slide' ) );
-			if ( state !== 'default' || isNaN( slide ) ) {
-				return;
+			if ( state === 'default' && ! isNaN( slide ) ) {
+				const sliderElem = hqfw.photoSlider.sliderElem;
+				sliderElem.setAttribute( 'data-current-slide', slide );
+				hqfw.photoSlider.moveSlide();
 			}
-
-			const sliderElem = hqfw.photoSlider.sliderElem;
-			sliderElem.setAttribute( 'data-current-slide', slide );
-			hqfw.photoSlider.moveSlide();
 		} );
 	},
 
@@ -768,20 +547,18 @@ hqfw.photoBox = {
 	 * @since 1.0.0
 	 */
 	init() {
-		if ( ! this.construct() ) {
-			return;
+		if ( this.construct() ) {
+			this.openModal();
+			this.closeModal();
+			this.keyPressCloseModal();
+			this.toggleFullScreen();
+			this.keyPressExitFullScreen();
+			this.screenResize();
 		}
-
-		this.openModal();
-		this.closeModal();
-		this.keyPressCloseModal();
-		this.toggleFullScreen();
-		this.keyPressExitFullScreen();
-		this.screenResize();
 	},
 
 	/**
-	 * Construct.
+	 * Constructor.
 	 *
 	 * @since 1.0.0
 	 */
@@ -802,44 +579,34 @@ hqfw.photoBox = {
 	 * @return {boolean} Check if all property element has a value.
 	 */
 	setElementProperties() {
-		// Set modalElem property.
 		const modalElem = document.getElementById( 'hqfw-js-photobox-viewer' );
 		if ( ! modalElem ) {
 			return false;
 		}
-
 		hqfw.photoBox.modalElem = modalElem;
 
-		// Set bodyElem property.
 		const bodyElem = document.querySelector( '.hqfw-photobox-viewer__body' );
 		if ( ! bodyElem ) {
 			return false;
 		}
-
 		hqfw.photoBox.bodyElem = bodyElem;
 
-		// Set containerElem property.
 		const containerElem = document.querySelector( '.hqfw-photobox-viewer__container' );
 		if ( ! containerElem ) {
 			return false;
 		}
-
 		hqfw.photoBox.containerElem = containerElem;
 
-		// Set captionElem property.
 		const captionElem = document.getElementById( 'hqfw-js-photobox-viewer-caption' );
 		if ( ! captionElem ) {
 			return false;
 		}
-
 		hqfw.photoBox.captionElem = captionElem;
 
-		// Set imageElem property.
 		const imageElem = document.getElementById( 'hqfw-js-photobox-viewer-image' );
 		if ( ! imageElem ) {
 			return false;
 		}
-
 		hqfw.photoBox.imageElem = imageElem;
 
 		return true;
@@ -862,17 +629,14 @@ hqfw.photoBox = {
 	 * @since 1.0.0
 	 */
 	setImageSize() {
-		if ( hqfw.photoBox.getState() !== 'show' ) {
-			return;
+		if ( hqfw.photoBox.getState() === 'show' ) {
+			const bodyElem = hqfw.photoBox.bodyElem;
+			const imageElem = hqfw.photoBox.imageElem;
+			const bodyHeight = bodyElem.offsetHeight;
+			let imageHeight = imageElem.naturalHeight;
+			imageHeight = ( imageHeight > bodyHeight ? bodyHeight : imageHeight );
+			imageElem.style.maxHeight = `${ imageHeight }px`;
 		}
-
-		const bodyElem = hqfw.photoBox.bodyElem;
-		const imageElem = hqfw.photoBox.imageElem;
-
-		const bodyHeight = bodyElem.offsetHeight;
-		let imageHeight = imageElem.naturalHeight;
-		imageHeight = ( imageHeight > bodyHeight ? bodyHeight : imageHeight );
-		imageElem.style.maxHeight = `${ imageHeight }px`;
 	},
 
 	/**
@@ -901,10 +665,8 @@ hqfw.photoBox = {
 		const bodyElem = hqfw.photoBox.bodyElem;
 		const containerElem = hqfw.photoBox.containerElem;
 		const imageElem = hqfw.photoBox.imageElem;
-
 		const bodyHeight = bodyElem.offsetHeight;
 		const imageHeight = imageElem.naturalHeight;
-
 		containerElem.classList.remove( 'hqfw-photobox-zoom' );
 		if ( imageHeight > bodyHeight ) {
 			// Enable zoom.
@@ -929,12 +691,10 @@ hqfw.photoBox = {
 	hideModal() {
 		const modalElem = hqfw.photoBox.modalElem;
 		const modalState = modalElem.getAttribute( 'data-state' );
-		if ( modalState !== 'show' ) {
-			return;
+		if ( modalState === 'show' ) {
+			setFullScreen.disable();
+			modalElem.setAttribute( 'data-state', 'hide' );
 		}
-
-		hqfw.fn.disableFullScreen();
-		modalElem.setAttribute( 'data-state', 'hide' );
 	},
 
 	/**
@@ -943,7 +703,7 @@ hqfw.photoBox = {
 	 * @since 1.0.0
 	 */
 	openModal() {
-		hqfw.fn.eventListener( 'click', '#hqfw-js-photobox-trigger-btn', function() {
+		eventListener( 'click', '#hqfw-js-photobox-trigger-btn', function() {
 			const image = hqfw.photoSlider.getCurrentImage();
 			if ( ! image ) {
 				return;
@@ -951,7 +711,6 @@ hqfw.photoBox = {
 
 			const modalElem = hqfw.photoBox.modalElem;
 			const captionElem = hqfw.photoBox.captionElem;
-
 			const imageElems = modalElem.querySelectorAll( 'img' );
 			if ( imageElems.length === 0 ) {
 				return;
@@ -964,7 +723,7 @@ hqfw.photoBox = {
 				fullScreenBtnElem.setAttribute( 'title', 'Fullscreen' );
 			}
 
-			const imageName = hqfw.fn.getImageName( image.source );
+			const imageName = getImageName( image.source );
 			captionElem.textContent = ( ! image.title ? imageName : image.title );
 			modalElem.setAttribute( 'data-state', 'show' );
 
@@ -992,7 +751,7 @@ hqfw.photoBox = {
 	 * @since 1.0.0
 	 */
 	closeModal() {
-		hqfw.fn.eventListener( 'click', '#hqfw-js-photobox-close-btn', function() {
+		eventListener( 'click', '#hqfw-js-photobox-close-btn', function() {
 			hqfw.photoBox.hideModal();
 		} );
 	},
@@ -1018,7 +777,7 @@ hqfw.photoBox = {
 	 * @since 1.0.0
 	 */
 	toggleFullScreen() {
-		hqfw.fn.eventListener( 'click', '#hqfw-js-photobox-fullscreen-btn', function( e ) {
+		eventListener( 'click', '#hqfw-js-photobox-fullscreen-btn', function( e ) {
 			const target = e.target;
 			const event = target.getAttribute( 'data-event' );
 			if ( ! [ 'show', 'exit' ].includes( event ) ) {
@@ -1026,11 +785,11 @@ hqfw.photoBox = {
 			}
 
 			if ( event === 'show' ) {
-				hqfw.fn.enableFullScreen();
+				setFullScreen.enable();
 			}
 
 			if ( event === 'exit' ) {
-				hqfw.fn.disableFullScreen();
+				setFullScreen.disable();
 			}
 
 			const latestEvent = ( event === 'show' ? 'exit' : 'show' );
@@ -1055,13 +814,11 @@ hqfw.photoBox = {
 			document.addEventListener( `${ prefix }fullscreenchange`, function() {
 				if ( ! document.fullscreenElement && ! document.webkitIsFullScreen && ! document.mozFullScreen && ! document.msFullscreenElement ) {
 					const fullScreenBtnElem = document.getElementById( 'hqfw-js-photobox-fullscreen-btn' );
-					if ( ! fullScreenBtnElem ) {
-						return;
+					if ( fullScreenBtnElem ) {
+						fullScreenBtnElem.setAttribute( 'data-event', 'show' );
+						fullScreenBtnElem.setAttribute( 'aria-label', 'Fullscreen' );
+						fullScreenBtnElem.setAttribute( 'title', 'Fullscreen' );
 					}
-
-					fullScreenBtnElem.setAttribute( 'data-event', 'show' );
-					fullScreenBtnElem.setAttribute( 'aria-label', 'Fullscreen' );
-					fullScreenBtnElem.setAttribute( 'title', 'Fullscreen' );
 				}
 			} );
 		} );
@@ -1074,7 +831,6 @@ hqfw.photoBox = {
 	 */
 	screenResize() {
 		window.addEventListener( 'resize', function() {
-			// Set image size.
 			hqfw.photoBox.setImageSize();
 		} );
 	},
@@ -1099,18 +855,16 @@ hqfw.variation = {
 	variationFormElem: null,
 
 	/**
-	 * Initialize.
+	 * Call to initialize.
 	 *
 	 * @since 1.0.0
 	 */
-	init() {
-		if ( ! this.construct() ) {
-			return;
+	__init() {
+		if ( this.construct() ) {
+			this.variationForm();
+			this.variationIdInputListener();
+			this.variatioWrapListener();
 		}
-
-		this.variationForm();
-		this.variationIdInputListener();
-		this.variatioWrapListener();
 	},
 
 	/**
@@ -1166,22 +920,20 @@ hqfw.variation = {
 	variationIdInputListener() {
 		const variationFormElem = hqfw.variation.variationFormElem;
 		const variationIdFormElem = variationFormElem.querySelector( 'input[name="variation_id"]' );
-		if ( ! variationIdFormElem ) {
-			return;
+		if ( variationIdFormElem ) {
+			jQuery( variationFormElem ).on( 'woocommerce_variation_select_change', function() {
+				setTimeout( function() {
+					const variationId = variationIdFormElem.value;
+					if ( ! variationId ) {
+						// Move the photo slider to primary image.
+						hqfw.photoSlider.moveSlideToPrimary();
+
+						// Update the product summary height.
+						hqfw.quickView.setProductSummaryBodyHeight();
+					}
+				}, 200 );
+			} );
 		}
-
-		jQuery( variationFormElem ).on( 'woocommerce_variation_select_change', function() {
-			setTimeout( function() {
-				const variationId = variationIdFormElem.value;
-				if ( ! variationId ) {
-					// Move the photo slider to primary image.
-					hqfw.photoSlider.moveSlideToPrimary();
-
-					// Update the product summary height.
-					hqfw.quickView.setProductSummaryBodyHeight();
-				}
-			}, 200 );
-		} );
 	},
 
 	/**
@@ -1192,17 +944,15 @@ hqfw.variation = {
 	variatioWrapListener() {
 		const variationFormElem = hqfw.variation.variationFormElem;
 		const variationWrapElem = variationFormElem.querySelector( '.single_variation_wrap' );
-		if ( ! variationWrapElem ) {
-			return;
+		if ( variationWrapElem ) {
+			jQuery( variationWrapElem ).on( 'show_variation', function( event, variation ) {
+				// Move photo slider based on the image id and source.
+				hqfw.photoSlider.moveSlideByImageId( variation.image_id, variation.image.full_src );
+
+				// Update the product summary height.
+				hqfw.quickView.setProductSummaryBodyHeight();
+			} );
 		}
-
-		jQuery( variationWrapElem ).on( 'show_variation', function( event, variation ) {
-			// Move photo slider based on the image id and source.
-			hqfw.photoSlider.moveSlideByImageId( variation.image_id, variation.image.full_src );
-
-			// Update the product summary height.
-			hqfw.quickView.setProductSummaryBodyHeight();
-		} );
 	},
 };
 
@@ -1255,18 +1005,16 @@ hqfw.quickView = {
 	 * @since 1.0.0
 	 */
 	init() {
-		if ( ! this.construct() ) {
-			return;
+		if ( this.construct() ) {
+			this.openModal();
+			this.closeModal();
+			this.autoCloseModal();
+			this.keyPressCloseModal();
+			this.slideNavigation();
+			this.screenResize();
+			this.setSlideNavigationVisibility();
+			this.setProductGalleryTriggerIcon();
 		}
-
-		this.openModal();
-		this.closeModal();
-		this.autoCloseModal();
-		this.keyPressCloseModal();
-		this.slideNavigation();
-		this.screenResize();
-		this.setSlideNavigationVisibility();
-		this.setProductGalleryTriggerIcon();
 	},
 
 	/**
@@ -1294,28 +1042,22 @@ hqfw.quickView = {
 	 * @return {boolean} Check if all property element has a value.
 	 */
 	setElementProperties() {
-		// Set modalElem property.
 		const modalElem = document.getElementById( 'hqfw-js-modal' );
 		if ( ! modalElem ) {
 			return false;
 		}
-
 		hqfw.quickView.modalElem = modalElem;
 
-		// Set viewerElem property.
 		const viewerElem = document.getElementById( 'hqfw-js-viewer-content' );
 		if ( ! viewerElem ) {
 			return false;
 		}
-
 		hqfw.quickView.viewerElem = viewerElem;
 
-		// Set viewerProductElem property.
 		const viewerProductElem = document.getElementById( 'hqfw-js-viewer-product' );
 		if ( ! viewerProductElem ) {
 			return false;
 		}
-
 		hqfw.quickView.viewerProductElem = viewerProductElem;
 
 		return true;
@@ -1329,19 +1071,17 @@ hqfw.quickView = {
 	 */
 	setProductIds() {
 		const quickViewBtnElems = document.querySelectorAll( '.hqfw-js-quick-view-btn' );
-		if ( quickViewBtnElems.length === 0 ) {
-			return;
-		}
-
-		quickViewBtnElems.forEach( function( quickViewBtnElem ) {
-			const productId = parseInt( quickViewBtnElem.getAttribute( 'data-product_id' ) );
-			if ( ! isNaN( productId ) && productId > 0 ) {
-				const productIds = hqfw.quickView.productIds;
-				if ( ! productIds.includes( productId ) ) {
-					hqfw.quickView.productIds.push( productId );
+		if ( quickViewBtnElems.length > 0 ) {
+			quickViewBtnElems.forEach( function( quickViewBtnElem ) {
+				const productId = parseInt( quickViewBtnElem.getAttribute( 'data-product_id' ) );
+				if ( ! isNaN( productId ) && productId > 0 ) {
+					const productIds = hqfw.quickView.productIds;
+					if ( ! productIds.includes( productId ) ) {
+						hqfw.quickView.productIds.push( productId );
+					}
 				}
-			}
-		} );
+			} );
+		}
 	},
 
 	/**
@@ -1390,16 +1130,14 @@ hqfw.quickView = {
 		}
 
 		const productViewerElem = modalElem.querySelector( '.hqfw-product' );
-		if ( ! productViewerElem ) {
-			return;
-		}
-
-		const width = window.innerWidth;
-		const height = window.innerHeight;
-		if ( width <= 992 && height <= 850 ) {
-			productViewerElem.style.height = `${ ( height - 40 ) }px`;
-		} else {
-			productViewerElem.style.height = 'auto';
+		if ( productViewerElem ) {
+			const width = window.innerWidth;
+			const height = window.innerHeight;
+			if ( width <= 992 && height <= 850 ) {
+				productViewerElem.style.height = `${ ( height - 40 ) }px`;
+			} else {
+				productViewerElem.style.height = 'auto';
+			}
 		}
 	},
 
@@ -1427,7 +1165,7 @@ hqfw.quickView = {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param {integer} productId The current product id viewed.
+	 * @param {integer} productId Contains the current product id viewed.
 	 * @return {Object} The previous and next product id.
 	 */
 	getProductIdAdjacent( productId ) {
@@ -1459,7 +1197,7 @@ hqfw.quickView = {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param {integer} productId The current product id viewed.
+	 * @param {integer} productId Contains the current product id viewed.
 	 */
 	setSlideNavigationProperties( productId ) {
 		if ( ! productId ) {
@@ -1469,12 +1207,12 @@ hqfw.quickView = {
 		const data = hqfw.quickView.getProductIdAdjacent( productId );
 
 		const prevSelector = '.hqfw-js-navigation-btn[data-event="prev"]';
-		hqfw.fn.setAttribute( prevSelector, 'data-state', ( data.prevId > 0 ? 'default' : 'hidden' ) );
-		hqfw.fn.setAttribute( prevSelector, 'data-product_id', data.prevId );
+		setAttribute.elem( prevSelector, 'data-state', ( data.prevId > 0 ? 'default' : 'hidden' ) );
+		setAttribute.elem( prevSelector, 'data-product_id', data.prevId );
 
 		const nextSelector = '.hqfw-js-navigation-btn[data-event="next"]';
-		hqfw.fn.setAttribute( nextSelector, 'data-state', ( data.nextId > 0 ? 'default' : 'hidden' ) );
-		hqfw.fn.setAttribute( nextSelector, 'data-product_id', data.nextId );
+		setAttribute.elem( nextSelector, 'data-state', ( data.nextId > 0 ? 'default' : 'hidden' ) );
+		setAttribute.elem( nextSelector, 'data-product_id', data.nextId );
 	},
 
 	/**
@@ -1486,7 +1224,7 @@ hqfw.quickView = {
 	setSlideNavigationVisibility() {
 		const totalIds = hqfw.quickView.productIds.length;
 		const state = ( totalIds > 1 ? 'default' : 'hidden' );
-		hqfw.fn.setAttribute( '.hqfw-js-navigation-btn', 'data-state', state );
+		setAttribute.elem( '.hqfw-js-navigation-btn', 'data-state', state );
 	},
 
 	/**
@@ -1498,14 +1236,12 @@ hqfw.quickView = {
 		const modalElem = hqfw.quickView.modalElem;
 		const viewerElem = hqfw.quickView.viewerElem;
 		const modalState = modalElem.getAttribute( 'data-state' );
-		if ( modalState !== 'show' ) {
-			return;
-		}
-
-		viewerElem.setAttribute( 'data-state', 'hidden' );
-		const isAnimationDone = await hqfw.fn.isAnimationDone( viewerElem );
-		if ( isAnimationDone ) {
-			modalElem.setAttribute( 'data-state', 'hide' );
+		if ( modalState === 'show' ) {
+			viewerElem.setAttribute( 'data-state', 'hidden' );
+			const isDone = await isAnimationDone( viewerElem );
+			if ( isDone ) {
+				modalElem.setAttribute( 'data-state', 'hide' );
+			}
 		}
 	},
 
@@ -1515,7 +1251,7 @@ hqfw.quickView = {
 	 * @since 1.0.0
 	 */
 	openModal() {
-		hqfw.fn.eventListener( 'click', '.hqfw-js-quick-view-btn', async function( e ) {
+		eventListener( 'click', '.hqfw-js-quick-view-btn', async function( e ) {
 			const target = e.target;
 			const modalElem = hqfw.quickView.modalElem;
 			const viewerElem = hqfw.quickView.viewerElem;
@@ -1533,7 +1269,7 @@ hqfw.quickView = {
 			viewerElem.setAttribute( 'data-state', 'loading' );
 
 			// Get the product content.
-			const res = await hqfw.fn.fetch( {
+			const res = await getFetch( {
 				nonce: hqfwLocal.nonce.getProductContent,
 				action: 'hqfw_get_product_content',
 				productId,
@@ -1548,7 +1284,7 @@ hqfw.quickView = {
 					hqfw.photoSlider.init();
 
 					// Initialize variation form.
-					hqfw.variation.init();
+					hqfw.variation.__init();
 
 					// Update the product summary height.
 					hqfw.quickView.setProductSummaryBodyHeight();
@@ -1583,7 +1319,7 @@ hqfw.quickView = {
 	 * @since 1.0.0
 	 */
 	closeModal() {
-		hqfw.fn.eventListener( 'click', '.hqfw-js-close-modal', async function() {
+		eventListener( 'click', '.hqfw-js-close-modal', async function() {
 			hqfw.quickView.hideModal();
 		} );
 	},
@@ -1621,7 +1357,7 @@ hqfw.quickView = {
 	 * @since 1.0.0
 	 */
 	slideNavigation() {
-		hqfw.fn.eventListener( 'click', '.hqfw-js-navigation-btn', async function( e ) {
+		eventListener( 'click', '.hqfw-js-navigation-btn', async function( e ) {
 			const target = e.target;
 			const modalElem = hqfw.quickView.modalElem;
 			const viewerElem = hqfw.quickView.viewerElem;
@@ -1639,10 +1375,10 @@ hqfw.quickView = {
 			viewerElem.setAttribute( 'data-state', 'loading' );
 
 			// Disable navigation button.
-			hqfw.fn.setAttribute( '.hqfw-js-navigation-btn', 'data-state', 'disabled' );
+			setAttribute.elem( '.hqfw-js-navigation-btn', 'data-state', 'disabled' );
 
 			// Get the product content.
-			const res = await hqfw.fn.fetch( {
+			const res = await getFetch( {
 				nonce: hqfwLocal.nonce.getProductContent,
 				action: 'hqfw_get_product_content',
 				productId,
@@ -1658,7 +1394,7 @@ hqfw.quickView = {
 					hqfw.photoSlider.init();
 
 					// Initialize variation form.
-					hqfw.variation.init();
+					hqfw.variation.__init();
 
 					// Update the product summary height.
 					hqfw.quickView.setProductSummaryBodyHeight();
@@ -1669,7 +1405,7 @@ hqfw.quickView = {
 					}, 500 );
 
 					// Enable navigation button.
-					hqfw.fn.setAttribute( '.hqfw-js-navigation-btn', 'data-state', 'default' );
+					setAttribute.elem( '.hqfw-js-navigation-btn', 'data-state', 'default' );
 
 					// Resize at mobile state.
 					hqfw.quickView.setProductViewerMobileHeight();
@@ -1707,13 +1443,14 @@ hqfw.domReady = {
 	/**
 	 * Execute the code when dom is ready.
 	 *
-	 * @param {Function} func callback
+	 * @param {Function} func Contains the callback function.
 	 * @return {Function} The callback function.
 	 */
 	execute( func ) {
 		if ( typeof func !== 'function' ) {
 			return;
 		}
+
 		if ( document.readyState === 'interactive' || document.readyState === 'complete' ) {
 			return func();
 		}
@@ -1722,7 +1459,15 @@ hqfw.domReady = {
 	},
 };
 
+/**
+ * Initialize App.
+ *
+ * @since 1.0.0
+ */
 hqfw.domReady.execute( function() {
-	hqfw.photoBox.init(); // Handle the photo box component events.
-	hqfw.quickView.init(); // Handle the quick view component events.
+	Object.entries( hqfw ).forEach( function( fragment ) {
+		if ( 'init' in fragment[ 1 ] ) {
+			fragment[ 1 ].init();
+		}
+	} );
 } );

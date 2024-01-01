@@ -11,12 +11,14 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 	1.0.0
  * @version 1.0.0
- * @author Mafel John Cahucom
+ * @author  Mafel John Cahucom
  */
 final class Actions {
 
 	/**
 	 * Inherit Singleton.
+     * 
+     * @since 1.0.0
 	 */
 	use Singleton;
 
@@ -58,7 +60,7 @@ final class Actions {
     public function render_quick_view_button() {
         // Get the hook index.
         $position = ( $this->settings['gn_qv_btn_position'] - 1 );
-        $hooks = [
+        $hooks    = [
             [
                 'name'      => 'woocommerce_after_shop_loop_item',
                 'priority'  => 10
@@ -69,13 +71,14 @@ final class Actions {
             ]
         ];
 
-        if ( ! isset( $hooks[ $position ] ) ) {
-            return;
+        if ( isset( $hooks[ $position ] ) ) {
+            add_action( $hooks[ $position ]['name'], function() {
+                echo do_shortcode( sprintf(
+                    '[handy-quick-view-button id="%s"]',
+                    get_the_ID()
+                ) );
+            }, $hooks[ $position ]['priority'] );
         }
-
-        add_action( $hooks[ $position ]['name'], function() {
-            echo do_shortcode( '[handy-quick-view-button id="'. get_the_ID() .'"]' );
-        }, $hooks[ $position ]['priority'] );
     }
 
     /**

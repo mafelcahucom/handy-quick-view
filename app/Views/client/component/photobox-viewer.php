@@ -15,9 +15,9 @@ defined( 'ABSPATH' ) || exit;
         <div class="hqfw-photobox-viewer__content">
             <div class="hqfw-photobox-viewer__head">
                 <div class="hqfw-flex hqfw-flex-ai-c hqfw-flex-jc-ed">
-                    <button id="hqfw-js-photobox-fullscreen-btn" class="hqfw-photobox-viewer__controller-btn" data-event="show" title="Fullscreen" aria-label="Fullscreen">
+                    <button id="hqfw-js-photobox-fullscreen-btn" class="hqfw-photobox-viewer__controller-btn" data-event="show" title="<?php echo __( 'Fullscreen', HQFW_PLUGIN_DOMAIN ); ?>" aria-label="<?php echo __( 'Fullscreen', HQFW_PLUGIN_DOMAIN ); ?>">
                     </button>
-                    <button id ="hqfw-js-photobox-close-btn" class="hqfw-photobox-viewer__controller-btn" title="Close (Esc)" aria-label="Close (Esc)">
+                    <button id ="hqfw-js-photobox-close-btn" class="hqfw-photobox-viewer__controller-btn" title="<?php echo __( 'Close (ESC)', HQFW_PLUGIN_DOMAIN ); ?>" aria-label="<?php echo __( 'Close (ESC)', HQFW_PLUGIN_DOMAIN ); ?>">
                     </button>
                 </div>
             </div>

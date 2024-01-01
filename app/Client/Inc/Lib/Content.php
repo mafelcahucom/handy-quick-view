@@ -2,6 +2,7 @@
 namespace HQFW\Client\Inc\Lib;
 
 use HQFW\Inc\Traits\Singleton;
+use HQFW\Inc\Plugins;
 use HQFW\Client\Inc\Helper;
 
 defined( 'ABSPATH' ) || exit;
@@ -11,12 +12,14 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 	1.0.0
  * @version 1.0.0
- * @author Mafel John Cahucom
+ * @author  Mafel John Cahucom
  */
 final class Content {
 
 	/**
 	 * Inherit Singleton.
+     * 
+     * @since 1.0.0
 	 */
 	use Singleton;
 
@@ -77,6 +80,9 @@ final class Content {
 
         if ( $settings['gn_ps_show_add_to_cart'] ) {
             add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_add_to_cart', 25 );
+            if ( Plugins::is_active( 'handy-add-to-cart' ) ) {
+                self::modify_grouped_quantity_input();
+            }
         }
 
         if ( $settings['gn_ps_show_meta'] ) {
@@ -118,7 +124,7 @@ final class Content {
      *
      * @since 1.0.0
      * 
-     * @param  integer  $product_id  The target product id.
+     * @param  integer  $product_id  Contains the target product id.
      * @return array
      */
     private static function get_product_images( $product_id ) {
@@ -170,5 +176,20 @@ final class Content {
         }
         
         return $images;
+    }
+
+    /**
+     * Quantity input adding class attributes if handy-add-to-cart is active.
+     * 
+     * @since 1.0.0
+     */
+    private static function modify_grouped_quantity_input() {
+        $product = wc_get_product( get_the_ID() );
+        if ( $product && $product->is_type( 'grouped' ) ) {
+            add_filter( 'woocommerce_quantity_input_classes', function( $classes, $current_product ) {
+                $classes['additional'] = 'hafw-grouped-quantity-input';
+                return $classes;
+            }, 10, 2 );
+        }
     }
 }

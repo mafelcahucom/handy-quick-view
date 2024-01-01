@@ -13,7 +13,7 @@ defined( 'ABSPATH' ) || exit;
 
 /**
  * $args = [
- *     'id' => (integer) The ID of the product to be view.
+ *     'id' => (integer) Contains the ID of the product to be view.
  *]
  **/
 
@@ -24,7 +24,7 @@ if ( ! isset( $args['id'] ) ) {
 $settings = get_option( '_hqfw_main_settings' );
 ?>
 
-<button type="button" class="hqfw hqfw-js-quick-view-btn hqfw-quick-view-btn hqfw-hover <?php echo esc_attr( $settings['qv_btn_style'] ); ?>" data-product_id="<?php echo esc_attr( $args['id'] ); ?>" title="Quick View" aria-label="Quick View">
+<button type="button" class="hqfw hqfw-js-quick-view-btn hqfw-quick-view-btn hqfw-hover <?php echo esc_attr( $settings['qv_btn_style'] ); ?>" data-product_id="<?php echo esc_attr( $args['id'] ); ?>" title="<?php echo __( 'Quick View', HQFW_PLUGIN_DOMAIN ); ?>" aria-label="<?php echo __( 'Quick View', HQFW_PLUGIN_DOMAIN ); ?>">
     <div class="hqfw-flex hqfw-flex-ai-c">
         <?php if ( in_array( $settings['qv_btn_style'], [ 'text', 'text-icon' ] ) ): ?>
             <span>

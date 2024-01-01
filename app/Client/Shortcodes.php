@@ -11,12 +11,14 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 	1.0.0
  * @version 1.0.0
- * @author Mafel John Cahucom
+ * @author  Mafel John Cahucom
  */
 final class Shortcodes {
 
 	/**
 	 * Register Shortcodes.
+     * 
+     * @since 1.0.0
 	 */
 	use Singleton;
 
@@ -35,6 +37,7 @@ final class Shortcodes {
      *
      * @since 1.0.0
      * 
+     * @param  array  $atts  Contains the shortcode attributes.
      * @return HTMLElement
      */
     public function quick_view_button( $atts ) {

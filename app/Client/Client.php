@@ -17,12 +17,14 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 	1.0.0
  * @version 1.0.0
- * @author Mafel John Cahucom
+ * @author  Mafel John Cahucom
  */
 final class Client {
 
 	/**
 	 * Inherit Singleton.
+     * 
+     * @since 1.0.0
 	 */
 	use Singleton;
 
@@ -108,28 +110,28 @@ final class Client {
      */
     public function register_scripts() {
         // Include dependency.
-        $client_dependency = [ 'jquery' ];
+        $dependency = [ 'jquery' ];
 
         // Zoom dependency.
         $is_zoom_enabled = false;
         if ( $this->settings['gn_pt_enable_zoom'] || $this->settings['gn_pt_enable_lightbox'] ) {
             $is_zoom_enabled     = true;
-            $client_dependency[] = 'zoom';
+            $dependency[] = 'zoom';
         }
 
         // Add to cart variation dependency.
         if ( $this->settings['gn_ps_show_add_to_cart'] ) {
-            $client_dependency[] = 'wc-add-to-cart-variation';
+            $dependency[] = 'wc-add-to-cart-variation';
         }
 
         // Client js.
-        $client_src     = Helper::get_asset_src( 'js/hqfw-client.min.js' );
-        $client_version = Helper::get_asset_version( 'js/hqfw-client.min.js' );
-        wp_register_script( 'hqfw-client-js', $client_src, $client_dependency, $client_version, true );
-        wp_enqueue_script( 'hqfw-client-js' );
+        $source  = Helper::get_asset_src( 'js/hqfw-client.min.js' );
+        $version = Helper::get_asset_version( 'js/hqfw-client.min.js' );
+        wp_register_script( 'hqfw-client', $source, $dependency, $version, true );
+        wp_enqueue_script( 'hqfw-client' );
 
         // Localize variables.
-        wp_localize_script( 'hqfw-client-js', 'hqfwLocal', [
+        wp_localize_script( 'hqfw-client', 'hqfwLocal', [
             'crafter' => 'Y35qwbAlyt+y60cldwAatUDyxikpRb30wBPT9Y1Xymk=',
             'url'     => admin_url( 'admin-ajax.php' ),
             'plugin'  => [
