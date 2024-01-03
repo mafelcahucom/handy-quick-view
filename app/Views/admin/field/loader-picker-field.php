@@ -48,7 +48,7 @@ if ( empty( $name ) || empty( $group ) || empty( $choices ) ) {
                     </div>
                 </button>
             <?php endforeach; ?>
-            <?php if ( count( $choices ) ): ?>
+            <?php if ( count( $choices ) > 10 ): ?>
                 <span class="hd-loader-picker-field__pagination hd-form-field__pagination" data-event="more">
                     <?php echo __( 'Show More', HQFW_PLUGIN_DOMAIN ); ?>
                 </span>
