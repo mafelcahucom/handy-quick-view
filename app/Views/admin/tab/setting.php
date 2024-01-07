@@ -2062,7 +2062,7 @@ echo Component::get_tab_panel([
                             'name'  => 'ad_add_custom_css',
                             'group' => 'advanced_setting_group',
                             'value' => $settings['ad_add_custom_css'],
-                            'description' => __( 'Add your own CSS code here to customize the appearance of toaster notifier components at the front-end.', HQFW_PLUGIN_DOMAIN )
+                            'description' => __( 'Add your own CSS code here to customize the appearance of quick view components at the front-end.', HQFW_PLUGIN_DOMAIN )
                         ])
                     ]
                 ]),
