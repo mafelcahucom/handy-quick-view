@@ -61,7 +61,7 @@ echo Component::get_tab_navigation([
 echo Component::get_tab_panel([
     'id'         => 'general',
     'class'      => 'hd-mb-50',
-    'state'      => 'active',
+    'state'      => 'default',
     'components' => [
         Component::get_button([
             'class' => 'hd-save-setting-btn',
@@ -115,7 +115,7 @@ echo Component::get_tab_panel([
                             'name'  => 'gn_qv_btn_position',
                             'group' => 'general_setting_group',
                             'value' => $settings['gn_qv_btn_position'],
-                            'description' => __( 'Select the quick view button position in product loop thumbnail.', HQFW_PLUGIN_DOMAIN ),
+                            'description' => __( 'Select the quick view button position in the product loop thumbnail.', HQFW_PLUGIN_DOMAIN ),
                             'options' => [
                                 [
                                     'value' => 1,
@@ -842,7 +842,7 @@ echo Component::get_tab_panel([
                             'name'  => 'md_sldr_btn_icon_prev',
                             'group' => 'modal_setting_group',
                             'value' => $settings['md_sldr_btn_icon_prev'],
-                            'description' => __( 'Select your preferred icon to use in previous product slider button.', HQFW_PLUGIN_DOMAIN ),
+                            'description' => __( 'Select your preferred icon to use in the previous product slider button.', HQFW_PLUGIN_DOMAIN ),
                             'icons' => [
                                 'bs-chevron-left', 'bs-arrow-left', 'bs-arrow-left-circle', 'bs-arrow-left-circle-fill', 
                                 'bs-arrow-left-square', 'bs-arrow-left-square-fill', 'bs-caret-left', 'bs-caret-left-fill'
@@ -858,7 +858,7 @@ echo Component::get_tab_panel([
                             'name'  => 'md_sldr_btn_icon_next',
                             'group' => 'modal_setting_group',
                             'value' => $settings['md_sldr_btn_icon_next'],
-                            'description' => __( 'Select your preferred icon to use in next product slider button.', HQFW_PLUGIN_DOMAIN ),
+                            'description' => __( 'Select your preferred icon to use in the next product slider button.', HQFW_PLUGIN_DOMAIN ),
                             'icons' => [
                                 'bs-chevron-right', 'bs-arrow-right', 'bs-arrow-right-circle', 'bs-arrow-right-circle-fill', 
                                 'bs-arrow-right-square', 'bs-arrow-right-square-fill', 'bs-caret-right', 'bs-caret-right-fill'
@@ -989,7 +989,7 @@ echo Component::get_tab_panel([
                             'name'  => 'md_loader_style',
                             'group' => 'modal_setting_group',
                             'value' => $settings['md_loader_style'],
-                            'description' => __( 'Select your preferred loader style to use in modal.', HQFW_PLUGIN_DOMAIN ),
+                            'description' => __( 'Select your preferred loader style to use in the modal.', HQFW_PLUGIN_DOMAIN ),
                             'choices' => [
                                 'spinner-1', 'spinner-2', 'spinner-3',
                                 'spinner-4', 'spinner-5', 'spinner-6',
@@ -1123,7 +1123,7 @@ echo Component::get_tab_panel([
                             'name'  => 'pt_sldr_btn_icon_prev',
                             'group' => 'product_thumbnail_setting_group',
                             'value' => $settings['pt_sldr_btn_icon_prev'],
-                            'description' => __( 'Select your preferred icon to use in previous image slider button.', HQFW_PLUGIN_DOMAIN ),
+                            'description' => __( 'Select your preferred icon to use in the previous image slider button.', HQFW_PLUGIN_DOMAIN ),
                             'icons' => [
                                 'bs-chevron-left', 'bs-arrow-left', 'bs-arrow-left-circle', 'bs-arrow-left-circle-fill', 
                                 'bs-arrow-left-square', 'bs-arrow-left-square-fill', 'bs-caret-left', 'bs-caret-left-fill'
@@ -1139,7 +1139,7 @@ echo Component::get_tab_panel([
                             'name'  => 'pt_sldr_btn_icon_next',
                             'group' => 'product_thumbnail_setting_group',
                             'value' => $settings['pt_sldr_btn_icon_next'],
-                            'description' => __( 'Select your preferred icon to use in next image slider button.', HQFW_PLUGIN_DOMAIN ),
+                            'description' => __( 'Select your preferred icon to use in the next image slider button.', HQFW_PLUGIN_DOMAIN ),
                             'icons' => [
                                 'bs-chevron-right', 'bs-arrow-right', 'bs-arrow-right-circle', 'bs-arrow-right-circle-fill', 
                                 'bs-arrow-right-square', 'bs-arrow-right-square-fill', 'bs-caret-right', 'bs-caret-right-fill'
@@ -2077,6 +2077,11 @@ echo Component::get_tab_panel([
         ]),
     ]
 ]);
+
+/**
+ * Placeholder.
+ */
+echo Component::get_placeholder();
 
 /**
  * Footer.

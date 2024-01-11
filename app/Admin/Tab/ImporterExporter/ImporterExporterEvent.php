@@ -14,7 +14,7 @@ defined( 'ABSPATH' ) || exit;
  *
  * @since 	1.0.0
  * @version 1.0.0
- * @author Mafel John Cahucom
+ * @author  Mafel John Cahucom
  */
 final class ImporterExporterEvent {
 
@@ -137,7 +137,7 @@ final class ImporterExporterEvent {
         if ( $decrypted_settings === false ) {
             wp_send_json_error([
                 'error'  => 'CORRUPTED_SETTING_FILE',
-                'detail' => 'Failed to decrypt settings.'
+                'detail' => __( 'Failed to decrypt settings.', HQFW_PLUGIN_DOMAIN )
             ]);
         }
 
@@ -146,7 +146,7 @@ final class ImporterExporterEvent {
         if ( $decrypted_settings === null || json_last_error() !== JSON_ERROR_NONE ) {
             wp_send_json_error([
                 'error'  => 'CORRUPTED_SETTING_FILE',
-                'detail' => 'Failed to decode settings.',
+                'detail' => __( 'Failed to decode settings.', HQFW_PLUGIN_DOMAIN ),
             ]);
         }
 
@@ -156,7 +156,7 @@ final class ImporterExporterEvent {
         if ( empty( $updated_settings ) ) {
             wp_send_json_error([
                 'error'  => 'CORRUPTED_SETTING_FILE',
-                'detail' => 'Failed to decode settings.',
+                'detail' => __( 'Failed to decode settings.', HQFW_PLUGIN_DOMAIN ),
             ]);
         }
 
@@ -170,7 +170,7 @@ final class ImporterExporterEvent {
         if ( count( $validation['validation']['invalid'] ) > 0 ) {
             wp_send_json_error([
                 'error'  => 'CORRUPTED_SETTING_FILE',
-                'detail' => 'Settings failed in validation.'
+                'detail' => __( 'Settings failed in validation.', HQFW_PLUGIN_DOMAIN )
             ]);
         }
     

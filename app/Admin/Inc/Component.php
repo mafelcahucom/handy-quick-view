@@ -221,6 +221,17 @@ final class Component {
     }
 
     /**
+     * Return the setting placeholder component.
+     * 
+     * @since 1.0.0
+     *
+     * @return HTMLElement
+     */
+    public static function get_placeholder() {
+        return Helper::render_view( 'component/placeholder' );
+    }
+
+    /**
      * Return the screen loader component.
      *
      * @since 1.0.0

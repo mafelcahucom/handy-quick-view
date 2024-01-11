@@ -61,8 +61,10 @@ if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', g
         HQFW\Init::get_instance();
     }
 } else {
-    echo sprintf(
-        '<div class="notice notice-error is-dismissible"><p>%s</p></div>',
-        'Handy Quick View for WooCommerce requires WooCommerce Plugin to be activated. Please install WooCommerce to continue.'
-    );
+    add_action( 'admin_notices', function() {
+        echo sprintf(
+            '<div class="notice notice-error is-dismissible"><p>%s</p></div>',
+            'Handy Quick View for WooCommerce requires WooCommerce Plugin to be activated. Please install WooCommerce to continue.'
+        );
+    });
 }
