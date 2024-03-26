@@ -1,21 +1,21 @@
 <?php
-namespace HQFW\Admin\Tab\Setting;
+namespace HQFW\Admin\Modules\Setting;
 
 use HQFW\Inc\Traits\Singleton;
 use HQFW\Inc\Traits\Security;
 use HQFW\Admin\Inc\FieldValidation;
-use HQFW\Admin\Tab\Setting\SettingApi;
+use HQFW\Api\SettingApi;
 
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Admin > Tab > Setting Event.
+ * Admin > Modules > Setting > Events.
  *
  * @since 	1.0.0
  * @version 1.0.0
  * @author  Mafel John Cahucom
  */
-final class SettingEvent {
+final class Events {
 
 	/**
 	 * Inherit Singleton.
@@ -70,7 +70,7 @@ final class SettingEvent {
         }
 
         // Get settings field rules.
-        $field_rules = SettingApi::get_field_rules( 'rules' );
+        $field_rules = SettingApi::get_settings( 'schemas' );
 
         // Remove the element who dont exists in settings field rules.
         foreach ( $fields as $key => $value ) {
@@ -90,7 +90,7 @@ final class SettingEvent {
         $current_settings_value = get_option( '_hqfw_main_settings' );
         if ( empty( $current_settings_value ) ) {
             // Get the default values of fields if _hqfw_main_settings is emty.
-            $current_settings_value = SettingApi::get_fields_default_values();
+            $current_settings_value = SettingApi::get_settings( 'fields' );
         }
 
         // Validate all fields.

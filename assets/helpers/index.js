@@ -8,6 +8,7 @@ import eventListener from "./eventListener";
 import getCheckboxValue from "./getCheckboxValue";
 import getExtractedNumbers from "./getExtractedNumbers";
 import getFetch from "./getFetch";
+import getPascalString from "./getPascalString";
 import getImageName from "./getImageName";
 import isAnimationDone from "./isAnimationDone";
 import isObject from "./isObject";
@@ -22,6 +23,7 @@ export {
     getCheckboxValue,
     getExtractedNumbers,
     getFetch,
+    getPascalString,
     getImageName,
     isAnimationDone,
     isObject,

@@ -10,12 +10,12 @@
 use HQFW\Admin\Inc\Helper;
 use HQFW\Admin\Inc\Component;
 use HQFW\Admin\Inc\Field;
-use HQFW\Admin\Tab\Setting\SettingApi;
+use HQFW\Api\SettingApi;
 
 defined( 'ABSPATH' ) || exit;
 
 // Get the setting current value.
-$settings = SettingApi::get_settings();
+$settings = SettingApi::get_current_settings();
 
 /**
  * Header
@@ -647,8 +647,8 @@ echo Component::get_tab_panel([
                             'name'  => 'qv_btn_br',
                             'group' => 'quick_view_button_setting_group',
                             'value' => $settings['qv_btn_br'],
-                            'label' => __( 'Radius', HQFW_PLUGIN_DOMAIN ),
-                            'placeholder' => __( 'Radius', HQFW_PLUGIN_DOMAIN )
+                            'label' => __( 'Border Radius', HQFW_PLUGIN_DOMAIN ),
+                            'placeholder' => __( 'Border Radius', HQFW_PLUGIN_DOMAIN )
                         ]),
                     ]
                 ]),
@@ -823,8 +823,8 @@ echo Component::get_tab_panel([
                             'name'  => 'md_close_btn_br',
                             'group' => 'modal_setting_group',
                             'value' => $settings['md_close_btn_br'],
-                            'label' => __( 'Radius', HQFW_PLUGIN_DOMAIN ),
-                            'placeholder' => __( 'Radius', HQFW_PLUGIN_DOMAIN )
+                            'label' => __( 'Border Radius', HQFW_PLUGIN_DOMAIN ),
+                            'placeholder' => __( 'Border Radius', HQFW_PLUGIN_DOMAIN )
                         ]),
                     ]
                 ]),
@@ -970,8 +970,8 @@ echo Component::get_tab_panel([
                             'name'  => 'md_sldr_btn_br',
                             'group' => 'modal_setting_group',
                             'value' => $settings['md_sldr_btn_br'],
-                            'label' => __( 'Radius', HQFW_PLUGIN_DOMAIN ),
-                            'placeholder' => __( 'Radius', HQFW_PLUGIN_DOMAIN )
+                            'label' => __( 'Border Radius', HQFW_PLUGIN_DOMAIN ),
+                            'placeholder' => __( 'Border Radius', HQFW_PLUGIN_DOMAIN )
                         ]),
                     ]
                 ])
@@ -1251,8 +1251,8 @@ echo Component::get_tab_panel([
                             'name'  => 'pt_sldr_btn_br',
                             'group' => 'product_thumbnail_setting_group',
                             'value' => $settings['pt_sldr_btn_br'],
-                            'label' => __( 'Radius', HQFW_PLUGIN_DOMAIN ),
-                            'placeholder' => __( 'Radius', HQFW_PLUGIN_DOMAIN )
+                            'label' => __( 'Border Radius', HQFW_PLUGIN_DOMAIN ),
+                            'placeholder' => __( 'Border Radius', HQFW_PLUGIN_DOMAIN )
                         ]),
                     ]
                 ])
@@ -1366,8 +1366,8 @@ echo Component::get_tab_panel([
                             'name'  => 'pt_zoom_btn_br',
                             'group' => 'product_thumbnail_setting_group',
                             'value' => $settings['pt_zoom_btn_br'],
-                            'label' => __( 'Radius', HQFW_PLUGIN_DOMAIN ),
-                            'placeholder' => __( 'Radius', HQFW_PLUGIN_DOMAIN )
+                            'label' => __( 'Border Radius', HQFW_PLUGIN_DOMAIN ),
+                            'placeholder' => __( 'Border Radius', HQFW_PLUGIN_DOMAIN )
                         ]),
                     ]
                 ])
@@ -2008,7 +2008,7 @@ echo Component::get_tab_panel([
                             'name'  => 'ad_opt_enable_cache',
                             'group' => 'advanced_setting_group',
                             'value' => $settings['ad_opt_enable_cache'],
-                            'description' => __( 'Enable this to cache the external styles and scripts.', HQFW_PLUGIN_DOMAIN ),
+                            'description' => __( 'Enable this option to cache the external style and script files so that they can be accessed more quickly.', HQFW_PLUGIN_DOMAIN ),
                             'choices' => [
                                 'on'  => __( 'Enabled', HQFW_PLUGIN_DOMAIN ),
                                 'off' => __( 'Disabled', HQFW_PLUGIN_DOMAIN )
@@ -2024,7 +2024,7 @@ echo Component::get_tab_panel([
                             'name'  => 'ad_opt_enable_minify',
                             'group' => 'advanced_setting_group',
                             'value' => $settings['ad_opt_enable_minify'],
-                            'description' => __( 'Enable this to minify the internal and external styles and scripts.', HQFW_PLUGIN_DOMAIN ),
+                            'description' => __( 'Enable this option to minify the internal and external style and script files to reduce load times and bandwidth.', HQFW_PLUGIN_DOMAIN ),
                             'choices' => [
                                 'on'  => __( 'Enabled', HQFW_PLUGIN_DOMAIN ),
                                 'off' => __( 'Disabled', HQFW_PLUGIN_DOMAIN )
@@ -2040,7 +2040,7 @@ echo Component::get_tab_panel([
                             'name'  => 'ad_opt_enable_defer',
                             'group' => 'advanced_setting_group',
                             'value' => $settings['ad_opt_enable_defer'],
-                            'description' => __( 'Enable this to load external scripts in deffered way.', HQFW_PLUGIN_DOMAIN ),
+                            'description' => __( 'Enable this option to defer external scripts so they will be downloaded in parallel to the parsing page and executed after page is finished parsing.', HQFW_PLUGIN_DOMAIN ),
                             'choices' => [
                                 'on'  => __( 'Enabled', HQFW_PLUGIN_DOMAIN ),
                                 'off' => __( 'Disabled', HQFW_PLUGIN_DOMAIN )

@@ -1,6 +1,6 @@
 {
     "name": "mafeljohncahucom/handy-quick-view",
-    "description": "A WordPress plugin for adding quick view in WooCommerce.",
+    "description": "Handy Quick View is a very helpful WooCommerce plugin that enables store owners to design a custom Quick View modal that enables customers to get a quick look at a product without visiting the product page.",
     "type": "wordpress-plugin",
     "license": "GPL",
     "authors": [

@@ -1,5 +1,5 @@
 <?php
-namespace HQFW\Admin\Tab\Setting;
+namespace HQFW\Api;
 
 use HQFW\Inc\Traits\Singleton;
 use HQFW\Admin\Inc\Helper;
@@ -7,7 +7,7 @@ use HQFW\Admin\Inc\Helper;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Admin > Tab Setting API.
+ * Admin > Setting API.
  *
  * @since 	1.0.0
  * @version 1.0.0
@@ -30,16 +30,16 @@ final class SettingApi {
     protected function __construct() {}
 
     /**
-     * Set of rules for setting fields. This can be use
-     * for checking settings fields validity.
-     *
-     * @since 1.0.0
+     * Return the set of setting fields with each schema or rules. There
+     * are 3 types of format to return the raw, schemas and fields.
      * 
-     * @param  string  $type  Contains the type of data to be returned |raw|rules.
+     * @since 1.0.0
+     *
+     * @param  string  $type  Contains the format of data to be returned.
      * @return array
      */
-    public static function get_field_rules( $type = 'rules' ) {
-        $rules = [
+    public static function get_settings( $type = 'raw' ) {
+        $settings = [
             'GEN' => [
                 'gn_enable'                     => [
                     'type'    => 'switch',
@@ -212,7 +212,7 @@ final class SettingApi {
                 ],
                 'qv_btn_br'                     => [
                     'type'     => 'size',
-                    'default'  => '8px'
+                    'default'  => '2px'
                 ],
             ],
             'MOD' => [
@@ -226,7 +226,7 @@ final class SettingApi {
                 ],
                 'md_br'                         => [
                     'type'     => 'size',
-                    'default'  => '8px'
+                    'default'  => '2px'
                 ],
                 'md_close_btn_wd'               => [
                     'type'     => 'size',
@@ -238,27 +238,27 @@ final class SettingApi {
                 ],
                 'md_close_btn_icon_wd'          => [
                     'type'     => 'size',
-                    'default'  => '16px'
+                    'default'  => '18px'
                 ],
                 'md_close_btn_icon_ht'          => [
                     'type'     => 'size',
-                    'default'  => '16px'
+                    'default'  => '18px'
                 ],
                 'md_close_btn_icon_clr'         => [
                     'type'     => 'color',
-                    'default'  => 'rgba(5,5,6,1)'
+                    'default'  => 'rgba(17,14,39,1)'
                 ],
                 'md_close_btn_icon_hv_clr'      => [
                     'type'     => 'color',
-                    'default'  => 'rgba(5,5,6,1)'
+                    'default'  => 'rgba(17,14,39,1)'
                 ],
                 'md_close_btn_bg_clr'           => [
                     'type'     => 'color',
-                    'default'  => 'rgba(228,230,236,1)'
+                    'default'  => 'rgba(224,225,226,1)'
                 ],
                 'md_close_btn_bg_hv_clr'        => [
                     'type'     => 'color',
-                    'default'  => 'rgba(214,216,220,1)'
+                    'default'  => 'rgba(202,203,205,1)'
                 ],
                 'md_close_btn_bs'               => [
                     'type'     => 'select',
@@ -319,7 +319,7 @@ final class SettingApi {
                 ],
                 'md_sldr_btn_icon_hv_clr'       => [
                     'type'     => 'color',
-                    'default'  => 'rgba(5,5,6,1)'
+                    'default'  => 'rgba(17,14,39,1)'
                 ],
                 'md_sldr_btn_bg_clr'            => [
                     'type'     => 'color',
@@ -352,7 +352,7 @@ final class SettingApi {
                 ],
                 'md_loader_style'               => [
                     'type'     => 'loader',
-                    'default'  => 'spinner-5',
+                    'default'  => 'spinner-1',
                     'choices'  => [
                         'spinner-1', 'spinner-2', 'spinner-3',
                         'spinner-4', 'spinner-5', 'spinner-6',
@@ -432,11 +432,11 @@ final class SettingApi {
                 ],
                 'pt_sldr_btn_icon_clr'          => [
                     'type'     => 'color',
-                    'default'  => 'rgba(5,5,6,1)'
+                    'default'  => 'rgba(17,14,39,1)'
                 ],
                 'pt_sldr_btn_icon_hv_clr'       => [
                     'type'     => 'color',
-                    'default'  => 'rgba(5,5,6,1)'
+                    'default'  => 'rgba(17,14,39,1)'
                 ],
                 'pt_sldr_btn_bg_clr'            => [
                     'type'     => 'color',
@@ -485,19 +485,19 @@ final class SettingApi {
                 ],
                 'pt_zoom_btn_icon_clr'          => [
                     'type'     => 'color',
-                    'default'  => 'rgba(5,5,6,1)'
+                    'default'  => 'rgba(17,14,39,1)'
                 ],
                 'pt_zoom_btn_icon_hv_clr'       => [
                     'type'     => 'color',
-                    'default'  => 'rgba(5,5,6,1)'
+                    'default'  => 'rgba(17,14,39,1)'
                 ],
                 'pt_zoom_btn_bg_clr'            => [
                     'type'     => 'color',
-                    'default'  => 'rgba(228,230,236,1)'
+                    'default'  => 'rgba(224,225,226,1)'
                 ],
                 'pt_zoom_btn_bg_hv_clr'         => [
                     'type'     => 'color',
-                    'default'  => 'rgba(214,216,220,1)'
+                    'default'  => 'rgba(202,203,205,1)'
                 ],
                 'pt_zoom_btn_bs'                => [
                     'type'     => 'select',
@@ -554,7 +554,7 @@ final class SettingApi {
                 ],
                 'pt_col_br'                     => [
                     'type'     => 'size',
-                    'default'  => '8px'
+                    'default'  => '2px'
                 ],
             ],
             'PRS' => [
@@ -589,7 +589,7 @@ final class SettingApi {
                 ],
                 'ps_name_clr'                   => [
                     'type'     => 'color',
-                    'default'  => 'rgba(5,5,6,1)'
+                    'default'  => 'rgba(17,14,39,1)'
                 ],
                 'ps_name_mb'                   => [
                     'type'     => 'size',
@@ -735,7 +735,7 @@ final class SettingApi {
                 ],
                 'ps_meta_b_clr'                 => [
                     'type'     => 'color',
-                    'default'  => 'rgba(0,0,0,0.05)'
+                    'default'  => 'rgba(229,231,235,1)'
                 ],
             ],
             'ADV' => [
@@ -758,72 +758,42 @@ final class SettingApi {
             ]
         ];
 
-        $output = $rules;
-        if ( $type === 'rules' ) {
-            $merged = [];
-            foreach ( $rules as $rule ) {
-                $merged = array_merge( $merged, $rule );
+        $output = $settings;
+        if ( in_array( $type, [ 'schemas', 'fields' ] ) ) {
+            $schemas = [];
+            foreach ( $settings as $setting ) {
+                $schemas = array_merge( $schemas, $setting );
             }
 
-            $output = $merged;
+            $output = $schemas;
+
+            if ( $type === 'fields' ) {
+                $fields = [];
+                foreach ( $schemas as $key => $schema ) {
+                    $fields[ $key ] = $schema['default'];
+                }
+
+                $output = $fields;
+            }
         }
 
         return $output;
     }
 
     /**
-     * Returns the default value of each fields based in get_field_rules().
-     *
-     * @since 1.0.0
+     * Return the settings from option _hqfw_main_settings but if option is
+     * empty it will be get the default settings values.
      * 
+     * @since 1.0.0
+     *
      * @return array
      */
-    public static function get_fields_default_values() {
-        $fields = [];
-        foreach ( self::get_field_rules( 'rules' ) as $key => $value ) {
-            $fields[ $key ] = $value['default'];
-        }
-
-        return $fields;
-    }
-
-    /**
-     * Returns the settings value from _hqfw_main_settings but
-     * if _hqfw_main_settings is empty it will get the default value
-     * from self::get_fields_default_values().
-     *
-     * @since 1.0.0
-     * 
-     * @return array
-     */
-    public static function get_settings() {
+    public static function get_current_settings() {
         $settings = get_option( '_hqfw_main_settings' );
         if ( empty( $settings ) ) {
-            $settings = self::get_fields_default_values();
+            $settings = self::get_settings( 'fields' );
         }
 
         return $settings;
-    }
-
-    /**
-     * Check if the settings has a missing field.
-     *
-     * @since 1.0.0
-     * 
-     * @param  array  $settings  Containing all the settings field.
-     * @return boolean
-     */
-    public static function has_missing_fields( $settings ) {
-        if ( empty( $settings ) ) {
-            return true;
-        }
-
-        $field_rules = self::get_field_rules();
-        foreach ( $field_rules as $key => $value ) {
-            if ( ! array_key_exists( $key, $settings ) ) {
-                return true;
-            }
-        }
-        return false;
     }
 }

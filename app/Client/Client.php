@@ -43,23 +43,19 @@ final class Client {
      * @since 1.0.0
      */
     protected function __construct() {
-        // Check if plugin has error.
         if ( Helper::plugin_has_error() ) {
             return;
         }
 
-        // Check if the plugin is enable in front-end.
         $this->settings = get_option( '_hqfw_main_settings' );
         if ( $this->settings['gn_enable'] == false ) {
             return;
         }
 
         if ( ! is_admin() ) {
-            // Enqueue styles and scripts.
             add_action( 'wp_enqueue_scripts', [ $this, 'register_scripts' ] );
         }
 
-        // Register all classes.
         self::register_classes();
     }
 
@@ -119,22 +115,19 @@ final class Client {
             $dependency[] = 'zoom';
         }
 
-        // Add to cart variation dependency.
         if ( $this->settings['gn_ps_show_add_to_cart'] ) {
             $dependency[] = 'wc-add-to-cart-variation';
         }
 
-        // Client js.
         $source  = Helper::get_asset_src( 'js/hqfw-client.min.js' );
         $version = Helper::get_asset_version( 'js/hqfw-client.min.js' );
         wp_register_script( 'hqfw-client', $source, $dependency, $version, true );
         wp_enqueue_script( 'hqfw-client' );
 
-        // Localize variables.
         wp_localize_script( 'hqfw-client', 'hqfwLocal', [
-            'crafter' => 'Y35qwbAlyt+y60cldwAatUDyxikpRb30wBPT9Y1Xymk=',
-            'url'     => admin_url( 'admin-ajax.php' ),
-            'plugin'  => [
+            'api'    => 'HNJOELMAFUCOHACM',
+            'url'    => admin_url( 'admin-ajax.php' ),
+            'plugin' => [
                 'isHATFWActive' => Plugins::is_active( 'handy-added-to-cart-toaster-notifier' ),
                 'isHAPFWActive' => Plugins::is_active( 'handy-added-to-cart-popup-notifier' ),
                 'isHVTFWActive' => Plugins::is_active( 'handy-product-variation-table' )

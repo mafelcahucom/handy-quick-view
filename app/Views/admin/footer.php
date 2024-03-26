@@ -18,7 +18,9 @@ defined( 'ABSPATH' ) || exit;
                 <span>
                     <?php echo __( 'Handcrafted by', HQFW_PLUGIN_DOMAIN ); ?>
                 </span>
-                <a class="hd-fw-600" href="#" target="_blank">Mafel John Cahucom</a>
+                <a class="hd-fw-600" href="#" target="_blank">
+                    <?php echo __( 'Mafel John Cahucom', HQFW_PLUGIN_DOMAIN ); ?>
+                </a>
             </p>
             <div class="hd-sitemap">
                 <a href="#" target="_blank">

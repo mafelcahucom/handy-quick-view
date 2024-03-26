@@ -68,7 +68,6 @@ hqfw.prompt = {
 		} );
 
 		if ( hqfwLocal.plugin.isHATFWActive || hqfwLocal.plugin.isHAPFWActive ) {
-			// Alert toaster notifier.
 			if ( hqfwLocal.plugin.isHATFWActive ) {
 				handyToasterNotifier.show( {
 					type: 'alert',
@@ -78,7 +77,6 @@ hqfw.prompt = {
 				} );
 			}
 
-			// Alert popup notifier.
 			if ( hqfwLocal.plugin.isHAPFWActive ) {
 				handyPopupNotifier.showAlert( {
 					status: 'error',
@@ -377,7 +375,7 @@ hqfw.photoSlider = {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param {integer} imageId     Contains the target image id.
+	 * @param {number} imageId     Contains the target image id.
 	 * @param {string}  imageSource Contains the image url.
 	 */
 	moveSlideByImageId( imageId, imageSource ) {
@@ -501,7 +499,7 @@ hqfw.photoBox = {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @type {element}
+	 * @type {HTMLElement}
 	 */
 	modalElem: null,
 
@@ -510,7 +508,7 @@ hqfw.photoBox = {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @type {element}
+	 * @type {HTMLElement}
 	 */
 	bodyElem: null,
 
@@ -519,7 +517,7 @@ hqfw.photoBox = {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @type {element}
+	 * @type {HTMLElement}
 	 */
 	containerElem: null,
 
@@ -528,7 +526,7 @@ hqfw.photoBox = {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @type {element}
+	 * @type {HTMLElement}
 	 */
 	captionElem: null,
 
@@ -537,7 +535,7 @@ hqfw.photoBox = {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @type {element}
+	 * @type {HTMLElement}
 	 */
 	imageElem: null,
 
@@ -977,7 +975,7 @@ hqfw.quickView = {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @type {element}
+	 * @type {HTMLElement}
 	 */
 	modalElem: null,
 
@@ -986,7 +984,7 @@ hqfw.quickView = {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @type {element}
+	 * @type {HTMLElement}
 	 */
 	viewerElem: null,
 
@@ -995,7 +993,7 @@ hqfw.quickView = {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @type {element}
+	 * @type {HTMLElement}
 	 */
 	viewerProductElem: null,
 
@@ -1165,7 +1163,7 @@ hqfw.quickView = {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param {integer} productId Contains the current product id viewed.
+	 * @param {number} productId Contains the current product id viewed.
 	 * @return {Object} The previous and next product id.
 	 */
 	getProductIdAdjacent( productId ) {
@@ -1197,7 +1195,7 @@ hqfw.quickView = {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param {integer} productId Contains the current product id viewed.
+	 * @param {number} productId Contains the current product id viewed.
 	 */
 	setSlideNavigationProperties( productId ) {
 		if ( ! productId ) {

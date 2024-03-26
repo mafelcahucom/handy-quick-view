@@ -757,6 +757,7 @@ final class Style {
                     height: 44px;
                     background-color: transparent !important;
                     background-image: url({$icon}) !important;
+                    border: 0 !important;
                     opacity: 0.7;
                 }
                 .hqfw-photobox-viewer__controller-btn:hover,
