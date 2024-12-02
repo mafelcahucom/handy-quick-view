@@ -1,38 +1,40 @@
 <?php
 /**
- * Admin Footer Template.
+ * App > Views > Admin > Footer.
  *
  * @since   1.0.0
+ *
  * @version 1.0.0
- * @author  Mafel John Cahucom 
+ * @author  Mafel John Cahucom
+ * @package handy-quick-view
  */
 
 use HQFW\Admin\Inc\Helper;
 
-defined( 'ABSPATH' ) || exit; 
+defined( 'ABSPATH' ) || exit;
 ?>
 
         <!-- end: footer -->
         <div class="hd-footer">
             <p>
                 <span>
-                    <?php echo __( 'Handcrafted by', HQFW_PLUGIN_DOMAIN ); ?>
+                    <?php echo __( 'Handcrafted by', 'handy-quick-view' ); ?>
                 </span>
                 <a class="hd-fw-600" href="#" target="_blank">
-                    <?php echo __( 'Mafel John Cahucom', HQFW_PLUGIN_DOMAIN ); ?>
+                    <?php echo __( 'Mafel John Cahucom', 'handy-quick-view' ); ?>
                 </a>
             </p>
             <div class="hd-sitemap">
                 <a href="#" target="_blank">
-                    <?php echo __( 'Documentation', HQFW_PLUGIN_DOMAIN ); ?>
+                    <?php echo __( 'Documentation', 'handy-quick-view' ); ?>
                 </a>
                 <span class="hd-sitemap__separator">/</span>
                 <a href="#" target="_blank">
-                    <?php echo __( 'Plugins', HQFW_PLUGIN_DOMAIN ); ?>
+                    <?php echo __( 'Plugins', 'handy-quick-view' ); ?>
                 </a>
                 <span class="hd-sitemap__separator">/</span>
                 <a href="#" target="_blank">
-                    <?php echo __( 'Developer', HQFW_PLUGIN_DOMAIN ); ?>
+                    <?php echo __( 'Developer', 'handy-quick-view' ); ?>
                 </a>
             </div>
             <ul class="hd-social-media">

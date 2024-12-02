@@ -14,12 +14,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
-if ( file_exists( dirname( __FILE__ ) . '/vendor/autoload.php' ) ) {
-    require_once dirname( __FILE__ ) . '/vendor/autoload.php';
-}
-
-if ( ! defined( 'HQFW_PLUGIN_DOMAIN' ) ) {
-    define( 'HQFW_PLUGIN_DOMAIN', 'handy-quick-view' );
+if ( file_exists( __DIR__ . '/vendor/autoload.php' ) ) {
+    require_once __DIR__ . '/vendor/autoload.php';
 }
 
 if ( ! defined( 'HQFW_PLUGIN_VERSION' ) ) {
@@ -39,20 +35,20 @@ if ( ! defined( 'HQFW_PLUGIN_PATH' ) ) {
 }
 
 if ( class_exists( 'HQFW\\Inc\\Installer' ) ) {
-    register_activation_hook( __FILE__, [ 'HQFW\\Inc\\Installer', 'activate' ] );
+    register_activation_hook( __FILE__, array( 'HQFW\\Inc\\Installer', 'activate' ) );
 
-    register_deactivation_hook( __FILE__, [ 'HQFW\\Inc\\Installer', 'deactivate' ] );
+    register_deactivation_hook( __FILE__, array( 'HQFW\\Inc\\Installer', 'deactivate' ) );
 }
 
-if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ) ) ) {
+if ( in_array( 'woocommerce/woocommerce.php', apply_filters( 'active_plugins', get_option( 'active_plugins' ) ), true ) ) {
     if ( class_exists( 'HQFW\\Init' ) ) {
         HQFW\Init::get_instance();
     }
 } else {
     add_action( 'admin_notices', function() {
-        echo sprintf(
+        printf(
             '<div class="notice notice-error is-dismissible"><p>%s</p></div>',
-            'Handy Quick View for WooCommerce requires WooCommerce Plugin to be activated. Please install WooCommerce to continue.'
+            __( 'Handy Quick View for WooCommerce requires WooCommerce Plugin to be activated. Please install WooCommerce to continue.', 'handy-quick-view' )
         );
     });
 }

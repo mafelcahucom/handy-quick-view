@@ -1,18 +1,36 @@
 {
-    "name": "mafeljohncahucom/handy-quick-view",
-    "description": "Handy Quick View is a very helpful WooCommerce plugin that enables store owners to design a custom Quick View modal that enables customers to get a quick look at a product without visiting the product page.",
-    "type": "wordpress-plugin",
-    "license": "GPL",
-    "authors": [
-        {
-            "name": "Mafel John Cahucom",
-            "email": "mafeljohn.timkang.cahucom070596@gmail.com"
-        }
-    ],
-    "require": {},
-    "autoload": {
-    	"psr-4": {
-    		"HQFW\\" : "app/"
-    	}
-    }
+	"name": "mafeljohncahucom/handy-quick-view",
+	"description": "Handy Quick View is a very helpful WooCommerce plugin that enables store owners to design a custom Quick View modal that enables customers to get a quick look at a product without visiting the product page.",
+	"type": "wordpress-plugin",
+	"license": "GPL-3.0-or-later",
+	"authors": [
+		{
+			"name": "Mafel John Cahucom",
+			"email": "mafeljohn.timkang.cahucom070596@gmail.com",
+			"role": "Developer"
+		}
+	],
+	"support": {
+		"source": "https://www.github.com",
+		"docs": "https://www.github.com/read.md"
+	},
+	"require": {
+		"php": ">=8.0.0"
+	},
+	"require-dev": {
+		"wp-coding-standards/wpcs": "^3.0",
+		"phpcompatibility/phpcompatibility-wp": "^2.1.5",
+		"phpunit/phpunit": "11"
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		}
+	},
+	"autoload": {
+		"psr-4": {
+			"HQFW\\" : "app/"
+		}
+	}
 }
+

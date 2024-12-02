@@ -1,4 +1,14 @@
 <?php
+/**
+ * App > Client > Inc > Lib > Content.
+ *
+ * @since   1.0.0
+ *
+ * @version 1.0.0
+ * @author  Mafel John Cahucom
+ * @package handy-quick-view
+ */
+
 namespace HQFW\Client\Inc\Lib;
 
 use HQFW\Inc\Traits\Singleton;
@@ -8,17 +18,16 @@ use HQFW\Client\Inc\Helper;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Client Product Content.
+ * The `Content` class contains the all quick view
+ * sections and components hooked to a custom actions.
  *
- * @since 	1.0.0
- * @version 1.0.0
- * @author  Mafel John Cahucom
+ * @since 1.0.0
  */
 final class Content {
 
 	/**
 	 * Inherit Singleton.
-     * 
+     *
      * @since 1.0.0
 	 */
 	use Singleton;
@@ -35,33 +44,45 @@ final class Content {
      * generate method must be call inside WP_Query loop.
      *
      * @since 1.0.0
+     *
+     * @return void
      */
     public static function generate() {
-        // Settings
+        /**
+         * Settings.
+         */
         $settings = get_option( '_hqfw_main_settings' );
 
-        // Product gallery.
-        add_action( 'hqfw_product_gallery', [ __CLASS__, 'product_image_gallery' ], 5 );
+        /**
+         * Product gallery.
+         */
+        add_action( 'hqfw_product_gallery', array( __CLASS__, 'product_image_gallery' ), 5 );
 
-        // Product gallery slider.
+        /**
+         * Product gallery slider.
+         */
         if ( $settings['gn_md_show_close_btn'] ) {
-            add_action( 'hqfw_product_gallery_slider', [ __CLASS__, 'close_button' ], 5 );
+            add_action( 'hqfw_product_gallery_slider', array( __CLASS__, 'close_button' ), 5 );
         }
-        
+
         if ( $settings['gn_pt_enable_lightbox'] ) {
-            add_action( 'hqfw_product_gallery_slider', [ __CLASS__, 'photo_box_button' ], 10 );
+            add_action( 'hqfw_product_gallery_slider', array( __CLASS__, 'photo_box_button' ), 10 );
         }
 
         if ( $settings['gn_pt_show_flash_sale'] ) {
             add_action( 'hqfw_product_gallery_slider', 'woocommerce_show_product_sale_flash', 15 );
         }
 
-        // Product summary head.
+        /**
+         * Product summary head.
+         */
         if ( $settings['gn_md_show_close_btn'] ) {
-            add_action( 'hqfw_product_summary_head', [ __CLASS__, 'close_button' ], 5 );
+            add_action( 'hqfw_product_summary_head', array( __CLASS__, 'close_button' ), 5 );
         }
 
-        // Product summary body.
+        /**
+         * Product summary body.
+         */
         if ( $settings['gn_ps_show_title'] ) {
             add_action( 'hqfw_product_summary_body', 'woocommerce_template_single_title', 5 );
         }
@@ -94,17 +115,21 @@ final class Content {
      * Render the product image gallery.
      *
      * @since 1.0.0
+     *
+     * @return void
      */
     public static function product_image_gallery() {
-        echo Helper::render_view( 'component/product-gallery', [
-            'images' => self::get_product_images( get_the_ID() )
-        ] );
+        echo Helper::render_view( 'component/product-gallery', array(
+            'images' => self::get_product_images( get_the_ID() ),
+        ) );
     }
 
     /**
      * Render the quick view modal close button.
      *
      * @since 1.0.0
+     *
+     * @return void
      */
     public static function close_button() {
         echo Helper::render_view( 'component/close-button' );
@@ -114,6 +139,8 @@ final class Content {
      * Render the photobox button.
      *
      * @since 1.0.0
+     *
+     * @return void
      */
     public static function photo_box_button() {
         echo Helper::render_view( 'component/photobox-button' );
@@ -123,8 +150,8 @@ final class Content {
      * Return the product images used in featured thumbnail and gallery.
      *
      * @since 1.0.0
-     * 
-     * @param  integer  $product_id  Contains the target product id.
+     *
+     * @param  integer $product_id Contains the target product id.
      * @return array
      */
     private static function get_product_images( $product_id ) {
@@ -138,7 +165,7 @@ final class Content {
         }
 
         // Store images.
-        $images = [];
+        $images = array();
 
         // Get primary image.
         $primary_image       = Helper::get_product_thumbnail_src( $product_id );
@@ -150,42 +177,46 @@ final class Content {
         }
 
         // Push primary image.
-        array_push( $images, [
+        array_push( $images, array(
             'id'    => $primary_image_id,
             'title' => $primary_image_title,
-            'image' => $primary_image
-        ] );
+            'image' => $primary_image,
+        ) );
 
         // Gat gallery images.
         $attachment_ids = $product->get_gallery_image_ids();
         if ( ! empty( $attachment_ids ) ) {
             foreach ( $attachment_ids as $attachment_id ) {
                 // Check if the image id is already exits in $images.
+                // phpcs:ignore WordPress.PHP.StrictInArray.MissingTrueStrict
                 if ( ! in_array( $attachment_id, array_column( $images, 'id' ) ) ) {
                     $image_title = get_the_title( $attachment_id );
                     $image       = Helper::get_attachment_image_src( $attachment_id );
 
                     // Push gallery image.
-                    array_push( $images, [
+                    array_push( $images, array(
                         'id'    => $attachment_id,
                         'title' => $image_title,
-                        'image' => $image
-                    ] );
+                        'image' => $image,
+                    ) );
                 }
             }
         }
-        
+
         return $images;
     }
 
     /**
      * Quantity input adding class attributes if handy-add-to-cart is active.
-     * 
+     *
      * @since 1.0.0
+     *
+     * @return void
      */
     private static function modify_grouped_quantity_input() {
         $product = wc_get_product( get_the_ID() );
         if ( $product && $product->is_type( 'grouped' ) ) {
+            // phpcs:ignore Generic.CodeAnalysis.UnusedFunctionParameter.FoundAfterLastUsed
             add_filter( 'woocommerce_quantity_input_classes', function( $classes, $current_product ) {
                 $classes['additional'] = 'hafw-grouped-quantity-input';
                 return $classes;

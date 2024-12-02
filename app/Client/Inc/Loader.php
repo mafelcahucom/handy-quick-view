@@ -1,4 +1,14 @@
 <?php
+/**
+ * App > Client > Inc > Loader.
+ *
+ * @since   1.0.0
+ *
+ * @version 1.0.0
+ * @author  Mafel John Cahucom
+ * @package handy-quick-view
+ */
+
 namespace HQFW\Client\Inc;
 
 use HQFW\Inc\Traits\Singleton;
@@ -6,17 +16,16 @@ use HQFW\Inc\Traits\Singleton;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Client Loaders.
+ * The `Loader` class contains all the available loader
+ * component's dynamic css or style.
  *
- * @since 	1.0.0
- * @version 1.0.0
- * @author  Mafel John Cahucom
+ * @since 1.0.0
  */
 final class loader {
 
 	/**
 	 * Inherit Singleton.
-     * 
+     *
      * @since 1.0.0
 	 */
 	use Singleton;
@@ -32,8 +41,8 @@ final class loader {
      * Return the loader css class with attributes.
      *
      * @since 1.0.0
-     * 
-     * @param  array  $args  Contains the necessary parameters for rendering loaders.
+     *
+     * @param  array $args Contains the necessary parameters for rendering loaders.
      * $args = [
      *     'name'      => (string) Contains the name of the loader.
      *     'classname' => (string) Contains the new classname will be named for the loader.
@@ -43,9 +52,9 @@ final class loader {
      *     'color_1'   => (string) Contains the primary color of the loader.
      *     'color-2'   => (string) Contains the secondary color of the loader.
      * ]
-     * @return HTMLElement
+     * @return string
      */
-    public static function get( $args = [] ) {
+    public static function get( $args = array() ) {
         if ( ! isset( $args['name'] ) ) {
             return;
         }
@@ -125,7 +134,7 @@ final class loader {
                 ";
                 break;
         }
-        
+
         return $output;
     }
 }

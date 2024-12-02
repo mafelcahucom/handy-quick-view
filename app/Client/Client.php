@@ -1,7 +1,18 @@
 <?php
+/**
+ * App > Client > Client.
+ *
+ * @since   1.0.0
+ *
+ * @version 1.0.0
+ * @author  Mafel John Cahucom
+ * @package handy-quick-view
+ */
+
 namespace HQFW\Client;
 
 use HQFW\Inc\Traits\Singleton;
+use HQFW\Inc\Traits\Instantiator;
 use HQFW\Inc\Plugins;
 use HQFW\Client\Inc\Helper;
 use HQFW\Client\Actions;
@@ -13,26 +24,33 @@ use HQFW\Client\Style;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Client.
+ * The `Client` class contains all the services and
+ * settings that needs to be loaded in the client
+ * side or front-end.
  *
- * @since 	1.0.0
- * @version 1.0.0
- * @author  Mafel John Cahucom
+ * @since 1.0.0
  */
 final class Client {
 
 	/**
 	 * Inherit Singleton.
-     * 
+     *
      * @since 1.0.0
 	 */
 	use Singleton;
 
     /**
+     * Inherit Instantiator.
+     *
+     * @since 1.0.0
+     */
+    use Instantiator;
+
+    /**
      * Holds the settings.
      *
      * @since 1.0.0
-     * 
+     *
      * @var array
      */
     private $settings;
@@ -53,94 +71,63 @@ final class Client {
         }
 
         if ( ! is_admin() ) {
-            add_action( 'wp_enqueue_scripts', [ $this, 'register_scripts' ] );
+            add_action( 'wp_enqueue_scripts', array( $this, 'register_scripts' ) );
         }
 
-        self::register_classes();
-    }
-
-    /**
-     * Returns all the class services.
-     *
-     * @return array  List of classes
-     */
-    private static function get_classes() {
-        return [
-            Filters::class,
+        /**
+         * Instantiate or load services.
+         */
+        self::instantiate(array(
             Actions::class,
+            Filters::class,
             Events::class,
             Shortcodes::class,
             Style::class,
-        ];
+        ));
     }
 
     /**
-     * Loop through the services classes and instantiate each class.
-     *
-     * @since 1.0.0
-     */
-    private static function register_classes() {
-        foreach ( self::get_classes() as $class ) {
-            if ( method_exists( $class, 'get_instance' ) ) {
-                self::instantiate( $class );
-            }
-        }
-    }
-
-    /**
-     * Instantiate the given service class.
+     * Register defined scripts asset.
      *
      * @since 1.0.0
      *
-     * @param  class  $class  Containing a class from self::get_classes().
-     * @return class
-     */
-    private static function instantiate( $class ) {
-        $class::get_instance();
-    }
-
-    /**
-     * Register all scripts.
-     *
-     * @since 1..0.0
+     * @return void
      */
     public function register_scripts() {
-        // Include dependency.
-        $dependency = [ 'jquery' ];
+        $asset                 = include HQFW_PLUGIN_PATH . 'public/client/scripts/hqfw-client.asset.php';
+        $asset['src']          = Helper::get_public_src( 'scripts/hqfw-client.js' );
+        $asset['dependencies'] = array( 'jquery' );
 
-        // Zoom dependency.
         $is_zoom_enabled = false;
         if ( $this->settings['gn_pt_enable_zoom'] || $this->settings['gn_pt_enable_lightbox'] ) {
-            $is_zoom_enabled     = true;
-            $dependency[] = 'zoom';
+            $is_zoom_enabled = true;
+            array_push( $asset['dependencies'], 'zoom' );
         }
 
         if ( $this->settings['gn_ps_show_add_to_cart'] ) {
-            $dependency[] = 'wc-add-to-cart-variation';
+            array_push( $asset['dependencies'], 'wc-add-to-cart-variation' );
         }
 
-        $source  = Helper::get_asset_src( 'js/hqfw-client.min.js' );
-        $version = Helper::get_asset_version( 'js/hqfw-client.min.js' );
-        wp_register_script( 'hqfw-client', $source, $dependency, $version, true );
+        wp_register_script( 'hqfw-client', $asset['src'], $asset['dependencies'], $asset['version'], true );
         wp_enqueue_script( 'hqfw-client' );
 
-        wp_localize_script( 'hqfw-client', 'hqfwLocal', [
+        wp_localize_script( 'hqfw-client', 'hqfwLocal', array(
             'api'    => 'HNJOELMAFUCOHACM',
             'url'    => admin_url( 'admin-ajax.php' ),
-            'plugin' => [
+            'plugin' => array(
                 'isHATFWActive' => Plugins::is_active( 'handy-added-to-cart-toaster-notifier' ),
                 'isHAPFWActive' => Plugins::is_active( 'handy-added-to-cart-popup-notifier' ),
-                'isHVTFWActive' => Plugins::is_active( 'handy-product-variation-table' )
-            ],
-            'setting' => [
-                'isZoomEnabled' => $is_zoom_enabled
-            ], 
-            'icon'    => [
-                'searchPlus' => Helper::get_icon( 'bs-search-plus' )
-            ],
-            'nonce'   => [
-                'getProductContent' => wp_create_nonce( 'hqfw_get_product_content' )
-            ]
-        ]);
+                'isHVTFWActive' => Plugins::is_active( 'handy-product-variation-table' ),
+            ),
+            'setting' => array(
+                'isZoomEnabled' => $is_zoom_enabled,
+            ),
+            'icon'    => array(
+                'searchPlus' => Helper::get_icon( 'bs-search-plus' ),
+            ),
+            'nonce'   => array(
+                'getProductContent' => wp_create_nonce( 'hqfw_get_product_content' ),
+            ),
+        ));
     }
 }

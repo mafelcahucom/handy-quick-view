@@ -1,10 +1,12 @@
 <?php
 /**
- * Views > Client > Component > Product Content.
+ * App > Views > Client > Component > Product Content.
  *
  * @since   1.0.0
+ *
  * @version 1.0.0
  * @author  Mafel John Cahucom
+ * @package handy-quick-view
  */
 
 defined( 'ABSPATH' ) || exit;
@@ -50,7 +52,7 @@ $settings = get_option( '_hqfw_main_settings' );
                          * @hooked woocommerce_template_single_add_to_cart - 25
                          * @hooked woocommerce_template_single_meta - 30
                          */
-                        do_action( 'hqfw_product_summary_body' ); 
+                        do_action( 'hqfw_product_summary_body' );
                     ?>
                 </div>
             </div>

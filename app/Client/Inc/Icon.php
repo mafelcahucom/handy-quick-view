@@ -1,4 +1,14 @@
 <?php
+/**
+ * App > Client > Inc > Icon.
+ *
+ * @since   1.0.0
+ *
+ * @version 1.0.0
+ * @author  Mafel John Cahucom
+ * @package handy-quick-view
+ */
+
 namespace HQFW\Client\Inc;
 
 use HQFW\Inc\Traits\Singleton;
@@ -6,17 +16,16 @@ use HQFW\Inc\Traits\Singleton;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Client Icons.
+ * The `Icon` class contains a set of SVG icons that
+ * can be used in client side or front-end
  *
- * @since   1.0.0
- * @version 1.0.0
- * @author  Mafel John Cahucom
+ * @since 1.0.0
  */
 final class Icon {
 
     /**
      * Inherit Singleton.
-     * 
+     *
      * @since 1.0.0
      */
     use Singleton;
@@ -32,161 +41,113 @@ final class Icon {
      * Return the svg icon.
      *
      * @since 1.0.0
-     * 
-     * @param  string  $type   Contains the type of icon.
-     * @param  string  $class  Contains the additional class.
+     *
+     * @param  string $name       Contains the name of icon to be retrieved.
+     * @param  string $classnames Contains the additional classnames.
      * @return string
      */
-    public static function get( $type, $class = '' ) {
-        $output = '';
-        $class  = esc_attr( $class );
-        switch ( $type ) {
-            case 'bs-close':
-                $output = sprintf(
+    public static function get( $name, $classnames = '' ) {
+        return match ( $name ) {
+            'bs-close' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
-                    $class
-                );
-                break;
-            case 'bs-search-plus':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-close' => sprintf(
+                    '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>',
+                    $classnames
+            ),
+            'bs-search-plus' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-eye':
-                $output = sprintf(
-                    '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-eye-fill':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-eye' => sprintf(
+                '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/><path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/></svg>',
+                    $classnames
+            ),
+            'bs-eye-fill' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/><path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-search':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-search' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-expand':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-expand' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-fullscreen':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-fullscreen' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M1.5 1a.5.5 0 0 0-.5.5v4a.5.5 0 0 1-1 0v-4A1.5 1.5 0 0 1 1.5 0h4a.5.5 0 0 1 0 1h-4zM10 .5a.5.5 0 0 1 .5-.5h4A1.5 1.5 0 0 1 16 1.5v4a.5.5 0 0 1-1 0v-4a.5.5 0 0 0-.5-.5h-4a.5.5 0 0 1-.5-.5zM.5 10a.5.5 0 0 1 .5.5v4a.5.5 0 0 0 .5.5h4a.5.5 0 0 1 0 1h-4A1.5 1.5 0 0 1 0 14.5v-4a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v4a1.5 1.5 0 0 1-1.5 1.5h-4a.5.5 0 0 1 0-1h4a.5.5 0 0 0 .5-.5v-4a.5.5 0 0 1 .5-.5z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-arrow-fullscreen':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-arrow-fullscreen' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M5.828 10.172a.5.5 0 0 0-.707 0l-4.096 4.096V11.5a.5.5 0 0 0-1 0v3.975a.5.5 0 0 0 .5.5H4.5a.5.5 0 0 0 0-1H1.732l4.096-4.096a.5.5 0 0 0 0-.707zm4.344 0a.5.5 0 0 1 .707 0l4.096 4.096V11.5a.5.5 0 1 1 1 0v3.975a.5.5 0 0 1-.5.5H11.5a.5.5 0 0 1 0-1h2.768l-4.096-4.096a.5.5 0 0 1 0-.707zm0-4.344a.5.5 0 0 0 .707 0l4.096-4.096V4.5a.5.5 0 1 0 1 0V.525a.5.5 0 0 0-.5-.5H11.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707zm-4.344 0a.5.5 0 0 1-.707 0L1.025 1.732V4.5a.5.5 0 0 1-1 0V.525a.5.5 0 0 1 .5-.5H4.5a.5.5 0 0 1 0 1H1.732l4.096 4.096a.5.5 0 0 1 0 .707z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-chevron-left':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-chevron-left' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-arrow-left':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-arrow-left' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-arrow-left-circle':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-arrow-left-circle' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-arrow-left-circle-fill':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-arrow-left-circle-fill' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-arrow-left-square':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-arrow-left-square' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm11.5 5.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-arrow-left-square-fill':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-arrow-left-square-fill' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-caret-left':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-caret-left' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M10 12.796V3.204L4.519 8 10 12.796zm-.659.753-5.48-4.796a1 1 0 0 1 0-1.506l5.48-4.796A1 1 0 0 1 11 3.204v9.592a1 1 0 0 1-1.659.753z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-caret-left-fill':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-caret-left-fill' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-chevron-right':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-chevron-right' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-arrow-right':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-arrow-right' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-arrow-right-circle':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-arrow-right-circle' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-arrow-right-circle-fill':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-arrow-right-circle-fill' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-arrow-right-square':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-arrow-right-square' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-arrow-right-square-fill':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-arrow-right-square-fill' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M0 14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v12zm4.5-6.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5a.5.5 0 0 1 0-1z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-caret-right':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-caret-right' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="M6 12.796V3.204L11.481 8 6 12.796zm.659.753 5.48-4.796a1 1 0 0 0 0-1.506L6.66 2.451C6.011 1.885 5 2.345 5 3.204v9.592a1 1 0 0 0 1.659.753z"/></svg>',
-                    $class
-                );
-                break;
-            case 'bs-caret-right-fill':
-                $output = sprintf(
+                    $classnames
+            ),
+            'bs-caret-right-fill' => sprintf(
                     '<svg class="%s" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z"/></svg>',
-                    $class
-                );
-                break;
-        }
-
-        return $output;
+                    $classnames
+            ),
+        };
     }
 }

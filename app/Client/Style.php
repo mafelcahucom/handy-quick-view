@@ -1,4 +1,14 @@
 <?php
+/**
+ * App > Client > Style.
+ *
+ * @since   1.0.0
+ *
+ * @version 1.0.0
+ * @author  Mafel John Cahucom
+ * @package handy-quick-view
+ */
+
 namespace HQFW\Client;
 
 use HQFW\Inc\Traits\Singleton;
@@ -8,17 +18,16 @@ use HQFW\Client\Inc\Loader;
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Style.
+ * The `Style` class contains the dynamic or inline
+ * styles or css in the client side or front-end.
  *
- * @since 	1.0.0
- * @version 1.0.0
- * @author  Mafel John Cahucom
+ * @since 1.0.0
  */
 final class Style {
 
 	/**
 	 * Inherit Singleton.
-     * 
+     *
      * @since 1.0.0
 	 */
 	use Singleton;
@@ -29,7 +38,10 @@ final class Style {
      * @since 1.0.0
      */
     protected function __construct() {
-        add_action( 'wp_head', [ $this, 'custom_internal_css' ], 100 );
+        /**
+         * Print custom internal css in <head>.
+         */
+        add_action( 'wp_head', array( $this, 'custom_internal_css' ), 100 );
     }
 
     /**
@@ -37,9 +49,9 @@ final class Style {
      *
      * @since 1.0.0
      *
-     * @param  array   $settings  Contains all the settings from _hqfw_main_settings.
-     * @param  array   $rules     Contains the rule of the property key & default value.
-     * @param  string  $prefix    Contains the prefix of the class name.
+     * @param  array  $settings Contains the all the settings from _hqfw_main_settings.
+     * @param  array  $rules    Contains the rule of the property key & default value.
+     * @param  string $prefix   Contains the prefix of the class name.
      * @return string
      */
     private function get_properties( $settings, $rules, $prefix ) {
@@ -49,8 +61,8 @@ final class Style {
 
         $output = '';
         foreach ( $rules as $key => $default ) {
-            $index   = $prefix .'_'. $key;
-            $output .= ' '. ( isset( $settings[ $index ] ) ? $settings[ $index ] : $default );
+            $index   = $prefix . '_' . $key;
+            $output .= ' ' . ( isset( $settings[ $index ] ) ? $settings[ $index ] : $default );
         }
 
         return $output;
@@ -60,9 +72,9 @@ final class Style {
      * Return property values of padding in single line.
      *
      * @since 1.0.0
-     * 
-     * @param  array   $settings  Contains all the settings from _hqfw_main_settings.
-     * @param  string  $prefix    Contains the prefix of the class name.
+     *
+     * @param  array  $settings Contains all the settings from _hqfw_main_settings.
+     * @param  string $prefix   Contains the prefix of the class name.
      * @return string
      */
     private function get_padding( $settings, $prefix ) {
@@ -70,12 +82,12 @@ final class Style {
             return;
         }
 
-        $rules = [
+        $rules = array(
             'pt' => '0px',
             'pr' => '0px',
             'pb' => '0px',
-            'pl' => '0px'
-        ];
+            'pl' => '0px',
+        );
 
         return $this->get_properties( $settings, $rules, $prefix );
     }
@@ -84,9 +96,9 @@ final class Style {
      * Return property values of margin in single line.
      *
      * @since 1.0.0
-     * 
-     * @param  array   $settings  Contains all the settings from _hqfw_main_settings.
-     * @param  string  $prefix    Contains the prefix of the class name.
+     *
+     * @param  array  $settings Contains all the settings from _hqfw_main_settings.
+     * @param  string $prefix   Contains the prefix of the class name.
      * @return string
      */
     private function get_margin( $settings, $prefix ) {
@@ -94,12 +106,12 @@ final class Style {
             return;
         }
 
-        $rules = [
+        $rules = array(
             'mt' => '0px',
             'mr' => '0px',
             'mb' => '0px',
-            'ml' => '0px'
-        ];
+            'ml' => '0px',
+        );
 
         return $this->get_properties( $settings, $rules, $prefix );
     }
@@ -108,9 +120,9 @@ final class Style {
      * Return property values of border in single line.
      *
      * @since 1.0.0
-     * 
-     * @param  array   $settings  Contains all the settings from _hqfw_main_settings.
-     * @param  string  $prefix    Contains the prefix of the class name.
+     *
+     * @param  array  $settings Contains the all the settings from _hqfw_main_settings.
+     * @param  string $prefix   Contains the prefix of the class name.
      * @return string
      */
     private function get_border( $settings, $prefix ) {
@@ -118,11 +130,11 @@ final class Style {
             return;
         }
 
-        $rules = [
+        $rules = array(
             'bw'    => '0px',
             'bs'    => 'none',
-            'b_clr' => '#000000'
-        ];
+            'b_clr' => '#000000',
+        );
 
         return $this->get_properties( $settings, $rules, $prefix );
     }
@@ -131,8 +143,8 @@ final class Style {
      * Minify the internal css.
      *
      * @since 1.0.0
-     * 
-     * @param  string  $css  Contains the internal css to be minify.
+     *
+     * @param  string $css Contains the internal css to be minify.
      * @return string
      */
     private function minify_css( $css ) {
@@ -150,14 +162,14 @@ final class Style {
      * Custom Internal Css.
      *
      * @since 1.0.0
-     * 
-     * @return string
+     *
+     * @return void
      */
     public function custom_internal_css() {
         $settings = get_option( '_hqfw_main_settings' );
 
         // Keyframes.
-        $class = "
+        $class = '
             @-webkit-keyframes hqfw-fade-in-top {
                 0% {
                     -webkit-transform: translateY(-50px);
@@ -206,8 +218,8 @@ final class Style {
                     opacity: 0;
                 }
             }
-        ";
-        
+        ';
+
         // Global
         $class .= "
             .hqfw * {
@@ -379,15 +391,15 @@ final class Style {
         ";
 
         // Loader
-        $class .= Loader::get([
+        $class .= Loader::get(array(
             'classname' => 'hqfw-viewer__loader',
             'name'      => $settings['md_loader_style'],
             'width'     => $settings['md_loader_wd'],
             'height'    => $settings['md_loader_ht'],
             'stroke'    => $settings['md_loader_stroke_wd'],
             'color_1'   => $settings['md_loader_clr_1'],
-            'color_2'   => $settings['md_loader_clr_2']
-        ]);
+            'color_2'   => $settings['md_loader_clr_2'],
+        ));
 
         // Product Viewer.
         $class .= "
@@ -582,7 +594,7 @@ final class Style {
         ";
 
         if ( $settings['gn_pt_enable_zoom'] ) {
-            $class .= "
+            $class .= '
                 .hqfw-photo-zoomer {
                     width:  100%;
                     height:  auto;
@@ -597,12 +609,12 @@ final class Style {
                     width: 100%;
                     height: 100%;
                 }
-            ";
+            ';
         }
 
         // Photo slider onsale.
         if ( $settings['gn_pt_show_flash_sale'] ) {
-            $class .= "
+            $class .= '
                 .hqfw-photo-slider .onsale {
                     display: -webkit-box;
                     display: -ms-flexbox;
@@ -621,7 +633,7 @@ final class Style {
                     line-height: 1em !important;
                     z-index: 9 !important;
                 }
-            ";
+            ';
         }
 
         // Photo slider controller.
@@ -730,7 +742,7 @@ final class Style {
 
         // Photo box.
         if ( $settings['gn_pt_enable_lightbox'] ) {
-            $icon   = Helper::get_asset_src( 'images/photobox-icon.png' );
+            $icon   = Helper::get_resource_src( 'images/photobox-icon.png' );
             $class .= "
                 .hqfw-photobox-viewer {
                     position: fixed;
@@ -1071,7 +1083,7 @@ final class Style {
         if ( $settings['ad_opt_enable_minify'] ) {
             $style = $this->minify_css( $style );
         }
-        
+
         echo $style;
     }
 }
