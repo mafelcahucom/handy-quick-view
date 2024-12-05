@@ -42,7 +42,7 @@ final class loader {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the necessary parameters for rendering loaders.
+     * @param  array $args Contains the necessary arguments for rendering loaders.
      * $args = [
      *     'name'      => (string) Contains the name of the loader.
      *     'classname' => (string) Contains the new classname will be named for the loader.

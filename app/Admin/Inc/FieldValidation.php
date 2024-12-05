@@ -44,7 +44,7 @@ final class FieldValidation {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the necessary parameters for validating fields.
+     * @param  array $args Contains the necessary arguments for validating fields.
      * $args = [
      *     'fields'        => (array) Contains the all the new fields.
      *     'current_value' => (array) Contains the fields value from get_option().
@@ -161,7 +161,7 @@ final class FieldValidation {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the necessary parameters for evaluating text field.
+     * @param  array $args Contains the necessary arguments for evaluating text field.
      * $args = [
      *     'value'         => (string)  Contains the value of text field.
      *     'max'           => (integer) Contains the maximum character length.
@@ -195,7 +195,7 @@ final class FieldValidation {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the parameter need to evaluate textarea field.
+     * @param  array $args Contains the necessary arguments to evaluate textarea field.
      * $args = [
      *     'value' => (string) Contains the value of textarea field.
      * ]
@@ -213,7 +213,7 @@ final class FieldValidation {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the parameter need to evaluate number field.
+     * @param  array $args Contains the necessary arguments to evaluate number field.
      * $args = [
      *     'value'         => (integer) Contains the value of number field.
      *     'current_value' => (integer) Contains the current value from _hqfw_main_settings.
@@ -247,7 +247,7 @@ final class FieldValidation {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the parameter need to evaluate switch field.
+     * @param  array $args Contains the necessary arguments to evaluate switch field.
      * $args = [
      *     'value'         => (boolean) Contains the value of switch field.
      *     'current_value' => (boolean) Contains the current value from _hqfw_main_settings.
@@ -277,7 +277,7 @@ final class FieldValidation {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the parameter need to evaluate select field.
+     * @param  array $args Contains the necessary arguments to evaluate select field.
      * $args = [
      *     'value'         => (integer|string) Contains the value of select field.
      *     'choices'       => (array)          Contains the choices in select field.
@@ -312,7 +312,7 @@ final class FieldValidation {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the parameter need to evaluate icon picker field.
+     * @param  array $args Contains the necessary arguments to evaluate icon picker field.
      * $args = [
      *     'value'         => (string) Contains the value of icon picker field.
      *     'icons'         => (array)  Contains the list of icons in icon picker field.
@@ -347,7 +347,7 @@ final class FieldValidation {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the parameter need to evaluate image picker field.
+     * @param  array $args Contains the necessary arguments to evaluate image picker field.
      * $args = [
      *     'value'         => (string) Contains the value of image picker field.
      *     'choices'       => (array)  Contains the list of images in image picker field.
@@ -382,7 +382,7 @@ final class FieldValidation {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the parameter need to evalualoader picker field.
+     * @param  array $args Contains the necessary arguments to evalualoader picker field.
      * $args = [
      *     'value'         => (string) Contains the value loader picker field.
      *     'choices'       => (array)  Contains the list of loaders choices.
@@ -417,7 +417,7 @@ final class FieldValidation {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the parameter need to evaluate color picker field.
+     * @param  array $args Contains the necessary arguments to evaluate color picker field.
      * $args = [
      *     'value'         => (string) Contains the value of color picker field.
      *     'current_value' => (string) Contains the current value from _hqfw_main_settings.
@@ -450,7 +450,7 @@ final class FieldValidation {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the parameter need to evaluate text field size.
+     * @param  array $args Contains the necessary arguments to evaluate text field size.
      * $args = [
      *     'value'         => (string) Contains the value of text field size.
      *     'current_value' => (string) Contains the current value from _hsfw_main_settings.

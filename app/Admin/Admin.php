@@ -182,6 +182,8 @@ final class Admin {
      * Register all submenu styles.
      *
      * @since 1.0.0
+     * 
+     * @return void
      */
     public function register_submenu_styles() {
         wp_register_style( 'lexend-deca', Helper::get_resource_src( 'fonts/lexend-deca/lexend-deca.css' ), array(), '1.0.0', 'all' );

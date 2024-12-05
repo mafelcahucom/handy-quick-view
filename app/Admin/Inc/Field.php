@@ -44,7 +44,7 @@ final class Field {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the necessary parameters for creating text field.
+     * @param  array $args Contains the necessary arguments for creating text field.
      * $args = [
      *     'name'        => (string) Contains the name of the text field.
      *     'group'       => (string) Contains the name of the group this text field.
@@ -64,7 +64,7 @@ final class Field {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the necessary parameters for creating textarea field.
+     * @param  array $args Contains the necessary arguments for creating textarea field.
      * $args = [
      *     'name'        => (string) Contains the name of the textarea field.
      *     'group'       => (string) Contains the name of the group this textarea field.
@@ -84,7 +84,7 @@ final class Field {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the necessary parameters for creating number field.
+     * @param  array $args Contains the necessary arguments for creating number field.
      * $args = [
      *     'name'        => (string)  Contains the name of the number field.
      *     'group'       => (string)  Contains the name of the group this number field.
@@ -104,7 +104,7 @@ final class Field {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the necessary parameters for creating select field.
+     * @param  array $args Contains the necessary arguments for creating select field.
      * $args = [
      *     'name'        => (string) Contains the name of the select field.
      *     'group'       => (string) Contains the name of the group this select field.
@@ -125,7 +125,7 @@ final class Field {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the necessary parameters for creating switch field.
+     * @param  array $args Contains the necessary arguments for creating switch field.
      * $args = [
      *     'name'        => (string)  Contains the name of the switch field.
      *     'group'       => (string)  Contains the name of the group this switch field.
@@ -146,7 +146,7 @@ final class Field {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the necessary parameters for creating color picker field.
+     * @param  array $args Contains the necessary arguments for creating color picker field.
      * $args = [
      *     'name'        => (string) Contains the name of the color-picker field.
      *     'group'       => (string) Contains the name of the group this color-picker field.
@@ -167,7 +167,7 @@ final class Field {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the necessary parameters for creating icon picker field.
+     * @param  array $args Contains the necessary arguments for creating icon picker field.
      * $args = [
      *     'name'        => (string) Contains the name of the icon field.
      *     'group'       => (string) Contains the name of the group this icon field.
@@ -211,7 +211,7 @@ final class Field {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the necessary parameters for creating iamge picker field.
+     * @param  array $args Contains the necessary arguments for creating iamge picker field.
      * $args = [
      *     'name'        => (string) Contains the name of the loader picker field.
      *     'group'       => (string) Contains the name of the group this loader picker field.
@@ -239,7 +239,7 @@ final class Field {
      *
      * @since 1.0.0
      *
-     * @param  array $args Contains the necessary parameters for creating note field.
+     * @param  array $args Contains the necessary arguments for creating note field.
      * $args = [
      *     'type'    => (string)  Contains the type of note field |message|alert.
      *     'title'   => (string)  Contains the title of the note field.
