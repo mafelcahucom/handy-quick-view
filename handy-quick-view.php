@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:          Handy Quick View For WooCommerce
- * Description:          Handy Quick View is a very helpful WooCommerce plugin that enables store owners to design a custom Quick View modal that enables customers to get a quick look at a product without visiting the product page.
+ * Description:          Handy Quick View is a powerful WooCommerce plugin that lets customers preview product details instantly through a custom-designed modal for reducing clicks, speeding up browsing, and creating a smoother, more engaging shopping experience.
  * Author:               Mafel John Cahucom
  * Author URI:           https://www.facebook.com/mafeljohn.cahucom
  * Version:              1.0.0
