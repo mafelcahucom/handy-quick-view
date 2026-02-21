@@ -31,6 +31,8 @@ Explore the comprehensive list of features and compelling reasons to choose Hand
 
 ## Core Features
 
+Discover the complete set of core features and powerful functionalities of Handy Quick View, designed to enhance your WooCommerce stores.
+
 - Supports Quick View Button In Shop Page
 - Customizable Quick View Button Type
 - Customizable Quick View Button Label
