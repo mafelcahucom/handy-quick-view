@@ -37,7 +37,7 @@ defined( 'ABSPATH' ) || exit;
                 <div class="hd-header__col--right">
                     <div class="hd-flex hd-gap-10">
                         <div>
-                            <a class="hd-btn-icon hd-btn-icon--circle" href="#" title="<?php echo __( 'Help', 'handy-quick-view' ); ?>">
+                            <a class="hd-btn-icon hd-btn-icon--circle" href="https://www.gethandytools.site/plugin/handy-quick-view-for-woocommerce/" title="<?php echo __( 'Help', 'handy-quick-view' ); ?>">
                                 <?php echo Helper::get_icon( 'help', 'hd-svg' ); ?>
                             </a>
                         </div>

@@ -20,40 +20,23 @@ defined( 'ABSPATH' ) || exit;
                 <span>
                     <?php echo __( 'Handcrafted by', 'handy-quick-view' ); ?>
                 </span>
-                <a class="hd-fw-600" href="#" target="_blank">
+                <a class="hd-fw-600" href="https://www.mafeljohncahucom.site" target="_blank">
                     <?php echo __( 'Mafel John Cahucom', 'handy-quick-view' ); ?>
                 </a>
             </p>
             <div class="hd-sitemap">
-                <a href="#" target="_blank">
+                <a href="https://www.gethandytools.site/plugin/handy-quick-view-for-woocommerce/" target="_blank">
                     <?php echo __( 'Documentation', 'handy-quick-view' ); ?>
                 </a>
                 <span class="hd-sitemap__separator">/</span>
-                <a href="#" target="_blank">
-                    <?php echo __( 'Plugins', 'handy-quick-view' ); ?>
+                <a href="https://github.com/mafelcahucom/handy-quick-view" target="_blank">
+                    <?php echo __( 'GitHub', 'handy-quick-view' ); ?>
                 </a>
                 <span class="hd-sitemap__separator">/</span>
-                <a href="#" target="_blank">
-                    <?php echo __( 'Developer', 'handy-quick-view' ); ?>
+                <a href="https://www.gethandytools.site" target="_blank">
+                    <?php echo __( 'Plugins', 'handy-quick-view' ); ?>
                 </a>
             </div>
-            <ul class="hd-social-media">
-                <li>
-                    <a href="#" target="_blank">
-                        <?php echo Helper::get_icon( 'facebook', 'hd-svg' ); ?>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" target="_blank">
-                        <?php echo Helper::get_icon( 'github', 'hd-svg' ); ?>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" target="_blank">
-                        <?php echo Helper::get_icon( 'browser', 'hd-svg' ); ?>
-                    </a>
-                </li>
-            </ul>
         </div>
         <!-- end: footer -->
 

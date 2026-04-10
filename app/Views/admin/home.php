@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
                 <div class="hd-txt-center">
                     <p class="hd-home__developer">
                         <span><?php echo __( 'HANDCRAFTED BY ', 'handy-quick-view' ); ?></span>
-                        <a href="#" target="_blank">
+                        <a href="https://www.mafeljohncahucom.site" target="_blank">
                             <?php echo __( 'MAFEL JOHN CAHUCOM', 'handy-quick-view' ); ?>
                         </a>
                     </p>
